@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Framework\Sheep.Framework.Application\Sheep.Framework.Application.csproj" />
+    <ProjectReference Include="..\..\00.Framework\Sheep.Framework.Domain\Sheep.Framework.Domain.csproj" />
+    <ProjectReference Include="..\Sheep.Core.Domain\Sheep.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
