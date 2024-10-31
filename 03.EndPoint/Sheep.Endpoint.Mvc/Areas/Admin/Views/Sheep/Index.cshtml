@@ -1,4 +1,5 @@
-﻿<section class="content">
+﻿@model Sheep.Core.Application.Sheep.Queries.GetSheepQuery
+<section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -22,41 +23,24 @@
                             <thead>
                                 <tr>
                                     <th>ردیف</th>
-                                    <th>کاربر</th>
-                                    <th>تاریخ</th>
+                                    <th>شماره دام</th>
+                                    <th>تاریخ تولد</th>
                                     <th>وضعیت</th>
                                     <th>علت</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>183</td>
-                                    <td>علی رضوی</td>
-                                    <td>1401-05-02</td>
-                                    <td><span class="tag tag-success">تایید شده</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </td>
-                                </tr>
-                                <tr>
-                                    <td>219</td>
-                                    <td>حامی رهنما</td>
-                                    <td>1401-05-02</td>
-                                    <td><span class="tag tag-warning">در حال بررسی</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </td>
-                                </tr>
-                                <tr>
-                                    <td>657</td>
-                                    <td>Bob Doe</td>
-                                    <td>1401-05-02</td>
-                                    <td><span class="tag tag-primary">تایید شده</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </td>
-                                </tr>
-                                <tr>
-                                    <td>175</td>
-                                    <td>جوان دیبا</td>
-                                    <td>1401-05-02</td>
-                                    <td><span class="tag tag-danger">رد شده</span></td>
-                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </td>
-                                </tr>
+                                @foreach (var item in Model.sheepEntities)
+                                {
+                                    <tr>
+                                        <td>183</td>
+                                        <td>علی رضوی</td>
+                                        <td>1401-05-02</td>
+                                        <td><span class="tag tag-success">تایید شده</span></td>
+                                        <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </td>
+                                    </tr>
+                                }
+
                             </tbody>
                         </table>
                     </div>
