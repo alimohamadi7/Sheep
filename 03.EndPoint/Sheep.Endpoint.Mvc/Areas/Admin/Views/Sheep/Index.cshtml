@@ -27,18 +27,24 @@
                                     <th>تاریخ تولد</th>
                                     <th>وضعیت</th>
                                     <th>علت</th>
+                                    <th>عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                   int  i = 1;
+                                }
                                 @foreach (var item in Model.sheepEntities)
                                 {
                                     <tr>
-                                        <td>183</td>
-                                        <td>علی رضوی</td>
-                                        <td>1401-05-02</td>
-                                        <td><span class="tag tag-success">تایید شده</span></td>
-                                        <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </td>
+                                        <td>@i</td>
+                                        <td>@item.SheepNumber</td>
+                                        <td>@item.SheepbirthDate</td>
+                                        <td><span class="tag tag-success">@item.SheepState</span></td>
+                                        <td>@item.Gender</td>
+                                        <td></td>
                                     </tr>
+                                    i++;
                                 }
 
                             </tbody>

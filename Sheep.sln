@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Framework", "00.Framework", "{1C40F1A4-11B3-406C-B9AB-1920B50FF4F3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Domain", "01.Domain", "{8E6BD86A-A25F-480E-BA1B-8BE334253F9E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Core", "01.Core", "{8E6BD86A-A25F-480E-BA1B-8BE334253F9E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Core.Domain", "01.Core\Sheep.Core.Domain\Sheep.Core.Domain.csproj", "{DFA64294-6D52-4E3D-8551-11C7A03D6569}"
 EndProject
@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstraper", "Bootstraper"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Infra.bootstraper", "02.Infrastructure\Bootstraper\Sheep.Infra.bootstraper\Sheep.Infra.bootstraper.csproj", "{9E5BC491-0508-45E2-83FD-DC5BC3BA258C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sheep.Framework.Application", "00.Framework\Sheep.Framework.Application\Sheep.Framework.Application.csproj", "{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Framework.Application", "00.Framework\Sheep.Framework.Application\Sheep.Framework.Application.csproj", "{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
