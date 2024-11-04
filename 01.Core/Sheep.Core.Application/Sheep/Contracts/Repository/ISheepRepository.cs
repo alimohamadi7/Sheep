@@ -1,5 +1,4 @@
-﻿using Sheep.Core.Application.Sheep.Queries;
-using Sheep.Core.Domain.Sheep.Entities;
+﻿using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Cotrats.Data;
 
 

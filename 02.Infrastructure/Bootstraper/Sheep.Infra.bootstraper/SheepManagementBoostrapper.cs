@@ -14,8 +14,7 @@ namespace Sheep.Infra.bootstraper
         {
             services.AddDbContext<SheepDbcontext>(x => x.UseSqlServer(connectionString));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServicesExtensions).Assembly));
-            //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly));
+
         }
     }
 }

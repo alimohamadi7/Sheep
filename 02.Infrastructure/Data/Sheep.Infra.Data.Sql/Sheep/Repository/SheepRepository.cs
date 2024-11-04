@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
-using Sheep.Core.Application.Sheep.Queries;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Infrastructure.Data;
 

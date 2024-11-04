@@ -1,25 +1,24 @@
-﻿using MediatR;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Sheep.Core.Application.Sheep.Queries;
+
 
 namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class SheepController : Controller
     {
-        private readonly IMediator _mediator;
 
-        public SheepController(IMediator mediator)
+
+        public SheepController()
         {
-            _mediator = mediator;
+
         }
 
         // GET: SheepController
         public async Task< ActionResult> Index( string trim ,int pageId)
         {
-            var sheep=await _mediator.Send(new GetSheepQuery { trim=trim,PageId=pageId}    );
-            return View(sheep.Result);
+            return View();
         }
 
         // GET: SheepController/Details/5
