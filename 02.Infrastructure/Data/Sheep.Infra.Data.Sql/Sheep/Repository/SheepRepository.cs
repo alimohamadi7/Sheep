@@ -2,6 +2,7 @@
 using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Core.Domain.Sheep.Entities;
+using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Infrastructure.Data;
 
 
@@ -14,7 +15,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
         {
             _context = dbContext;
         }
-        public  async Task<GetSheepQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        public  async Task<OperationResult<GetSheepQuery>> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
         {
             IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);
             if (!string.IsNullOrEmpty(trim))
@@ -24,6 +25,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
             int take = 20;
             int skip = (PageId - 1) * take;
             string Addres = "";
+
             GetSheepQuery SheepQueryViweModel = new GetSheepQuery()
             {
                 trim = trim,
@@ -31,8 +33,13 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
                 .ToListAsync(cancellationToken)
 
             };
+
             SheepQueryViweModel.GeneratePagging(result, PageId, take, trim, Addres);
-            return SheepQueryViweModel;
+            OperationResult<GetSheepQuery> operationResul = new OperationResult<GetSheepQuery>()
+            {
+                Result = SheepQueryViweModel
+            };
+            return operationResul;
         }
     }
 }

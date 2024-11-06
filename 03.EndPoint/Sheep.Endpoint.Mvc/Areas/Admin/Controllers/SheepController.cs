@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sheep.Core.Application.Sheep.Contracts;
 
 
 namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
@@ -9,16 +10,17 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
     public class SheepController : Controller
     {
 
+        private readonly ISheepApplication _sheepApplication;
 
-        public SheepController()
+        public SheepController(ISheepApplication sheepApplication)
         {
-
+            _sheepApplication = sheepApplication;
         }
 
         // GET: SheepController
-        public async Task< ActionResult> Index( string trim ,int pageId)
+        public async Task< ActionResult> Index( CancellationToken cancellationToken,string trim ,int pageId)
         {
-            return View();
+            return View(await _sheepApplication.GetAllSheep(cancellationToken ,pageId,trim));
         }
 
         // GET: SheepController/Details/5
