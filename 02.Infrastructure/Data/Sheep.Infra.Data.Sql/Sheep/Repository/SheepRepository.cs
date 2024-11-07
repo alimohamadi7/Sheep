@@ -15,7 +15,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
         {
             _context = dbContext;
         }
-        public  async Task<OperationResult<GetSheepQuery>> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        public async Task<OperationResult<GetSheepQuery>> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
         {
             IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);
             if (!string.IsNullOrEmpty(trim))

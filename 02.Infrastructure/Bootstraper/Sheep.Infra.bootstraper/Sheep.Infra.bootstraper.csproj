@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\00.Framework\Sheep.Framework.Application\Sheep.Framework.Application.csproj" />
     <ProjectReference Include="..\..\..\00.Framework\Sheep.Framework.Infrastructure\Sheep.Framework.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\01.Core\Sheep.Core.Application\Sheep.Core.Application.csproj" />
     <ProjectReference Include="..\..\Data\Sheep.Infra.Data.Sql\Sheep.Infra.Data.Sql.csproj" />

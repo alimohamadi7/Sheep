@@ -2,9 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sheep.Core.Application.Sheep;
 using Sheep.Core.Application.Sheep.Contracts;
+using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Framework.Application.Cotrats.Data;
 using Sheep.Framework.Infrastructure.Data;
 using Sheep.Infra.Data.Sql;
+using Sheep.Infra.Data.Sql.Sheep.Repository;
 
 
 
@@ -16,6 +18,7 @@ namespace Sheep.Infra.bootstraper
         {
             services.AddDbContext<SheepDbcontext>(x => x.UseSqlServer(connectionString));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<ISheepRepository, SheepRepository>();
             services.AddTransient<ISheepApplication, SheepApplication>();
         }
     }

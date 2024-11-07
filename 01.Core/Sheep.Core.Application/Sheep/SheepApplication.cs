@@ -1,18 +1,14 @@
 ﻿using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Framework.Application.Operation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Sheep.Core.Application.Sheep
 {
     public class SheepApplication : ISheepApplication
     {
         private readonly ISheepRepository _sheepRepository;
-        public SheepApplication( ISheepRepository sheepRepository)
+        public SheepApplication(ISheepRepository sheepRepository)
         {
             _sheepRepository = sheepRepository;
         }
@@ -32,7 +28,7 @@ namespace Sheep.Core.Application.Sheep
         }
 
         public async Task<OperationResult<GetSheepQuery>> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "")
-        {;
+        {
             return await _sheepRepository.GetAll(cancellationToken, pageId, trim);
         }
 
