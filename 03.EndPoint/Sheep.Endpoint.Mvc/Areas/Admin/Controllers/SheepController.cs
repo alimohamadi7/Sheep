@@ -18,7 +18,7 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         }
 
         // GET: SheepController
-        public async Task< ActionResult> Index( CancellationToken cancellationToken,string trim ,int pageId)
+        public async Task< ActionResult> Index( CancellationToken cancellationToken,string trim="" ,int pageId=1)
         {
             return View(await _sheepApplication.GetAllSheep(cancellationToken ,pageId,trim));
         }

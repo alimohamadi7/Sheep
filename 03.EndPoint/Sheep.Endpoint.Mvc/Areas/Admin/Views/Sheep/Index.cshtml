@@ -1,4 +1,23 @@
-﻿@model Sheep.Core.Application.Sheep.Contracts.GetSheepQuery
+﻿@model Sheep.Framework.Application.Operation.OperationResult<Sheep.Core.Application.Sheep.Contracts.GetSheepQuery>
+
+
+<div class="content-wrapper" style="min-height: 1301.27px;">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>اطلاعات دام</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
+                        <li class="breadcrumb-item active">جداول ساده</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -34,7 +53,7 @@
                                 @{
                                    int  i = 1;
                                 }
-                                @foreach (var item in Model.sheepEntities)
+                                @foreach (var item in Model.Result.sheepEntities)
                                 {
                                     <tr>
                                         <td>@i</td>
@@ -57,3 +76,4 @@
         </div>
     </div>
 </section>
+</div>
