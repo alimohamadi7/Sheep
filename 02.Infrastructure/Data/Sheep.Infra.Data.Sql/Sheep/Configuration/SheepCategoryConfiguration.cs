@@ -5,11 +5,11 @@ using Sheep.Core.Domain.Sheep.Entities;
 
 namespace Sheep.Infra.Data.Sql.Sheep.Configuration
 {
-    public class SheepGroupConfiguration : IEntityTypeConfiguration<SheepGroupEntity>
+    public class SheepCategoryConfiguration : IEntityTypeConfiguration<SheepCategoryEntity>
     {
-        public void Configure(EntityTypeBuilder<SheepGroupEntity> builder)
+        public void Configure(EntityTypeBuilder<SheepCategoryEntity> builder)
         {
-            builder.ToTable(nameof(SheepGroupEntity));
+            builder.ToTable(nameof(SheepCategoryEntity));
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.Sheep).WithMany(x => x.SheepGroup).
                 HasForeignKey(x => x.SheepId);

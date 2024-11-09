@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Sheep.Infra.Data.Sql.Sheep.Configuration
 {
-    public class GroupConfiguration : IEntityTypeConfiguration<GroupEntity>
+    public class CategoryConfiguration : IEntityTypeConfiguration<CategoryEntity>
     {
-        public void Configure(EntityTypeBuilder<GroupEntity> builder)
+        public void Configure(EntityTypeBuilder<CategoryEntity> builder)
         {
-            builder.ToTable(nameof(GroupEntity));
+            builder.ToTable(nameof(CategoryEntity));
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             builder.HasMany(x => x.SheepGroups).WithOne(x => x.Group).

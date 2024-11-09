@@ -4,17 +4,17 @@ using System.Diagnostics.Contracts;
 
 namespace Sheep.Core.Domain.Sheep.Entities
 {
-    public class GroupEntity : BaseEntity<Guid>
+    public class CategoryEntity : BaseEntity<Guid>
     {
         public string Name { get; set; }
-        public int Gender { get; set; }
+        public GenderType Gender { get; set; }
         public bool IsDeleted { get; set; }
         public long Food { get; set; }
         public long Salary { get; set; }
         public long Overhead { get; set; }
-        public ICollection<SheepGroupEntity> SheepGroups { get; set; }
-        public GroupEntity() { }
-        public GroupEntity(string name, int gender, bool isDeleted, long food, long salary, long overhead)
+        public ICollection<SheepCategoryEntity> SheepGroups { get; set; }
+        public CategoryEntity() { }
+        public CategoryEntity(string name, GenderType gender, bool isDeleted, long food, long salary, long overhead)
         {
             Name = name;
             Gender = gender;
@@ -22,9 +22,9 @@ namespace Sheep.Core.Domain.Sheep.Entities
             Food = food;
             Salary = salary;
             Overhead = overhead;
-            isDeleted = false;
+          IsDeleted = false;
         }
-        public void Update(string name, int gender, bool isDeleted, long food, long salary, long overhead)
+        public void Update(string name, GenderType gender, bool isDeleted, long food, long salary, long overhead)
         {
             Name = name;
             Gender = gender;
