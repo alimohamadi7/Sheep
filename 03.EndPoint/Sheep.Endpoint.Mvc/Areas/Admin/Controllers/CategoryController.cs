@@ -1,14 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sheep.Core.Application.Category.Contracts;
 
 namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        // GET: CategoryController
-        public ActionResult Index()
+        private readonly ICategoryApplication _categoryApplication;
+
+        public CategoryController(ICategoryApplication categoryApplication)
         {
-            return View();
+            _categoryApplication = categoryApplication;
+        }
+
+        // GET: CategoryController
+        public async Task< ActionResult> Index(CancellationToken cancellationToken)
+        {
+            return View(await _categoryApplication.GetAllCategory(cancellationToken));
         }
 
         // GET: CategoryController/Details/5
@@ -18,15 +27,15 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         }
 
         // GET: CategoryController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            return PartialView(nameof(Create));
         }
 
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
@@ -39,7 +48,7 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         }
 
         // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
             return View();
         }
@@ -47,7 +56,7 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -60,7 +69,7 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         }
 
         // GET: CategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             return View();
         }
@@ -68,7 +77,7 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {

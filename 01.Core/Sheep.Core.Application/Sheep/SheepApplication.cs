@@ -1,5 +1,6 @@
 ﻿using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
+using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
 
 
@@ -14,6 +15,7 @@ namespace Sheep.Core.Application.Sheep
         }
         public Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {
+            OperationResult<bool> operation = new OperationResult<bool>() ;
             throw new NotImplementedException();
         }
 

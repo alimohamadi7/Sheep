@@ -1,5 +1,83 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Sheep.Framework.Application.Operation.OperationResult<Sheep.Core.Application.Category.GetCategoryQouery>
+
+
+<div class="content-wrapper" style="min-height: 1301.27px;">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>گروه دامی </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
+                        <li class="breadcrumb-item active">جداول ساده</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col col-md-3">
+                    <a class="btn btn-success btn-lg" href="#showmodal=@Url.Action("Create", "Category")">ثبت گروه جدید</a>
+
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">اطلاعات گروه دام</h3>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-bordered table-striped dataTable dtr-inline">
+                                <thead>
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th>نام گروه</th>
+                                        <th>خوراک مصرفی</th>
+                                        <th>دستمزد</th>
+                                        <th>سربار</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int i = 1;
+                                    }
+                                    @foreach (var item in Model.Result.categoryEntities)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Food</td>
+                                            <td>@item.Salary</td>
+                                            <td>@item.Overhead</td>
+                                            <td></td>
+                                        </tr>
+                                        i++;
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

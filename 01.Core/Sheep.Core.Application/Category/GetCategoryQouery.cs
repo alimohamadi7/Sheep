@@ -5,6 +5,6 @@ namespace Sheep.Core.Application.Category
 {
     public class GetCategoryQouery 
     {
-        public List<SheepEntity> sheepEntities { get; set; }
+        public List<CategoryEntity> categoryEntities{ get; set; }
     }
 }

@@ -14,21 +14,19 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public long Overhead { get; set; }
         public ICollection<SheepCategoryEntity> SheepGroups { get; set; }
         public CategoryEntity() { }
-        public CategoryEntity(string name, GenderType gender, bool isDeleted, long food, long salary, long overhead)
+        public CategoryEntity(string name, GenderType gender, long food, long salary, long overhead)
         {
             Name = name;
             Gender = gender;
-            IsDeleted = isDeleted;
             Food = food;
             Salary = salary;
             Overhead = overhead;
           IsDeleted = false;
         }
-        public void Update(string name, GenderType gender, bool isDeleted, long food, long salary, long overhead)
+        public void Edit(string name, GenderType gender, long food, long salary, long overhead)
         {
             Name = name;
             Gender = gender;
-            IsDeleted = isDeleted;
             Food = food;
             Salary = salary;
             Overhead = overhead;
