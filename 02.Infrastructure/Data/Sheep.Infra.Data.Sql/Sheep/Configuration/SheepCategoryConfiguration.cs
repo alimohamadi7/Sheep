@@ -13,8 +13,8 @@ namespace Sheep.Infra.Data.Sql.Sheep.Configuration
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.Sheep).WithMany(x => x.SheepGroup).
                 HasForeignKey(x => x.SheepId);
-            builder.HasOne(x => x.Group).WithMany(x => x.SheepGroups).
-                HasForeignKey(x => x.GroupId);
+            builder.HasOne(x => x.Category).WithMany(x => x.SheepGroups).
+                HasForeignKey(x => x.CategoryId);
         }
     }
 }

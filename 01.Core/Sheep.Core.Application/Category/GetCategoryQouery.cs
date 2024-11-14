@@ -1,5 +1,4 @@
-﻿using Sheep.Core.Domain.Sheep.Entities;
-
+﻿using Sheep.Core.Domain.Category;
 
 namespace Sheep.Core.Application.Category
 {

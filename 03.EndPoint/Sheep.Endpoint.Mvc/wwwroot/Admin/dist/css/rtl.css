@@ -2,6 +2,10 @@
 body{
   text-align: right;
 }
+/* Form-validation */
+.error {
+    color: #ff0000;
+}
 .wrapper,.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl,.media,.os-content,.main-header,.user-panel {
   direction: rtl;
 }

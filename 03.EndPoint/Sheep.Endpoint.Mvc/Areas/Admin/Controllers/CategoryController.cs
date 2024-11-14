@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sheep.Core.Application.Category;
 using Sheep.Core.Application.Category.Contracts;
+using Sheep.Endpoint.Mvc.WebframeWork.Validateattr;
 
 namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
 {
@@ -15,7 +17,7 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         }
 
         // GET: CategoryController
-        public async Task< ActionResult> Index(CancellationToken cancellationToken)
+        public async Task<ActionResult> Index(CancellationToken cancellationToken)
         {
             return View(await _categoryApplication.GetAllCategory(cancellationToken));
         }
@@ -35,16 +37,11 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(IFormCollection collection)
+        [Validate]
+        public async Task<ActionResult> Create(CreateCommand createCommand,CancellationToken cancellationToken)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _categoryApplication.Create(createCommand, cancellationToken);
+            return new JsonResult(result);
         }
 
         // GET: CategoryController/Edit/5

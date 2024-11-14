@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/Admin/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/Admin/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/Admin/plugins/sweetalert2/sweetalert2.min.css" />
     <!--rtl CSS-->
     <link rel="stylesheet" href="/Admin/dist/css/rtl.css">
 </head >
@@ -759,7 +760,11 @@
     <script src="/Admin/plugins/chart.js/Chart.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/Admin/dist/js/demo.js"></script>
+    <script src="~/Admin/plugins/sweetalert2/sweetalert2.min.js"></script>
     <script src="/Admin/dist/js/pages/dashboard3.js"></script>
-    <script src="~/admin/js/site.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Admin/js/site.js"></script>
+    @RenderSection("Scripts", false)
 </body>
 </html>

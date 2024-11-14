@@ -1,5 +1,5 @@
 ﻿using Sheep.Core.Application.Category.Contracts;
-using Sheep.Core.Domain.Sheep.Entities;
+using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
 
 
@@ -15,10 +15,8 @@ namespace Sheep.Core.Application.Category
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {
             CategoryEntity categoryEntity = new CategoryEntity(command.Name,
-                command.Gender,
-                command.Food,
-                command.Salary,
-                command.Overhead);
+                command.Gender)
+        ;
             await _repository.AddAsync(categoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }

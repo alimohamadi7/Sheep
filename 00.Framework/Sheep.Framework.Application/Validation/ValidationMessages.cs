@@ -20,5 +20,6 @@ namespace Sheep.Framework.Application.Validation
         public const string InvalidFile = "انتخاب نمایید pdf  لطفا یک فایل   ";
         public const string InvalidNationalcode = "لطفا کد ملی را بدرستی وارد کنید";
         public const string Invalidpersonalnumber = "لطفا شماره پرسنلی را بدرستی وارد کنید";
+        public const string Invalidnumber = "لطفا عدد وارد کنید";
     }
 }
