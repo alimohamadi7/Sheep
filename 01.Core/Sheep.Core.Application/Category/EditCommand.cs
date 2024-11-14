@@ -1,4 +1,5 @@
-﻿using Sheep.Framework.Domain.Entities;
+﻿using Sheep.Framework.Application.Validation;
+using Sheep.Framework.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,15 +13,9 @@ namespace Sheep.Core.Application.Category
     {
         public Guid Id { get; set; }
         [Display(Name = "نام گروه")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        [MaxLength(50, ErrorMessage = ValidationMessages.MaxLenght)]
         public string Name { get; set; }
-        [Display(Name = "جنسیت")]
-        public GenderType Gender { get; set; }
-        public bool IsDeleted { get; set; }
-        [Display(Name = "خوراک مصرفی")]
-        public long Food { get; set; }
-        [Display(Name = "دستمزد")]
-        public long Salary { get; set; }
-        [Display(Name = "سربار")]
-        public long Overhead { get; set; }
+
     }
 }

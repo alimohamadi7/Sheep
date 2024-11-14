@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Sheep.Core.Application.Sheep.Contracts;
 
 
-namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
+namespace Sheep.Endpoint.Mvc.Controllers
 {
-    [Area("Admin")]
     public class SheepController : Controller
     {
 

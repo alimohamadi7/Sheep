@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Sheep.Core.Application.Category;
 using Sheep.Core.Application.Category.Contracts;
 using Sheep.Endpoint.Mvc.WebframeWork.Validateattr;
+using System.Threading;
 
-namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
+namespace Sheep.Endpoint.Mvc.Controllers
 {
-    [Area("Admin")]
+
     public class CategoryController : Controller
     {
         private readonly ICategoryApplication _categoryApplication;
@@ -45,45 +46,36 @@ namespace Sheep.Endpoint.Mvc.Areas.Admin.Controllers
         }
 
         // GET: CategoryController/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(Guid Id,CancellationToken cancellationToken)
         {
-            return View();
+            var result = await _categoryApplication.GetDetails(Id, cancellationToken);
+            return PartialView(nameof(Edit),result);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        [Validate]
+        public async Task<ActionResult> Edit(EditCommand editCommand, CancellationToken cancellationToken)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _categoryApplication.Edit(editCommand, cancellationToken);
+            return new JsonResult(result);
         }
 
         // GET: CategoryController/Delete/5
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(Guid id,CancellationToken cancellationToken)
         {
-            return View();
+            var result = await _categoryApplication.GetDetails(id, cancellationToken);
+            return PartialView(nameof(Delete), result);
         }
 
         // POST: CategoryController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteConfrim(Guid id, CancellationToken  cancellationToken)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _categoryApplication.Delete(id, cancellationToken);
+            return new JsonResult(result);
         }
     }
 }

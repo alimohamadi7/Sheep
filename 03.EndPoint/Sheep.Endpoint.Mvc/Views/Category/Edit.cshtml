@@ -1,0 +1,45 @@
+﻿@model Sheep.Core.Application.Category.EditCommand
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">گروه دامی</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="Edit" asp-controller="Category"
+                          method="post"
+                          data-ajax="true"
+                          data-callback=""
+                          data-action="Refresh"
+                          enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputName">نام گروه</label>
+                                <input type="hidden" asp-for="Id" class="form-control">
+                                <input type="text" asp-for="Name" class="form-control" id="exampleInputName" placeholder="نام گروه">
+                                <span asp-validation-for="Name" class="error"></span>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="d-flex justify-content-center">
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary waves-effect">ویرایش</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">بستن</button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

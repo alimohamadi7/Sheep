@@ -7,14 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="Data\**" />
-    <Content Remove="Areas\Admin\Models\**" />
+    <Compile Remove="wwwroot\images\**" />
     <Content Remove="Data\**" />
-    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <Content Remove="wwwroot\images\**" />
     <EmbeddedResource Remove="Data\**" />
-    <None Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
     <None Remove="Data\**" />
+    <None Remove="wwwroot\images\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,11 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\js\" />

@@ -12,8 +12,7 @@ namespace Sheep.Core.Application.Category
         [Required (ErrorMessage = ValidationMessages.IsRequired)]
         [MaxLength(50, ErrorMessage = ValidationMessages.MaxLenght)]
         public string Name { get; set; }
-        [Display(Name = "جنسیت")]
-        public GenderType Gender { get; set; }
+
 
     }
 }

@@ -6,12 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>گروه دامی </h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
-                        <li class="breadcrumb-item active">جداول ساده</li>
+                        <li class="breadcrumb-item active">گروه دامی</li>
                     </ol>
                 </div>
             </div>
@@ -21,7 +20,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col col-md-3">
+                <div class="col col-md-3 m-md-2">
                     <a class="btn btn-success btn-lg" href="#showmodal=@Url.Action("Create", "Category")">ثبت گروه جدید</a>
 
                 </div>
@@ -59,7 +58,16 @@
                                         <tr>
                                             <td>@i</td>
                                             <td>@item.Name</td>
-                                            <td></td>
+                                            <td>
+                                                <a class="btn btn-warning pull-right m-rl-5"
+                                                   href="#showmodal=@Url.Action("Edit", "Category", new { id = item.Id})">
+                                                    <i class="fa fa-edit"></i> ویرایش
+                                                </a>
+                                                <a class="btn btn-danger pull-right m-rl-5"
+                                                   href="#showmodal=@Url.Action("Delete", "Category", new { id = item.Id})">
+                                                    <i class="fa fa-trash"></i> حذف
+                                                </a>
+                                            </td>
                                         </tr>
                                         i++;
                                     }
