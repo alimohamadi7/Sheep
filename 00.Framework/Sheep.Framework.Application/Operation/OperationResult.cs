@@ -37,9 +37,9 @@ namespace Sheep.Framework.Application.Operation
         {
             var result = new OperationResult<TResult>
             {
-                Result = default
+                Result = default,
+                isSuccedded = false,
             };
-
             result.ErrorMessages.Add(new(propertyName, message));
             return result;
         }

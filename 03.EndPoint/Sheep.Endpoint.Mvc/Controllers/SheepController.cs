@@ -17,9 +17,9 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: SheepController
-        public async Task< ActionResult> Index( CancellationToken cancellationToken,string trim="" ,int pageId=1)
+        public async Task<ActionResult> Index(CancellationToken cancellationToken, string trim = "", int pageId = 1)
         {
-            return View(await _sheepApplication.GetAllSheep(cancellationToken ,pageId,trim));
+            return View(await _sheepApplication.GetAllSheep(cancellationToken, pageId, trim));
         }
 
         // GET: SheepController/Details/5
@@ -29,28 +29,28 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: SheepController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            return PartialView(nameof(Create));
         }
 
         // POST: SheepController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(CreateCommand command, CancellationToken cancellationToken)
         {
-            try
+            var result = await _sheepApplication.IsExistSheep(command, cancellationToken);
+            if (result.isSuccedded == false)
             {
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(nameof(command.SheepNumber), result.Message);
             }
-            catch
-            {
-                return View();
-            }
+            await _sheepApplication.Create(command, cancellationToken);
+            return new JsonResult(result);
+
         }
 
         // GET: SheepController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
             return View();
         }
@@ -58,7 +58,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         // POST: SheepController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: SheepController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             return View();
         }
@@ -79,7 +79,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         // POST: SheepController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {

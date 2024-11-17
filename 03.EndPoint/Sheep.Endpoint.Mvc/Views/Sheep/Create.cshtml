@@ -1,0 +1,67 @@
+﻿@model Sheep.Core.Application.Sheep.Contracts.CreateCommand
+@using Sheep.Framework.Domain.Entities
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">گروه دامی</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="Create" asp-controller="Sheep"
+                          method="post"
+                          data-ajax="true"
+                          data-callback=""
+                          data-action="Refresh"
+                          enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="SheepNumber">شماره دام</label>
+                                <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
+                                <span asp-validation-for="SheepNumber" class="error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Gender">جنسیت</label>
+                                <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
+                                </select>
+                                <span asp-validation-for="SheepState" class="error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="SheepbirthDate">تاریخ تولد</label>
+                                <input type="text" asp-for=SheepbirthDate class="form-control"  onclick="Datepicker1()" id="SheepbirthDate" placeholder="تاریخ تولد">
+                                <span asp-validation-for="SheepbirthDate" class="error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Sheepshop">تاریخ خرید</label>
+                                <input type="text" asp-for="Sheepshop" class="form-control " onclick="Datepicker2()" id="Sheepshop" placeholder="تاریخ خرید">
+                                <span asp-validation-for="Sheepshop" class="error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="SheepState">وضعیت</label>
+                                <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<State>()">
+                                </select>
+                                <span asp-validation-for="SheepState" class="error"></span>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="d-flex justify-content-center">
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary waves-effect">ذخیره</button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

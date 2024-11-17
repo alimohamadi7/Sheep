@@ -8,5 +8,6 @@ namespace Sheep.Core.Application.Sheep.Contracts.Repository
     public interface ISheepRepository : IRepository<SheepEntity>
     {
         Task<OperationResult<GetSheepQuery>> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "");
+        Task<OperationResult<bool>> IsExistSheep( CreateCommand createCommand, CancellationToken cancellationToken);
     }
 }

@@ -41,5 +41,15 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
             };
             return operationResul;
         }
+
+        public async Task<OperationResult<bool>> IsExistSheep(CreateCommand createCommand, CancellationToken cancellationToken)
+        {
+            var result = TableNoTracking.Any(x => x.SheepNumber == createCommand.SheepNumber);
+            if (result == false)
+            {
+                return OperationResult<bool>.SuccessResult(true);
+            }
+           return OperationResult<bool>.FailureResult(createCommand.SheepNumber, ApplicationMessages.DuplicatedRecord);
+        }
     }
 }
