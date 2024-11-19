@@ -26,7 +26,7 @@ namespace Sheep.Infra.bootstraper
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<ISheepRepository, SheepRepository>();
             services.AddTransient<ISheepApplication, SheepApplication>();
-            services.AddTransient<ICategoryRepository ,CategoryRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICategoryApplication, CategoryApplication>();
             services.AddTransient<ICategoryPriceRepo, CategoryPriceRepo>();
             services.AddTransient<ICategoryPriceApp, CategoryPriceApp>();

@@ -1,7 +1,7 @@
 ﻿
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Reflection;
 
 namespace Sheep.Framework.Infrastructure.Utilities
 {

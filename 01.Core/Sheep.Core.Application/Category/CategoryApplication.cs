@@ -1,7 +1,6 @@
 ﻿using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace Sheep.Core.Application.Category

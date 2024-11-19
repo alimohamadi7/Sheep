@@ -1,7 +1,7 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using DNTPersianUtils.Core;
 using Microsoft.AspNetCore.Mvc;
 using Sheep.Core.Application.Sheep.Contracts;
+using Sheep.Endpoint.Mvc.WebframeWork.Validateattr;
 
 
 namespace Sheep.Endpoint.Mvc.Controllers
@@ -37,14 +37,10 @@ namespace Sheep.Endpoint.Mvc.Controllers
         // POST: SheepController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+      
         public async Task<ActionResult> Create(CreateCommand command, CancellationToken cancellationToken)
         {
-            var result = await _sheepApplication.IsExistSheep(command, cancellationToken);
-            if (result.isSuccedded == false)
-            {
-                ModelState.AddModelError(nameof(command.SheepNumber), result.Message);
-            }
-            await _sheepApplication.Create(command, cancellationToken);
+            var result=   await _sheepApplication.Create(command, cancellationToken);
             return new JsonResult(result);
 
         }

@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Sheep.Framework.Domain.Entities
 {
 
-     public enum State
-        {
+    public enum State
+    {
         [Display(Name = "فروخته شده")]
-        Sall =0,
+        Sall = 0,
         [Display(Name = "تلف شده ")]
-        wasted=1,
+        wasted = 1,
         [Display(Name = "موجود")]
-        present=2
-        }
+        present = 2
+    }
 
 }

@@ -1,5 +1,4 @@
-﻿using Sheep.Framework.Application.Operation;
-using Sheep.Framework.Application.Validation;
+﻿using Sheep.Framework.Application.Validation;
 using Sheep.Framework.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,9 +16,9 @@ namespace Sheep.Core.Application.Sheep.Contracts
         public Guid? ParentId { get; set; }
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        public DateTime SheepbirthDate { get; set; }
+        public string? SheepbirthDate { get; set; }
         [Display(Name = "تاریخ خرید")]
-        public DateTime? Sheepshop { get; set; }
+        public string? Sheepshop { get; set; }
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         [Display(Name = "وضعیت")]
         public State SheepState { get; set; }

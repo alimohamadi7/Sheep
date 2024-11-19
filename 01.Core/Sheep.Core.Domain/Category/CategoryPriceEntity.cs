@@ -25,8 +25,8 @@ namespace Sheep.Core.Domain.Category
             Salary = salary;
             Overhead = overhead;
         }
-        public void Delete() 
-        { 
+        public void Delete()
+        {
             IsDeleted = true;
         }
 

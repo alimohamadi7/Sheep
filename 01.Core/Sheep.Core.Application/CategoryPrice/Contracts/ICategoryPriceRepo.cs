@@ -5,7 +5,7 @@ using Sheep.Framework.Application.Operation;
 
 namespace Sheep.Core.Application.CategoryPrice.Contracts
 {
-    public interface ICategoryPriceRepo:IRepository<CategoryPriceEntity>
+    public interface ICategoryPriceRepo : IRepository<CategoryPriceEntity>
     {
         Task<OperationResult<GetQouery>> GetAll(CancellationToken cancellationToken);
     }

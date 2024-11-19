@@ -49,7 +49,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
             {
                 return OperationResult<bool>.SuccessResult(true);
             }
-           return OperationResult<bool>.FailureResult(createCommand.SheepNumber, ApplicationMessages.DuplicatedRecord);
+            return OperationResult<bool>.FailureResult(createCommand.SheepNumber, ApplicationMessages.DuplicatedRecord);
         }
     }
 }

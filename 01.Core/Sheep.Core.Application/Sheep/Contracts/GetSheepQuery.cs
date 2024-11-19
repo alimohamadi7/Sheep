@@ -1,6 +1,5 @@
 ﻿using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Entity;
-using Sheep.Framework.Application.Operation;
 
 
 namespace Sheep.Core.Application.Sheep.Contracts

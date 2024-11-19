@@ -80,7 +80,7 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoryPriceEntity");
+                    b.ToTable("CategoryPriceEntity", (string)null);
                 });
 
             modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepCategoryEntity", b =>

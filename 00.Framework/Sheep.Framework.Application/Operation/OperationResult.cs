@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sheep.Framework.Application.Operation
+﻿namespace Sheep.Framework.Application.Operation
 {
     public interface IOperationResult
     {
@@ -39,6 +33,7 @@ namespace Sheep.Framework.Application.Operation
             {
                 Result = default,
                 isSuccedded = false,
+                Message = message
             };
             result.ErrorMessages.Add(new(propertyName, message));
             return result;

@@ -1,6 +1,6 @@
 ﻿@model Sheep.Framework.Application.Operation.OperationResult<Sheep.Core.Application.Sheep.Contracts.GetSheepQuery>
-
-
+@using Sheep.Framework.Application.Utilities
+@using DNTPersianUtils.Core
 <div class="content-wrapper" style="min-height: 1301.27px;">
     <section class="content-header">
         <div class="container-fluid">
@@ -46,8 +46,8 @@
                                         <th>ردیف</th>
                                         <th>شماره دام</th>
                                         <th>تاریخ تولد</th>
-                                        <th>وضعیت</th>
-                                        <th>علت</th>
+@*                                         <th>وضعیت</th> *@
+                                        <th>جنسیت</th>
                                         <th>عملیات</th>
                                     </tr>
                                 </thead>
@@ -60,9 +60,9 @@
                                         <tr>
                                             <td>@i</td>
                                             <td>@item.SheepNumber</td>
-                                            <td>@item.SheepbirthDate</td>
-                                            <td><span class="tag tag-success">@item.SheepState</span></td>
-                                            <td>@item.Gender</td>
+                                            <td>@item.SheepbirthDate.ToPersianDateTextify() </td>
+@*                                             <td><span class="tag tag-success">@EnumExtensions.ToDisplay(@item.SheepState)</span></td>
+ *@                                            <td>@EnumExtensions.ToDisplay(@item.Gender)</td>
                                             <td></td>
                                         </tr>
                                         i++;
@@ -108,6 +108,16 @@
         format: 'YYYY/MM/DD',
         altField: '.observer-example-alt'
             });
+        }
+        $("#Sheep").addClass("active");
+
+        let genreDropdown = document.getElementById('SheepState');
+        genreDropdown.addEventListener("change", getMovies);
+
+
+        function getMovies(event) {
+            let genre = event.target.value;
+            alert(genre) //you can replace this with the api call to get the movies.
         }
     </script>
 }

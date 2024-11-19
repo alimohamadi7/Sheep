@@ -1,8 +1,8 @@
-﻿using Sheep.Core.Application.Sheep.Contracts;
+﻿using DNTPersianUtils.Core;
+using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
-using System.Numerics;
 
 
 namespace Sheep.Core.Application.Sheep
@@ -16,9 +16,12 @@ namespace Sheep.Core.Application.Sheep
         }
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {
-            SheepEntity entity =new SheepEntity(command.SheepNumber,command.SheepbirthDate,command.Sheepshop,
-                command.ParentId,command.SheepState,command.Gender);
-          await  _sheepRepository.AddAsync(entity,cancellationToken);
+            if( await _sheepRepository.Exists(x=>x.SheepNumber==command.SheepNumber))
+                return  OperationResult<bool>.FailureResult(command.SheepNumber,ApplicationMessages.DuplicatedRecord);
+            SheepEntity entity = new SheepEntity(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(),
+                command.Sheepshop.ToGregorianDateTime(),
+                command.ParentId, command.SheepState, command.Gender);
+            await _sheepRepository.AddAsync(entity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 

@@ -6,7 +6,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
     public class SheepEntity : BaseEntity<Guid>
     {
         public string SheepNumber { get; set; }
-        public DateTime SheepbirthDate { get; set; }
+        public DateTime? SheepbirthDate { get; set; }
         public DateTime? Sheepshop { get; set; }
         public Guid? ParentId { get; set; }
         public bool IsDeleted { get; set; }
@@ -17,7 +17,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public ICollection<SheepCategoryEntity> SheepGroup { get; set; }
         public ICollection<SheepFullPriceEntity> SheepFullPrices { get; set; }
         public SheepEntity() { }
-        public SheepEntity(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender)
+        public SheepEntity(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender)
         {
             SheepNumber = sheepNumber;
             SheepbirthDate = sheepbirthDate;
@@ -27,7 +27,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
             SheepState = sheepState;
             Gender = gender;
         }
-        public void Edit(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender)
+        public void Edit(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender)
         {
             SheepNumber = sheepNumber;
             SheepbirthDate = sheepbirthDate;
