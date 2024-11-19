@@ -41,14 +41,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="Sheepshop">تاریخ خرید</label>
-                                <input type="text" asp-for="Sheepshop" class="form-control " onclick="Datepicker2()" id="Sheepshop" placeholder="تاریخ خرید">
+                                <input type="text" asp-for="Sheepshop" class="form-control "  onclick="Datepicker2(e)" id="Sheepshop" placeholder="تاریخ خرید">
                                 <span asp-validation-for="Sheepshop" class="error"></span>
                             </div>
                             <div class="form-group">
                                 <label for="SheepState">وضعیت</label>
-                                <select class="form-control" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
+                                <select class="form-control" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
                                 </select>
                                 <span asp-validation-for="SheepState" class="error"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Sheepshop">تاریخ فروش</label>
+                                <input type="text" name="SheepSellDate" class="form-control " onclick="Datepicker3()" id="SheepSellDate" placeholder="تاریخ فروش">
+                            </div>
+                            <div class="form-group">
+                                <label for="Sheepshop">تاریخ تلف شدن</label>
+                                <input type="text" name="SheepwastedDate" class="form-control " onclick="Datepicker4()" id="SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                <span asp-validation-for="Sheepshop" class="error"></span>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -67,3 +76,6 @@
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+@section Scripts{
+
+}

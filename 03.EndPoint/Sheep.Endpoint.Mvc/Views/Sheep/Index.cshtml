@@ -80,10 +80,14 @@
     </section>
 </div>
 @section Scripts {
+@*     <link href="~/lib/persiandatetimepicker/persian-datepicker.css" rel="stylesheet" />
     <script src="~/lib/persiandatetimepicker/persian-date.js"></script>
-    <link href="~/lib/persiandatetimepicker/persian-datepicker.css" rel="stylesheet" />
-    <script src="~/lib/persiandatetimepicker/persian-datepicker.js"></script>
+    <script src="~/lib/persiandatetimepicker/persian-datepicker.js"></script> *@
     <script>
+
+        
+    </script>
+@*     <script>
 
         function Datepicker1(){
             $("#SheepbirthDate").pDatepicker({
@@ -109,15 +113,35 @@
         altField: '.observer-example-alt'
             });
         }
+        function Datepicker3() {
+            $("#SheepSellDate").pDatepicker({
+                calendar: {
+                    persian: {
+                        leapYearMode: 'astronomical'
+                    }
+                }, initialValue: false,
+                observer: true,
+                format: 'YYYY/MM/DD',
+                altField: '.observer-example-alt'
+            });
+        }
+        function Datepicker4() {
+            $("#SheepwastedDate").pDatepicker({
+                calendar: {
+                    persian: {
+                        leapYearMode: 'astronomical'
+                    }
+                }, initialValue: false,
+                observer: true,
+                format: 'YYYY/MM/DD',
+                altField: '.observer-example-alt'
+            });
+        }
         $("#Sheep").addClass("active");
 
-        let genreDropdown = document.getElementById('SheepState');
-        genreDropdown.addEventListener("change", getMovies);
-
-
-        function getMovies(event) {
-            let genre = event.target.value;
-            alert(genre) //you can replace this with the api call to get the movies.
+        function myFunction() {
+            var x = document.getElementById("SheepState").value;
+           alert(x)
         }
-    </script>
+    </script> *@
 }
