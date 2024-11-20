@@ -19,10 +19,18 @@ namespace Sheep.Core.Application.Sheep.Contracts
         public string? SheepbirthDate { get; set; }
         [Display(Name = "تاریخ خرید")]
         public string? Sheepshop { get; set; }
+        [Display(Name = "تاریخ فروش")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        public string? SheepSellDate { get; set; }
+        [Display(Name = "تاریخ تلف شدن")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        public string? SheepwastedDate { get; set; }
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        [RegularExpression(@"^[1-9]\d{0,2}(\d*|(,\d{3})*)$", ErrorMessage = ValidationMessages.IsRequired)]
         [Display(Name = "وضعیت")]
         public State SheepState { get; set; }
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        [RegularExpression(@"^[1-9]\d{0,2}(\d*|(,\d{3})*)$", ErrorMessage = ValidationMessages.IsRequired)]
         [Display(Name = "جنسیت")]
         public GenderType Gender { get; set; }
     }

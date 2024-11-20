@@ -147,6 +147,46 @@
             });
             $("#Sheep").addClass("active");
         });
+
+        function myFunction() {
+            var x = document.getElementById("SheepState").value;
+            if(x==2){
+                removewasteddate()
+                addselldate()
+                }
+                if (x == 1 || x==0) {
+                removeselldate();
+                removewasteddate()
+                    }
+            if (x == 3) {
+                removeselldate();
+                addwasteddate()
+            }
+            }
+            function addselldate() {
+                let p = document.getElementsByClassName("SheepSellDate");
+                for (i = 0; i < p.length; i++) {
+                    p[i].removeAttribute("hidden");
+                }
+            }
+                function removeselldate(){
+                    let p = document.getElementsByClassName("SheepSellDate");
+                    for (i = 0; i < p.length; i++) {
+                        p[i].hidden = true;
+                    }
+                }
+            function addwasteddate() {
+                let p = document.getElementsByClassName("SheepwastedDate");
+                for (i = 0; i < p.length; i++) {
+                    p[i].removeAttribute("hidden");
+                }
+            }
+            function removewasteddate() {
+                let p = document.getElementsByClassName("SheepwastedDate");
+                for (i = 0; i < p.length; i++) {
+                    p[i].hidden = true;
+                }
+            }
 </script>
 
 }

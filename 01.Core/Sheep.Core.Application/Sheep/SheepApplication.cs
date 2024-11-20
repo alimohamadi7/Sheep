@@ -20,7 +20,8 @@ namespace Sheep.Core.Application.Sheep
                 return  OperationResult<bool>.FailureResult(command.SheepNumber,ApplicationMessages.DuplicatedRecord);
             SheepEntity entity = new SheepEntity(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(),
                 command.Sheepshop.ToGregorianDateTime(),
-                command.ParentId, command.SheepState, command.Gender);
+                command.ParentId, command.SheepState, command.Gender,command.SheepSellDate.ToGregorianDateTime(),
+                command.SheepwastedDate.ToGregorianDateTime());
             await _sheepRepository.AddAsync(entity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }

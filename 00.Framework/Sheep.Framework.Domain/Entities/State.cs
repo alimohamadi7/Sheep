@@ -1,16 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sheep.Framework.Domain.Entities
 {
-
     public enum State
     {
-        [Display(Name = "فروخته شده")]
-        Sall = 0,
-        [Display(Name = "تلف شده ")]
-        wasted = 1,
+        [Display(Name = "انتخاب کنید ")]
+        None=0,
         [Display(Name = "موجود")]
-        present = 2
+        present = 1,
+        [Display(Name = "فروخته شده")]
+        Sall = 2,
+        [Display(Name = "تلف شده ")]
+        wasted = 3,
+
     }
 
 }

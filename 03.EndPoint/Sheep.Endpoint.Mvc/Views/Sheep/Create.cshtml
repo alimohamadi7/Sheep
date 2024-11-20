@@ -11,7 +11,7 @@
                 <!-- general form elements -->
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">گروه دامی</h3>
+                        <h3 class="card-title">ثبت اطلاعات دام</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -51,12 +51,14 @@
                                 <span asp-validation-for="SheepState" class="error"></span>
                             </div>
                             <div class="form-group">
-                                <label for="Sheepshop">تاریخ فروش</label>
-                                <input type="text" name="SheepSellDate" class="form-control DatePicker" placeholder="تاریخ فروش">
+                                <label for="Sheepshop" class="SheepSellDate" hidden>تاریخ فروش</label>
+                                <input type="text" hidden asp-for="SheepSellDate" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
+                                <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
                             </div>
                             <div class="form-group">
-                                <label for="Sheepshop">تاریخ تلف شدن</label>
-                                <input type="text" name="SheepwastedDate" class="form-control DatePicker" placeholder="تاریخ تلف شدن">
+                                <label for="SheepwastedDate" class="SheepwastedDate" hidden>تاریخ تلف شدن</label>
+                                <input type="text" hidden asp-for="SheepwastedDate" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
                             </div>
                         </div>
                         <!-- /.card-body -->
