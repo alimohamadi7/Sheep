@@ -80,13 +80,8 @@
     </section>
 </div>
 @section Scripts {
-@*     <link href="~/lib/persiandatetimepicker/persian-datepicker.css" rel="stylesheet" />
-    <script src="~/lib/persiandatetimepicker/persian-date.js"></script>
-    <script src="~/lib/persiandatetimepicker/persian-datepicker.js"></script> *@
-    <script>
-
-        
-    </script>
+    <link href="~/lib/persian-datetime-picker/jquery.mpdatepicker.min.css" rel="stylesheet" />
+    <script src="~/lib/persian-datetime-picker/jquery.mpdatepicker.min.js"></script>
 @*     <script>
 
         function Datepicker1(){
@@ -137,11 +132,21 @@
                 altField: '.observer-example-alt'
             });
         }
-        $("#Sheep").addClass("active");
+       
 
         function myFunction() {
             var x = document.getElementById("SheepState").value;
            alert(x)
         }
     </script> *@
+    <script>
+        $(document).ready(function () {
+            $("#MainModal").on('show.bs.modal', function () {
+                $(".DatePicker").mpdatepicker({
+                });
+            });
+            $("#Sheep").addClass("active");
+        });
+</script>
+
 }

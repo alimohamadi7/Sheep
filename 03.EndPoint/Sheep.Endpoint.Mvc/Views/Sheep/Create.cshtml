@@ -36,12 +36,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="SheepbirthDate">تاریخ تولد</label>
-                                <input type="text" asp-for=SheepbirthDate class="form-control" onclick="Datepicker1()" id="SheepbirthDate" placeholder="تاریخ تولد">
+                                <input type="text" asp-for=SheepbirthDate class="form-control DatePicker" placeholder="تاریخ تولد">
                                 <span asp-validation-for="SheepbirthDate" class="error"></span>
                             </div>
                             <div class="form-group">
                                 <label for="Sheepshop">تاریخ خرید</label>
-                                <input type="text" asp-for="Sheepshop" class="form-control "  onclick="Datepicker2(e)" id="Sheepshop" placeholder="تاریخ خرید">
+                                <input type="text" asp-for="Sheepshop" class="form-control DatePicker" placeholder="تاریخ خرید">
                                 <span asp-validation-for="Sheepshop" class="error"></span>
                             </div>
                             <div class="form-group">
@@ -52,12 +52,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="Sheepshop">تاریخ فروش</label>
-                                <input type="text" name="SheepSellDate" class="form-control " onclick="Datepicker3()" id="SheepSellDate" placeholder="تاریخ فروش">
+                                <input type="text" name="SheepSellDate" class="form-control DatePicker" placeholder="تاریخ فروش">
                             </div>
                             <div class="form-group">
                                 <label for="Sheepshop">تاریخ تلف شدن</label>
-                                <input type="text" name="SheepwastedDate" class="form-control " onclick="Datepicker4()" id="SheepwastedDate" placeholder="تاریخ تلف شدن">
-                                <span asp-validation-for="Sheepshop" class="error"></span>
+                                <input type="text" name="SheepwastedDate" class="form-control DatePicker" placeholder="تاریخ تلف شدن">
                             </div>
                         </div>
                         <!-- /.card-body -->

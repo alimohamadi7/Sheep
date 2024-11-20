@@ -22,7 +22,6 @@ SinglePage.LoadModal = function () {
 
 function showModal() {
     $("#MainModal").modal("show");
-
 }
 
 function hideModal() {
