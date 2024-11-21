@@ -8,13 +8,18 @@ namespace Sheep.Core.Application.Sheep.Contracts
     public class EditCommand
     {
         public Guid Id { get; set; }
-        public Guid PastId { get; set; }
+        public string PastSheepNumber { get; set; }
         public Guid? ParentId { get; set; }
         [Display(Name = "شماره دام")]
         [RegularExpression(@"^[0-9]*$", ErrorMessage = ValidationMessages.Number)]
         [MaxLength(15, ErrorMessage = ValidationMessages.MaxLenght)]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string SheepNumber { get; set; }
+        [Display(Name = "شماره دام مادر")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = ValidationMessages.Number)]
+        [MaxLength(15, ErrorMessage = ValidationMessages.MaxLenght)]
+        public string? SheepParentId { get; set; }
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string? SheepbirthDate { get; set; }

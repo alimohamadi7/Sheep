@@ -39,18 +39,23 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
 
         public async Task<SheepEntity> GetSheepBySheepNumber(string sheepId, CancellationToken cancellationToken)
         {
-         return  await  TableNoTracking.Where(x=>x.SheepNumber== sheepId).FirstOrDefaultAsync(cancellationToken);
+         return  await  TableNoTracking.Where(x=>x.SheepNumber== sheepId).SingleOrDefaultAsync(cancellationToken);
 
         }
 
         public async Task<OperationResult<bool>> IsExistSheep(CreateCommand createCommand, CancellationToken cancellationToken)
         {
-            var result = TableNoTracking.Any(x => x.SheepNumber == createCommand.SheepNumber);
+            var result =await TableNoTracking.AnyAsync(x => x.SheepNumber == createCommand.SheepNumber,cancellationToken);
             if (result == false)
             {
                 return OperationResult<bool>.SuccessResult(true);
             }
             return OperationResult<bool>.FailureResult(createCommand.SheepNumber, ApplicationMessages.DuplicatedRecord);
+        }
+
+        public async Task<bool> SheepIsParent(Guid Id, CancellationToken cancellationToken)
+        {
+            return await TableNoTracking.AnyAsync(x => x.ParentId == Id); 
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Sheep.Core.Application.Sheep.Contracts.Repository
         Task<GetSheepQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "");
         Task<OperationResult<bool>> IsExistSheep(CreateCommand createCommand, CancellationToken cancellationToken);
         Task<SheepEntity> GetSheepBySheepNumber(string sheepId ,CancellationToken cancellationToken);
+        Task<bool> SheepIsParent(Guid Id, CancellationToken cancellationToken);
     }
 }
