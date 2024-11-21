@@ -19,19 +19,19 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: SheepController
-        public async Task<ActionResult> Index(CancellationToken cancellationToken, string trim = "", int pageId = 1)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken, string trim = "", int pageId = 1)
         {
             return View(await _sheepApplication.GetAllSheep(cancellationToken, pageId, trim));
         }
 
         // GET: SheepController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             return View();
         }
 
         // GET: SheepController/Create
-        public async Task<ActionResult> Create()
+        public async Task<IActionResult> Create()
         {
             return PartialView(nameof(Create));
         }
@@ -40,7 +40,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<ActionResult> Create(CreateCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateCommand command, CancellationToken cancellationToken)
         {
             var result=   await _sheepApplication.Create(command, cancellationToken);
             return new JsonResult(result);
@@ -48,7 +48,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: SheepController/Edit/5
-        public async Task<ActionResult> Edit(Guid id,CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(Guid id,CancellationToken cancellationToken)
         {
             return PartialView(nameof(Edit), await _sheepApplication.GetDetails(id,cancellationToken));
         }
@@ -57,14 +57,14 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<ActionResult> Edit(EditCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(EditCommand command, CancellationToken cancellationToken)
         {
             var result = await _sheepApplication.Edit(command, cancellationToken);
             return new JsonResult(result);
         }
 
         // GET: SheepController/Delete/5
-        public async Task<ActionResult> Delete(Guid id,CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete(Guid id,CancellationToken cancellationToken)
         {
             var result = await _sheepApplication.GetDetails(id, cancellationToken);
             return PartialView(nameof(Delete), result);
@@ -73,7 +73,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         // POST: SheepController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfrim(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteConfrim(Guid id, CancellationToken cancellationToken)
         {
             var result = await _sheepApplication.Delete(id, cancellationToken);
             return new JsonResult(result);

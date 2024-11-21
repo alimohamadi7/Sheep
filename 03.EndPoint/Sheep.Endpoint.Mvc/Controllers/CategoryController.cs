@@ -16,19 +16,19 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: CategoryController
-        public async Task<ActionResult> Index(CancellationToken cancellationToken)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             return View(await _categoryApplication.GetAllCategory(cancellationToken));
         }
 
         // GET: CategoryController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             return View();
         }
 
         // GET: CategoryController/Create
-        public async Task<ActionResult> Create()
+        public async Task<IActionResult> Create()
         {
             return PartialView(nameof(Create));
         }
@@ -37,14 +37,14 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Validate]
-        public async Task<ActionResult> Create(CreateCommand createCommand, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(CreateCommand createCommand, CancellationToken cancellationToken)
         {
             var result = await _categoryApplication.Create(createCommand, cancellationToken);
             return new JsonResult(result);
         }
 
         // GET: CategoryController/Edit/5
-        public async Task<ActionResult> Edit(Guid Id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(Guid Id, CancellationToken cancellationToken)
         {
             var result = await _categoryApplication.GetDetails(Id, cancellationToken);
             return PartialView(nameof(Edit), result);
@@ -54,14 +54,14 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Validate]
-        public async Task<ActionResult> Edit(EditCommand editCommand, CancellationToken cancellationToken)
+        public async Task<IActionResult> Edit(EditCommand editCommand, CancellationToken cancellationToken)
         {
             var result = await _categoryApplication.Edit(editCommand, cancellationToken);
             return new JsonResult(result);
         }
 
         // GET: CategoryController/Delete/5
-        public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             var result = await _categoryApplication.GetDetails(id, cancellationToken);
             return PartialView(nameof(Delete), result);
@@ -70,7 +70,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfrim(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteConfrim(Guid id, CancellationToken cancellationToken)
         {
             var result = await _categoryApplication.Delete(id, cancellationToken);
             return new JsonResult(result);
