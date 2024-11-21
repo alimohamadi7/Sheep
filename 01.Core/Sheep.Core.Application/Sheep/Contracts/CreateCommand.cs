@@ -18,7 +18,7 @@ namespace Sheep.Core.Application.Sheep.Contracts
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string? SheepbirthDate { get; set; }
         [Display(Name = "تاریخ خرید")]
-        public string? Sheepshop { get; set; }
+        public string? SheepshopDate { get; set; }
         [Display(Name = "تاریخ فروش")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string? SheepSellDate { get; set; }

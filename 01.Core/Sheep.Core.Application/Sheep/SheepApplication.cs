@@ -19,24 +19,36 @@ namespace Sheep.Core.Application.Sheep
             if( await _sheepRepository.Exists(x=>x.SheepNumber==command.SheepNumber))
                 return  OperationResult<bool>.FailureResult(command.SheepNumber,ApplicationMessages.DuplicatedRecord);
             SheepEntity entity = new SheepEntity(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(),
-                command.Sheepshop.ToGregorianDateTime(),
+                command.SheepshopDate.ToGregorianDateTime(),
                 command.ParentId, command.SheepState, command.Gender,command.SheepSellDate.ToGregorianDateTime(),
                 command.SheepwastedDate.ToGregorianDateTime());
             await _sheepRepository.AddAsync(entity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
-        public Task<OperationResult<bool>> Delete(long id, CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var sheep = await _sheepRepository.GetByIdAsync(cancellationToken, id);
+            sheep.Delete();
+            await _sheepRepository.UpdateAsync(sheep, cancellationToken);
+            return OperationResult<bool>.SuccessResult(true);
         }
 
-        public Task<OperationResult<EditCommand>> Edit(EditCommand command, CancellationToken cancellationToken)
+        public  async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if((command.PastId != command.Id))
+            {
+                if (await _sheepRepository.Exists(x => x.SheepNumber == command.SheepNumber))
+                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.DuplicatedRecord);
+            }
+            var sheep=await _sheepRepository.GetByIdAsync(cancellationToken,command.Id);
+            sheep.Edit(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(), command.SheepshopDate.ToGregorianDateTime(), command.ParentId,
+                command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(), command.SheepwastedDate.ToGregorianDateTime());
+            await _sheepRepository.UpdateAsync(sheep, cancellationToken);
+            return OperationResult<bool>.SuccessResult(true);
         }
 
-        public async Task<OperationResult<GetSheepQuery>> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "")
+        public async Task<GetSheepQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "")
         {
             return await _sheepRepository.GetAll(cancellationToken, pageId, trim);
         }
@@ -46,9 +58,24 @@ namespace Sheep.Core.Application.Sheep
             return await _sheepRepository.IsExistSheep(createCommand, cancellationToken);
         }
 
-        public Task<OperationResult<EditCommand>> GetDetails(long id, CancellationToken cancellationToken)
+        public  async Task<EditCommand> GetDetails(Guid id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var sheep=await _sheepRepository.GetByIdAsync(cancellationToken,id);
+            EditCommand editCommand = new EditCommand()
+            {
+                Id=sheep.Id,
+                SheepbirthDate=sheep.SheepbirthDate.ToShortPersianDateString(),
+                SheepNumber=sheep.SheepNumber,  
+                SheepSellDate= sheep.SheepSellDate.ToShortPersianDateString(),
+                SheepshopDate=sheep.SheepshopDate.ToShortPersianDateString(),
+                SheepwastedDate=sheep.SheepwastedDate.ToShortPersianDateString(),
+                SheepState=sheep.SheepState,
+                Gender=sheep.Gender,
+                ParentId=sheep.ParentId,
+                PastId=sheep.Id
+            };
+            return editCommand;
         }
+
     }
 }

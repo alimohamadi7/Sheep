@@ -10,7 +10,7 @@ namespace Sheep.Framework.Domain.Entities
         [Display(Name = "موجود")]
         present = 1,
         [Display(Name = "فروخته شده")]
-        Sall = 2,
+        Sell = 2,
         [Display(Name = "تلف شده ")]
         wasted = 3,
 

@@ -1,4 +1,4 @@
-﻿@model Sheep.Framework.Application.Operation.OperationResult<Sheep.Core.Application.Sheep.Contracts.GetSheepQuery>
+﻿@model Sheep.Core.Application.Sheep.Contracts.GetSheepQuery
 @using Sheep.Framework.Application.Utilities
 @using DNTPersianUtils.Core
 <div class="content-wrapper" style="min-height: 1301.27px;">
@@ -28,14 +28,16 @@
                         <div class="card-header">
                             <h3 class="card-title">اطلاعات دام</h3>
                             <div class="card-tools">
+                                 <form action="/Sheep" method="get">
                                 <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+                                    <input type="text" name="trim" class="form-control float-right" placeholder="جستجو">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -55,15 +57,23 @@
                                     @{
                                         int i = 1;
                                     }
-                                    @foreach (var item in Model.Result.sheepEntities)
+                                    @foreach (var item in Model.sheepEntities)
                                     {
                                         <tr>
                                             <td>@i</td>
                                             <td>@item.SheepNumber</td>
                                             <td>@item.SheepbirthDate.ToPersianDateTextify() </td>
-@*                                             <td><span class="tag tag-success">@EnumExtensions.ToDisplay(@item.SheepState)</span></td>
- *@                                            <td>@EnumExtensions.ToDisplay(@item.Gender)</td>
-                                            <td></td>
+                                          <td>@EnumExtensions.ToDisplay(@item.Gender)</td>
+                                            <td>
+                                                <a class="btn btn-warning pull-right m-rl-5"
+                                                   href="#showmodal=@Url.Action("Edit", "Sheep", new { id = item.Id})">
+                                                    <i class="fa fa-edit"></i> ویرایش
+                                                </a>
+                                                <a class="btn btn-danger pull-right m-rl-5"
+                                                   href="#showmodal=@Url.Action("Delete", "Sheep", new { id = item.Id})">
+                                                    <i class="fa fa-trash"></i> حذف
+                                                </a>
+                                            </td>
                                         </tr>
                                         i++;
                                     }
@@ -78,67 +88,12 @@
             </div>
         </div>
     </section>
+    <partial name="_Pagination" data="@Model.trim,@Model.Addres,@Model.CurentPage,@Model.PageId,@Model.PageCount" />
 </div>
+
 @section Scripts {
     <link href="~/lib/persian-datetime-picker/jquery.mpdatepicker.min.css" rel="stylesheet" />
     <script src="~/lib/persian-datetime-picker/jquery.mpdatepicker.min.js"></script>
-@*     <script>
-
-        function Datepicker1(){
-            $("#SheepbirthDate").pDatepicker({
-          calendar: {
-          persian: {
-            leapYearMode: 'astronomical'
-          }
-        }, initialValue: false,
-                observer: true,
-        format: 'YYYY/MM/DD',
-        altField: '.observer-example-alt'
-            });
-        }
-                function Datepicker2(){
-            $("#Sheepshop").pDatepicker({
-          calendar: {
-          persian: {
-            leapYearMode: 'astronomical'
-          }
-        }, initialValue: false,
-                observer: true,
-        format: 'YYYY/MM/DD',
-        altField: '.observer-example-alt'
-            });
-        }
-        function Datepicker3() {
-            $("#SheepSellDate").pDatepicker({
-                calendar: {
-                    persian: {
-                        leapYearMode: 'astronomical'
-                    }
-                }, initialValue: false,
-                observer: true,
-                format: 'YYYY/MM/DD',
-                altField: '.observer-example-alt'
-            });
-        }
-        function Datepicker4() {
-            $("#SheepwastedDate").pDatepicker({
-                calendar: {
-                    persian: {
-                        leapYearMode: 'astronomical'
-                    }
-                }, initialValue: false,
-                observer: true,
-                format: 'YYYY/MM/DD',
-                altField: '.observer-example-alt'
-            });
-        }
-       
-
-        function myFunction() {
-            var x = document.getElementById("SheepState").value;
-           alert(x)
-        }
-    </script> *@
     <script>
         $(document).ready(function () {
             $("#MainModal").on('show.bs.modal', function () {

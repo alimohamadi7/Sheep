@@ -1,4 +1,4 @@
-﻿@model Sheep.Core.Application.Sheep.Contracts.CreateCommand
+﻿@model Sheep.Core.Application.Sheep.Contracts.EditCommand
 @using Sheep.Framework.Domain.Entities
 @using DNTPersianUtils.Core
 <!-- Main content -->
@@ -11,11 +11,11 @@
                 <!-- general form elements -->
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">ثبت اطلاعات دام</h3>
+                        <h3 class="card-title">ویرایش اطلاعات دام</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form asp-action="Create" asp-controller="Sheep"
+                    <form asp-action="Edit" asp-controller="Sheep"
                           method="post"
                           data-ajax="true"
                           data-callback=""
@@ -25,6 +25,8 @@
                             <div class="form-group">
                                 <label for="SheepNumber">شماره دام</label>
                                 <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
+                                <input type="text" asp-for="Id" hidden class="form-control">
+                                <input type="text" asp-for="PastId" hidden class="form-control">
                                 <span asp-validation-for="SheepNumber" class="error"></span>
                             </div>
                             <div class="form-group">
@@ -50,21 +52,37 @@
                                 </select>
                                 <span asp-validation-for="SheepState" class="error"></span>
                             </div>
-                            <div class="form-group">
-                                <label for="Sheepshop" class="SheepSellDate" hidden>تاریخ فروش</label>
-                                <input type="text" hidden asp-for="SheepSellDate" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
-                                <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="SheepwastedDate" class="SheepwastedDate" hidden>تاریخ تلف شدن</label>
-                                <input type="text" hidden asp-for="SheepwastedDate" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
-                                <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
-                            </div>
+                            @if (Model.SheepState == State.Sell)
+                            {
+                                <div class="form-group">
+                                    <label for="Sheepshop" class="SheepSellDate" >تاریخ فروش</label>
+                                    <input type="text"  asp-for="SheepSellDate" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
+                                    <span asp-validation-for="SheepSellDate"  class="error SheepSellDate"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="SheepwastedDate" hidden class="SheepwastedDate">تاریخ تلف شدن</label>
+                                    <input type="text" asp-for="SheepwastedDate" hidden class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                    <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
+                                </div>
+                            }
+                            @if (Model.SheepState == State.wasted)
+                            {
+                                <div class="form-group">
+                                    <label for="SheepwastedDate" class="SheepwastedDate" >تاریخ تلف شدن</label>
+                                    <input type="text"  asp-for="SheepwastedDate" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                    <span asp-validation-for="SheepwastedDate"  class="error SheepwastedDate"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Sheepshop" hidden class="SheepSellDate">تاریخ فروش</label>
+                                    <input type="text" asp-for="SheepSellDate" hidden class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
+                                    <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
+                                </div>
+                            }
                         </div>
                         <!-- /.card-body -->
                         <div class="d-flex justify-content-center">
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary waves-effect">ذخیره</button>
+                                <button type="submit" class="btn btn-primary waves-effect">ویرایش</button>
                                 <button type="button" class="btn btn-warning" data-dismiss="modal">بستن</button>
                             </div>
                         </div>
@@ -77,6 +95,6 @@
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-@section Scripts{
+@section Scripts {
 
-}
+} 

@@ -22,6 +22,19 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public SheepEntity(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
             DateTime? sheepselldate,DateTime? sheepwasteddate)
         {
+            switch (sheepState)
+            {
+                case State.present:
+                    sheepselldate = null;
+                    sheepwasteddate = null;
+                    break;
+                    case State.wasted:
+                    sheepselldate = null;
+                    break;
+                case State.Sell:
+                    sheepwasteddate=null;
+                    break;
+            }
             SheepNumber = sheepNumber;
             SheepbirthDate = sheepbirthDate;
             SheepshopDate = sheepshop;
@@ -35,6 +48,19 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public void Edit(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
             DateTime? sheepselldate, DateTime? sheepwasteddate)
         {
+            switch (sheepState)
+            {
+                case State.present:
+                    sheepselldate = null;
+                    sheepwasteddate = null;
+                    break;
+                case State.wasted:
+                    sheepselldate = null;
+                    break;
+                case State.Sell:
+                    sheepwasteddate = null;
+                    break;
+            }
             SheepNumber = sheepNumber;
             SheepbirthDate = sheepbirthDate;
             SheepshopDate = sheepshop;

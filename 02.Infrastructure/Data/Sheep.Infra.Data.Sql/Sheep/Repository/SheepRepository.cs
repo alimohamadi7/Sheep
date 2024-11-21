@@ -15,7 +15,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
         {
             _context = dbContext;
         }
-        public async Task<OperationResult<GetSheepQuery>> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        public async Task<GetSheepQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
         {
             IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);
             if (!string.IsNullOrEmpty(trim))
@@ -26,7 +26,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
             int skip = (PageId - 1) * take;
             string Addres = "";
 
-            GetSheepQuery SheepQueryViweModel = new GetSheepQuery()
+            GetSheepQuery SheepQueryViwe = new GetSheepQuery()
             {
                 trim = trim,
                 sheepEntities = await result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take)
@@ -34,12 +34,8 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
 
             };
 
-            SheepQueryViweModel.GeneratePagging(result, PageId, take, trim, Addres);
-            OperationResult<GetSheepQuery> operationResul = new OperationResult<GetSheepQuery>()
-            {
-                Result = SheepQueryViweModel
-            };
-            return operationResul;
+            SheepQueryViwe.GeneratePagging(result, PageId, take, trim, Addres);
+            return SheepQueryViwe;
         }
 
         public async Task<OperationResult<bool>> IsExistSheep(CreateCommand createCommand, CancellationToken cancellationToken)

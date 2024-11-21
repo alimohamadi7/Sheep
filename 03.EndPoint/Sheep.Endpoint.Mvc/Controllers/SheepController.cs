@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Endpoint.Mvc.WebframeWork.Validateattr;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Threading;
 
 
 namespace Sheep.Endpoint.Mvc.Controllers
@@ -37,7 +39,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         // POST: SheepController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-      
+        
         public async Task<ActionResult> Create(CreateCommand command, CancellationToken cancellationToken)
         {
             var result=   await _sheepApplication.Create(command, cancellationToken);
@@ -46,45 +48,35 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: SheepController/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(Guid id,CancellationToken cancellationToken)
         {
-            return View();
+            return PartialView(nameof(Edit), await _sheepApplication.GetDetails(id,cancellationToken));
         }
 
         // POST: SheepController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+
+        public async Task<ActionResult> Edit(EditCommand command, CancellationToken cancellationToken)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _sheepApplication.Edit(command, cancellationToken);
+            return new JsonResult(result);
         }
 
         // GET: SheepController/Delete/5
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(Guid id,CancellationToken cancellationToken)
         {
-            return View();
+            var result = await _sheepApplication.GetDetails(id, cancellationToken);
+            return PartialView(nameof(Delete), result);
         }
 
         // POST: SheepController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteConfrim(Guid id, CancellationToken cancellationToken)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = await _sheepApplication.Delete(id, cancellationToken);
+            return new JsonResult(result);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Sheep.Framework.Application.Entity
+﻿namespace Framework.Application.Entity
 {
     public class BasePagging
     {
