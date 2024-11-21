@@ -3,12 +3,11 @@ using Sheep.Framework.Application.Cotrats.Data;
 using Sheep.Framework.Application.Operation;
 
 
-namespace Sheep.Core.Application.Sheep.Contracts.Repository
+namespace Sheep.Core.Application.SheepBirth.Contracts
 {
-    public interface ISheepRepository : IRepository<SheepEntity>
+    public  interface ISheepBirthRepository:IRepository<SheepEntity>
     {
         Task<GetSheepQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "");
         Task<OperationResult<bool>> IsExistSheep(CreateCommand createCommand, CancellationToken cancellationToken);
-        Task<SheepEntity> GetSheepBySheepNumber(string sheepId ,CancellationToken cancellationToken);
     }
 }

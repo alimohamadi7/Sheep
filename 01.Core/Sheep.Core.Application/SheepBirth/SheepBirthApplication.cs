@@ -1,16 +1,15 @@
 ﻿using DNTPersianUtils.Core;
-using Sheep.Core.Application.Sheep.Contracts;
-using Sheep.Core.Application.Sheep.Contracts.Repository;
+using Sheep.Core.Application.SheepBirth.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
 
 
-namespace Sheep.Core.Application.Sheep
+namespace Sheep.Core.Application.SheepBirth
 {
-    public class SheepApplication : ISheepApplication
+    public class SheepBirthApplication : ISheepBirthApplication
     {
-        private readonly ISheepRepository _sheepRepository;
-        public SheepApplication(ISheepRepository sheepRepository)
+        private readonly ISheepBirthRepository _sheepRepository;
+        public SheepBirthApplication(ISheepBirthRepository sheepRepository)
         {
             _sheepRepository = sheepRepository;
         }
@@ -18,12 +17,9 @@ namespace Sheep.Core.Application.Sheep
         {
             if( await _sheepRepository.Exists(x=>x.SheepNumber==command.SheepNumber))
                 return  OperationResult<bool>.FailureResult(command.SheepNumber,ApplicationMessages.DuplicatedRecord);
-            if(!await _sheepRepository.Exists(x=>x.SheepNumber == command.ParentId))
-                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSheepFound);
-            var sheepEntity =await _sheepRepository.GetSheepBySheepNumber(command.SheepNumber, cancellationToken);
             SheepEntity entity = new SheepEntity(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(),
                 command.SheepshopDate.ToGregorianDateTime(),
-                sheepEntity.Id, command.SheepState, command.Gender,command.SheepSellDate.ToGregorianDateTime(),
+                command.ParentId, command.SheepState, command.Gender,command.SheepSellDate.ToGregorianDateTime(),
                 command.SheepwastedDate.ToGregorianDateTime());
             await _sheepRepository.AddAsync(entity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);

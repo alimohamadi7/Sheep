@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sheep.Core.Application.Sheep.Contracts;
+using Sheep.Core.Application.SheepBirth.Contracts;
 
 namespace Sheep.Endpoint.Mvc.Controllers
 {
     public class SheepBrithController : Controller
     {
-        private readonly ISheepApplication _sheepApplication;
+        private readonly ISheepBirthApplication _sheepApplication;
 
-        public SheepBrithController(ISheepApplication sheepApplication)
+        public SheepBrithController(ISheepBirthApplication sheepApplication)
         {
             _sheepApplication = sheepApplication;
         }

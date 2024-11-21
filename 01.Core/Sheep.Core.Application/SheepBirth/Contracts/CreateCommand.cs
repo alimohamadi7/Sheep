@@ -3,7 +3,7 @@ using Sheep.Framework.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Sheep.Core.Application.Sheep.Contracts
+namespace Sheep.Core.Application.SheepBirth.Contracts
 {
     public class CreateCommand
     {
@@ -13,10 +13,7 @@ namespace Sheep.Core.Application.Sheep.Contracts
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string SheepNumber { get; set; }
         [Display(Name = "شماره دام مادر")]
-        [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        [RegularExpression(@"^[0-9]*$", ErrorMessage = ValidationMessages.Number)]
-        [MaxLength(15, ErrorMessage = ValidationMessages.MaxLenght)]
-        public string? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string? SheepbirthDate { get; set; }

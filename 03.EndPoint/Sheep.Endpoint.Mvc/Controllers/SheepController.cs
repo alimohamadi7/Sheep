@@ -21,7 +21,9 @@ namespace Sheep.Endpoint.Mvc.Controllers
         // GET: SheepController
         public async Task<IActionResult> Index(CancellationToken cancellationToken, string trim = "", int pageId = 1)
         {
-            return View(await _sheepApplication.GetAllSheep(cancellationToken, pageId, trim));
+ 
+                return View(await _sheepApplication.GetAllSheep(cancellationToken, pageId, trim));
+            
         }
 
         // GET: SheepController/Details/5
@@ -31,8 +33,10 @@ namespace Sheep.Endpoint.Mvc.Controllers
         }
 
         // GET: SheepController/Create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(bool SheepBirth=false)
         {
+            if (SheepBirth == true)
+            return PartialView("BirthCreate");
             return PartialView(nameof(Create));
         }
 
