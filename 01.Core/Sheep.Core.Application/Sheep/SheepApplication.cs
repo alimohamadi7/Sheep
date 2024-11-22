@@ -65,11 +65,23 @@ namespace Sheep.Core.Application.Sheep
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepMale);
                 }
                 command.ParentId = sheepEntity.Id;
+                //check not add new sheepid and lastsheepid add to sheepmother
+                if (sheepEntity.Id == command.ParentId)
+                {
+                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepParentIdChangeTosheepNumber);
+
+                }
             }
             //check sheep has child gender not change to male
             if(await _sheepRepository.SheepIsParent(command.Id, cancellationToken) &&(command.Gender==GenderType.Male))
             {
-                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepIsParent);
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepIsParentNotMale);
+
+            }
+            //check sheep is parent not change sheepnumber
+            if (await _sheepRepository.SheepIsParent(command.Id, cancellationToken))
+            {
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepIsParentChangesheepNumber);
 
             }
             //check not same sheepnumber and sheepMothernumber

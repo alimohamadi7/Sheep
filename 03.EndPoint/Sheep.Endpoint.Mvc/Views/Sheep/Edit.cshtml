@@ -27,7 +27,6 @@
                                 <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
                                 <input type="text" asp-for="Id" hidden class="form-control">
                                 <input type="text" asp-for="PastSheepNumber" hidden class="form-control">
-                                <input type="text" asp-for="ParentId" hidden class="form-control">
                                 <span asp-validation-for="SheepNumber" class="error"></span>
                             </div>
                             @if (Model.ParentId != null)
