@@ -21,9 +21,14 @@ namespace Sheep.Core.Application.Sheep
                 return  OperationResult<bool>.FailureResult(command.SheepNumber,ApplicationMessages.DuplicatedRecord);
             if(command.SheepParentId != null)
             {
+                if (command.SheepSellDate != null || command.SheepwastedDate != null)
+                {
+                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepParentnotvalid);
+
+                }
                 if (!await _sheepRepository.Exists(x => x.SheepNumber == command.SheepParentId))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSheepFound);
-                var sheepEntity = await _sheepRepository.GetSheepBySheepNumber(command.SheepParentId, cancellationToken);
+                var sheepEntity = await _sheepRepository.GetSheepBySheepParentNumber(command.SheepParentId, cancellationToken);
                 if (sheepEntity.Gender ==GenderType.Male )
                 {
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepMale);
@@ -58,7 +63,7 @@ namespace Sheep.Core.Application.Sheep
                 //check sheep mother is exists
                 if (!await _sheepRepository.Exists(x => x.SheepNumber == command.SheepParentId))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSheepFound);
-                var sheepEntity = await _sheepRepository.GetSheepBySheepNumber(command.SheepParentId, cancellationToken);
+                var sheepEntity = await _sheepRepository.GetSheepBySheepParentNumber(command.SheepParentId, cancellationToken);
                 //not add child for gender male
                 if (sheepEntity.Gender == GenderType.Male)
                 {
