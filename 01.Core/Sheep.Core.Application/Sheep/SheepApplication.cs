@@ -21,17 +21,18 @@ namespace Sheep.Core.Application.Sheep
                 return  OperationResult<bool>.FailureResult(command.SheepNumber,ApplicationMessages.DuplicatedRecord);
             if(command.SheepParentId != null)
             {
-                if (command.SheepSellDate != null || command.SheepwastedDate != null)
-                {
-                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepParentnotvalid);
-
-                }
+ 
                 if (!await _sheepRepository.Exists(x => x.SheepNumber == command.SheepParentId))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSheepFound);
                 var sheepEntity = await _sheepRepository.GetSheepBySheepParentNumber(command.SheepParentId, cancellationToken);
                 if (sheepEntity.Gender ==GenderType.Male )
                 {
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepMale);
+                }
+                if (sheepEntity.SheepSellDate != null || sheepEntity.SheepwastedDate != null)
+                {
+                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepParentnotvalid);
+
                 }
                 command.ParentId= sheepEntity.Id;
             }
@@ -54,12 +55,14 @@ namespace Sheep.Core.Application.Sheep
         public  async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
             if((command.PastSheepNumber != command.SheepNumber))
-            {
+            { 
+                //check sheep mother is exists
                 if (await _sheepRepository.Exists(x => x.SheepNumber == command.SheepNumber))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.DuplicatedRecord);
             }
             if (command.SheepParentId != null)
-            {      
+            {
+
                 //check sheep mother is exists
                 if (!await _sheepRepository.Exists(x => x.SheepNumber == command.SheepParentId))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSheepFound);
@@ -69,11 +72,17 @@ namespace Sheep.Core.Application.Sheep
                 {
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepMale);
                 }
-                command.ParentId = sheepEntity.Id;
-                //check not add new sheepid and lastsheepid add to sheepmother
-                if (sheepEntity.Id == command.ParentId)
+                //check sheepparent is not sell or wasted
+                if (sheepEntity.SheepSellDate != null || sheepEntity.SheepwastedDate != null)
                 {
-                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepParentIdChangeTosheepNumber);
+                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepParentnotvalid);
+
+                }
+                command.ParentId = sheepEntity.Id;
+                //check not same sheepnumber and sheepMothernumber
+                if (CheckSameSheepNumberandMotherNumber(command.SheepNumber, command.SheepParentId))
+                {
+                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSameNumber);
 
                 }
             }
@@ -83,20 +92,16 @@ namespace Sheep.Core.Application.Sheep
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepIsParentNotMale);
 
             }
-            //check sheep is parent not change sheepnumber
-            if (await _sheepRepository.SheepIsParent(command.Id, cancellationToken))
-            {
-                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepIsParentChangesheepNumber);
 
-            }
-            //check not same sheepnumber and sheepMothernumber
-            if (CheckSameSheepNumberandMotherNumber(command.SheepNumber,command.SheepParentId))
-            {
-                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSameNumber);
 
-            }
 
             var sheep =await _sheepRepository.GetByIdAsync(cancellationToken,command.Id);
+            //check not add new sheepid and lastsheepid add to sheepmother
+            if (sheep.Id == command.ParentId)
+            {
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
+
+            }
             sheep.Edit(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(), command.SheepshopDate.ToGregorianDateTime(), command.ParentId,
                 command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(), command.SheepwastedDate.ToGregorianDateTime());
             await _sheepRepository.UpdateAsync(sheep, cancellationToken);

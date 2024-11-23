@@ -37,7 +37,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
             return SheepQueryViwe;
         }
 
-        public async Task<SheepEntity> GetSheepBySheepNumber(string sheepId, CancellationToken cancellationToken)
+        public async Task<SheepEntity> GetSheepBySheepParentNumber(string sheepId, CancellationToken cancellationToken)
         {
          return  await  TableNoTracking.Where(x=>x.SheepNumber== sheepId).SingleOrDefaultAsync(cancellationToken);
 
