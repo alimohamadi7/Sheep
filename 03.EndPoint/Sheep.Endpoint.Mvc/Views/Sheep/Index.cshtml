@@ -32,7 +32,7 @@
                             <div class="card-tools">
                                  <form action="/Sheep" method="get">
                                 <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="trim" class="form-control float-right" placeholder="جستجو">
+                                    <input type="text" name="trim" value="@Model.trim" class="form-control float-right" placeholder="جستجو">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
@@ -52,7 +52,7 @@
                                         <th>تاریخ تولد</th>
 @*                                         <th>وضعیت</th> *@
                                         <th>جنسیت</th>
-                                        <th>عملیات</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,11 +69,11 @@
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Edit", "Sheep", new { id = item.Id})">
-                                                    <i class="fa fa-edit"></i> ویرایش
+                                                    <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a class="btn btn-danger pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Delete", "Sheep", new { id = item.Id})">
-                                                    <i class="fa fa-trash"></i> حذف
+                                                    <i class="fa fa-trash"></i> 
                                                 </a>
                                             </td>
                                         </tr>

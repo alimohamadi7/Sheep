@@ -3,6 +3,7 @@ using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
 
 namespace Sheep.Infra.Data.Sql.Sheep.Repository
@@ -16,7 +17,8 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
         }
         public async Task<GetSheepQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
         {
-            IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);
+            IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false 
+            &&x.SheepState ==State.present);
             if (!string.IsNullOrEmpty(trim))
             {
                 result = result.Where(u => u.SheepNumber.Contains(trim));
