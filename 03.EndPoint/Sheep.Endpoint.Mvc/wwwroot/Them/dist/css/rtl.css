@@ -6,8 +6,12 @@ body{
 .error {
     color: #ff0000;
 }
-.wrapper,.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl,.media,.os-content,.main-header,.user-panel {
-  direction: rtl;
+/* select font*/
+.form-myselect{
+    font-size:19px;
+}
+.wrapper, .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .media, .os-content, .main-header, .user-panel {
+    direction: rtl;
 }
 /*Main Content And Sidebar */
 .layout-fixed .main-sidebar {

@@ -3,6 +3,7 @@ using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
 
 
@@ -36,10 +37,11 @@ namespace Sheep.Core.Application.Sheep
                 }
                 command.ParentId= sheepEntity.Id;
             }
+            int age = Calculate.CalculateAge(  Convert.ToDateTime( command.SheepbirthDate.ToGregorianDateTime()));
             SheepEntity entity = new SheepEntity(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(),
                 command.SheepshopDate.ToGregorianDateTime(),
                 command.ParentId, command.SheepState, command.Gender,command.SheepSellDate.ToGregorianDateTime(),
-                command.SheepwastedDate.ToGregorianDateTime());
+                command.SheepwastedDate.ToGregorianDateTime(),age);
             await _sheepRepository.AddAsync(entity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
@@ -148,6 +150,11 @@ namespace Sheep.Core.Application.Sheep
             if (sheepnumber == sheepmothernunber) result=true;
             return result;
 
+        }
+
+        public Task CalcuteCategory(int day)
+        {
+            throw new NotImplementedException();
         }
     }
 

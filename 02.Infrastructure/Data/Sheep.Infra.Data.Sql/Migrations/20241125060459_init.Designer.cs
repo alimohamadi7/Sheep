@@ -12,8 +12,8 @@ using Sheep.Infra.Data.Sql;
 namespace Sheep.Infra.Data.Sql.Migrations
 {
     [DbContext(typeof(SheepDbcontext))]
-    [Migration("20241109051643_change type gender group")]
-    partial class changetypegendergroup
+    [Migration("20241125060459_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.GroupEntity", b =>
+            modelBuilder.Entity("Sheep.Core.Domain.Category.CategoryEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,12 +34,6 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<long>("Food")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -52,6 +46,33 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoryEntity", (string)null);
+                });
+
+            modelBuilder.Entity("Sheep.Core.Domain.Category.CategoryPriceEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Food")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("Overhead")
                         .HasColumnType("bigint");
 
@@ -60,7 +81,40 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupEntity", (string)null);
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategoryPriceEntity");
+                });
+
+            modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepCategoryEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<bool>("ActiveGroup")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("SheepId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SheepId");
+
+                    b.ToTable("SheepCategoryEntity", (string)null);
                 });
 
             modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepEntity", b =>
@@ -69,6 +123,9 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -90,13 +147,20 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<DateTime?>("SheepSellDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("SheepState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("SheepbirthDate")
+                    b.Property<DateTime?>("SheepbirthDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Sheepshop")
+                    b.Property<DateTime?>("SheepshopDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SheepwastedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -135,35 +199,34 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.ToTable("SheepFullPriceEntity", (string)null);
                 });
 
-            modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepGroupEntity", b =>
+            modelBuilder.Entity("Sheep.Core.Domain.Category.CategoryPriceEntity", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+                    b.HasOne("Sheep.Core.Domain.Category.CategoryEntity", "CategoryEntity")
+                        .WithMany("CategoryEntities")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<bool>("ActiveGroup")
-                        .HasColumnType("bit");
+                    b.Navigation("CategoryEntity");
+                });
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+            modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepCategoryEntity", b =>
+                {
+                    b.HasOne("Sheep.Core.Domain.Category.CategoryEntity", "Category")
+                        .WithMany("SheepGroups")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasOne("Sheep.Core.Domain.Sheep.Entities.SheepEntity", "Sheep")
+                        .WithMany("SheepGroup")
+                        .HasForeignKey("SheepId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                    b.Navigation("Category");
 
-                    b.Property<Guid>("SheepId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("SheepId");
-
-                    b.ToTable("SheepGroupEntity", (string)null);
+                    b.Navigation("Sheep");
                 });
 
             modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepEntity", b =>
@@ -187,27 +250,10 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Navigation("SheepEntity");
                 });
 
-            modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepGroupEntity", b =>
+            modelBuilder.Entity("Sheep.Core.Domain.Category.CategoryEntity", b =>
                 {
-                    b.HasOne("Sheep.Core.Domain.Sheep.Entities.GroupEntity", "Group")
-                        .WithMany("SheepGroups")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("CategoryEntities");
 
-                    b.HasOne("Sheep.Core.Domain.Sheep.Entities.SheepEntity", "Sheep")
-                        .WithMany("SheepGroup")
-                        .HasForeignKey("SheepId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-
-                    b.Navigation("Sheep");
-                });
-
-            modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.GroupEntity", b =>
-                {
                     b.Navigation("SheepGroups");
                 });
 

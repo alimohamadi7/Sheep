@@ -1,5 +1,5 @@
 ﻿@model Sheep.Framework.Application.Operation.OperationResult<Sheep.Core.Application.Category.GetCategoryQouery>
-
+@using Sheep.Framework.Application.Utilities
 
 <div class="content-wrapper" style="min-height: 1301.27px;">
     <section class="content-header">
@@ -57,7 +57,7 @@
                                     {
                                         <tr>
                                             <td>@i</td>
-                                            <td>@item.Name</td>
+                                            <td>@EnumExtensions.ToDisplay(item.Category)</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Edit", "Category", new { id = item.Id})">

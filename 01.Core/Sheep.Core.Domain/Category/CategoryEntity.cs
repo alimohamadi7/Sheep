@@ -6,20 +6,20 @@ namespace Sheep.Core.Domain.Category
 {
     public class CategoryEntity : BaseEntity<Guid>
     {
-        public string Name { get; set; }
+        public CategoryType Category { get; set; }
         public bool IsDeleted { get; set; }
         public ICollection<SheepCategoryEntity> SheepGroups { get; set; }
         public ICollection<CategoryPriceEntity> CategoryEntities { get; set; }
         public CategoryEntity() { }
-        public CategoryEntity(string name)
+        public CategoryEntity(CategoryType category)
         {
-            Name = name;
+            Category = category;
 
             IsDeleted = false;
         }
-        public void Edit(string name)
+        public void Edit(CategoryType category)
         {
-            Name = name;
+            Category = category;
 
         }
         public void Delete()

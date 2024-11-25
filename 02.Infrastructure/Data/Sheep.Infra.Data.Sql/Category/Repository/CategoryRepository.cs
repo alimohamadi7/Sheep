@@ -5,6 +5,7 @@ using Sheep.Core.Application.Category;
 using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
 
 namespace Sheep.Infra.Data.Sql.Category.Repository
@@ -30,6 +31,11 @@ namespace Sheep.Infra.Data.Sql.Category.Repository
                 isSuccedded = true,
             };
             return operation;
+        }
+
+        public Task<bool> IsExistCategory(CategoryType Category, CancellationToken cancellationToken)
+        {
+            return TableNoTracking.AnyAsync(x => x.Category==Category);
         }
     }
 }

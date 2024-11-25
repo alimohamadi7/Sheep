@@ -3,6 +3,7 @@
     public class ValidationMessages
     {
         public const string IsRequired = "لطفا {0} را وارد کنید";
+        public const string NotZero = "لطفا یک گزینه را انتخاب نمایید";
         public const string MaxFileSize = "فایل حجیم تر از حد مجاز است";
         public const string InvalidFileFormat = "فرمت فایل مجاز نیست";
         public const string MaxLenght = "{0} نمی تواند بیشتر از {1} کاراکتر باشد";

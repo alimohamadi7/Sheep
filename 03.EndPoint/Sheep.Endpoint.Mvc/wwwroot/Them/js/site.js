@@ -265,6 +265,13 @@ jQuery.validator.unobtrusive.adapters.addBool("uploadpdf");
 
 //    });
 //jQuery.validator.unobtrusive.adapters.addBool("maxfilesize");
+
+jQuery.validator.addMethod("ZeroNotAllow",
+    function (value) {
+        if (value == 0) return false;
+        return true;
+    });
+jQuery.validator.unobtrusive.adapters.addBool("ZeroNotAllow");
 function fixNumbers(str) {
     var persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
     var arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];

@@ -14,7 +14,11 @@ namespace Sheep.Core.Application.Category
         }
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {
-            CategoryEntity categoryEntity = new CategoryEntity(command.Name)
+            if (!await _repository.IsExistCategory(command.Category.HasFlag, cancellationToken))
+            {
+                return OperationResult<bool>.FailureResult(" ", ApplicationMessages.DuplicatedRecord);
+            }
+            CategoryEntity categoryEntity = new CategoryEntity(command.Category)
         ;
             await _repository.AddAsync(categoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
@@ -31,7 +35,7 @@ namespace Sheep.Core.Application.Category
         public async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
             var category = await _repository.GetByIdAsync(cancellationToken, command.Id);
-            category.Edit(command.Name);
+            category.Edit(command.Category);
             await _repository.UpdateAsync(category, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
@@ -49,7 +53,7 @@ namespace Sheep.Core.Application.Category
             EditCommand editCommand = new EditCommand()
             {
                 Id = category.Id,
-                Name = category.Name,
+                Category = category.Category,
             };
             return editCommand;
         }

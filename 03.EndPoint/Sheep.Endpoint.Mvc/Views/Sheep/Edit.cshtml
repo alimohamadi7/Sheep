@@ -40,7 +40,7 @@
                             }
                             <div class="form-group">
                                 <label for="Gender">جنسیت</label>
-                                <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
+                                <select class="form-control form-myselect" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
                                 </select>
                                 <span asp-validation-for="Gender" class="error"></span>
                                 <span id='output'></span>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="SheepState">وضعیت</label>
-                                <select class="form-control" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
+                                <select class="form-control form-myselect" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
                                 </select>
                                 <span asp-validation-for="SheepState" class="error"></span>
                             </div>

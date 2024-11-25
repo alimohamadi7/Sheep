@@ -1,4 +1,5 @@
 ﻿@model Sheep.Core.Application.Category.EditCommand
+@using Sheep.Framework.Domain.Entities
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -23,8 +24,9 @@
                             <div class="form-group">
                                 <label for="exampleInputName">نام گروه</label>
                                 <input type="hidden" asp-for="Id" class="form-control">
-                                <input type="text" asp-for="Name" class="form-control" id="exampleInputName" placeholder="نام گروه">
-                                <span asp-validation-for="Name" class="error"></span>
+                                <select class="form-control form-myselect" asp-for="Category" asp-items="Html.GetEnumSelectList<CategoryType>()">
+                                </select>
+                                <span asp-validation-for="Category" class="error"></span>
                             </div>
                         </div>
                         <!-- /.card-body -->

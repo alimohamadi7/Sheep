@@ -12,8 +12,8 @@ using Sheep.Infra.Data.Sql;
 namespace Sheep.Infra.Data.Sql.Migrations
 {
     [DbContext(typeof(SheepDbcontext))]
-    [Migration("20241120175014_add sell date ")]
-    partial class addselldate
+    [Migration("20241125090641_change column in category")]
+    partial class changecolumnincategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -40,11 +43,6 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -123,6 +121,9 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
