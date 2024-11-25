@@ -10,7 +10,7 @@ namespace Sheep.Infra.Data.Sql.Category.Configuration
         {
             builder.ToTable(nameof(CategoryEntity));
             builder.HasKey(x => x.Id);
-            builder.HasMany(x => x.SheepGroups).WithOne(x => x.Category).
+            builder.HasMany(x => x.sheepCategoryEntities).WithOne(x => x.Category).
                 HasForeignKey(x => x.CategoryId);
             builder.HasMany(x => x.CategoryEntities).WithOne(x => x.CategoryEntity).
                 HasForeignKey(x => x.CategoryId);

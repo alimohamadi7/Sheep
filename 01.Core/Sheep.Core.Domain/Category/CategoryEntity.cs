@@ -8,7 +8,7 @@ namespace Sheep.Core.Domain.Category
     {
         public CategoryType Category { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<SheepCategoryEntity> SheepGroups { get; set; }
+        public ICollection<SheepCategoryEntity> sheepCategoryEntities { get; set; }
         public ICollection<CategoryPriceEntity> CategoryEntities { get; set; }
         public CategoryEntity() { }
         public CategoryEntity(CategoryType category)

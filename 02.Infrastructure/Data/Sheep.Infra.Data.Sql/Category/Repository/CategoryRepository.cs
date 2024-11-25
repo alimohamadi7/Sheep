@@ -5,6 +5,7 @@ using Sheep.Core.Application.Category;
 using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
 
@@ -35,7 +36,7 @@ namespace Sheep.Infra.Data.Sql.Category.Repository
 
         public Task<bool> IsExistCategory(CategoryType Category, CancellationToken cancellationToken)
         {
-            return TableNoTracking.AnyAsync(x => x.Category==Category);
+            return TableNoTracking.AnyAsync( x=>x.Category== Category);
         }
     }
 }

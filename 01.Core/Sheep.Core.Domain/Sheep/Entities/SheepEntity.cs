@@ -17,7 +17,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public GenderType Gender { get; set; }
         public SheepEntity Parent { get; set; }
         public ICollection<SheepEntity> SheepEntites { get; set; }
-        public ICollection<SheepCategoryEntity> SheepGroup { get; set; }
+        public ICollection<SheepCategoryEntity> SheepCategories { get; set; }
         public ICollection<SheepFullPriceEntity> SheepFullPrices { get; set; }
         public SheepEntity() { }
         public SheepEntity(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,

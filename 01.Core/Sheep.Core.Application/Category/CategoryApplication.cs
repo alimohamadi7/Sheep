@@ -14,12 +14,11 @@ namespace Sheep.Core.Application.Category
         }
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {
-            if (!await _repository.IsExistCategory(command.Category.HasFlag, cancellationToken))
+            if (await _repository.IsExistCategory(command.Category, cancellationToken))
             {
                 return OperationResult<bool>.FailureResult(" ", ApplicationMessages.DuplicatedRecord);
             }
-            CategoryEntity categoryEntity = new CategoryEntity(command.Category)
-        ;
+            CategoryEntity categoryEntity = new CategoryEntity(command.Category);
             await _repository.AddAsync(categoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
