@@ -34,6 +34,11 @@ namespace Sheep.Infra.Data.Sql.Category.Repository
             return operation;
         }
 
+        public async Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType,CancellationToken cancellationToken )
+        {
+            return await TableNoTracking.SingleOrDefaultAsync(x => x.Category == categoryType,cancellationToken);
+        }
+
         public Task<bool> IsExistCategory(CategoryType Category, CancellationToken cancellationToken)
         {
             return TableNoTracking.AnyAsync( x=>x.Category== Category);

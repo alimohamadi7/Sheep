@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sheep.Infra.Data.Sql;
 
@@ -11,9 +12,11 @@ using Sheep.Infra.Data.Sql;
 namespace Sheep.Infra.Data.Sql.Migrations
 {
     [DbContext(typeof(SheepDbcontext))]
-    partial class SheepDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20241126080549_nullable datetime")]
+    partial class nullabledatetime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,7 +106,7 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("End")
+                    b.Property<DateTime?>("End")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ModifiedDate")

@@ -13,6 +13,7 @@
         public static string SheepIsParentChangesheepNumber = "  شماره دام به علت داشتن بره قابل تغییر نیست ";
         public static string NotChangeAble = "  امکان تغییر وجود ندارد";
         public static string SheepParentnotvalid = "  شماره دام مادر در گله در وضعیت   *موجود*  نیست ";
+        public static string AddSheepCategoryError = "  در ثبت گروه دامی مشکلی به وجود آمده است ";
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Domain.Entities;
 
 
 namespace Sheep.Core.Application.Category
@@ -44,6 +45,11 @@ namespace Sheep.Core.Application.Category
             return await _repository.GetAll(cancellationToken);
 
 
+        }
+
+        public async Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType ,CancellationToken cancellationToken)
+        {
+          return  await _repository.GetCategoryByCategoryType(categoryType ,cancellationToken);
         }
 
         public async Task<EditCommand> GetDetails(Guid id, CancellationToken cancellationToken)

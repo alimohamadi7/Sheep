@@ -1,6 +1,8 @@
 ﻿using DNTPersianUtils.Core;
 using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
+using Sheep.Core.Application.Sheep.SheepCategory;
+using Sheep.Core.Application.Sheep.SheepCategory.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Application.Utilities;
@@ -12,9 +14,11 @@ namespace Sheep.Core.Application.Sheep
     public class SheepApplication : ISheepApplication
     {
         private readonly ISheepRepository _sheepRepository;
-        public SheepApplication(ISheepRepository sheepRepository)
+        private readonly ISheepCategoryApplication _sheepCategoryApplication;
+        public SheepApplication(ISheepRepository sheepRepository, ISheepCategoryApplication sheepCategoryApplication)
         {
             _sheepRepository = sheepRepository;
+            _sheepCategoryApplication = sheepCategoryApplication;
         }
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {
@@ -42,7 +46,18 @@ namespace Sheep.Core.Application.Sheep
                 command.SheepshopDate.ToGregorianDateTime(),
                 command.ParentId, command.SheepState, command.Gender,command.SheepSellDate.ToGregorianDateTime(),
                 command.SheepwastedDate.ToGregorianDateTime(),age);
-            await _sheepRepository.AddAsync(entity, cancellationToken);
+             await _sheepRepository.AddAsync(entity, cancellationToken);
+            var sheepcategory = new CreateSheepCategorCommand()
+            {
+                SheepId = entity.Id,
+                Age = entity.Age,
+                Gender = entity.Gender,
+                Birthdate=Convert.ToDateTime(entity.SheepbirthDate),
+            };
+          if( ! _sheepCategoryApplication.Create(sheepcategory, cancellationToken).Result.isSuccedded)
+            {
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.AddSheepCategoryError);
+            }
             return OperationResult<bool>.SuccessResult(true);
         }
 
