@@ -16,7 +16,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         public async Task<List<GetSheepCategoryQuery>> GetAll(Guid SheepId, CancellationToken cancellationToken)
         {
-            return  await TableNoTracking.Where(x =>x.SheepId==SheepId&& x.ActiveCategory == true)
+            return  await TableNoTracking.Where(x =>x.SheepId==SheepId)
                       .Select(x => new GetSheepCategoryQuery { id = x.Id }).ToListAsync(cancellationToken);
 
         }
