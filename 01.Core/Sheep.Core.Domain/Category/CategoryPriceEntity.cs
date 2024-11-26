@@ -8,6 +8,8 @@ namespace Sheep.Core.Domain.Category
         public long Food { get; set; }
         public long Salary { get; set; }
         public long Overhead { get; set; }
+        public DateTime Start {  get; set; }
+        public DateTime End { get; set; }
         public Guid CategoryId { get; set; }
         public CategoryEntity CategoryEntity { get; set; }
         public CategoryPriceEntity() { }
