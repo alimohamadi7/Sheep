@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Infra.bootstraper", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Framework.Application", "00.Framework\Sheep.Framework.Application\Sheep.Framework.Application.csproj", "{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sheep.Infra.BackgroundTask", "02.Infrastructure\BackgroundTask\Sheep.Infra.BackgroundTask\Sheep.Infra.BackgroundTask.csproj", "{B6471DDF-F165-4CE6-822B-61C2247CD9B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6471DDF-F165-4CE6-822B-61C2247CD9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6471DDF-F165-4CE6-822B-61C2247CD9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6471DDF-F165-4CE6-822B-61C2247CD9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6471DDF-F165-4CE6-822B-61C2247CD9B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{49CA742C-E2B5-45DB-8358-7C2587CAF12A} = {D3D50EDA-3094-4FF2-ADED-C18247E55D03}
 		{9E5BC491-0508-45E2-83FD-DC5BC3BA258C} = {49CA742C-E2B5-45DB-8358-7C2587CAF12A}
 		{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C} = {1C40F1A4-11B3-406C-B9AB-1920B50FF4F3}
+		{B6471DDF-F165-4CE6-822B-61C2247CD9B3} = {D3D50EDA-3094-4FF2-ADED-C18247E55D03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {590EB6C9-AE8A-4E28-8E1B-B785E5BB7F28}

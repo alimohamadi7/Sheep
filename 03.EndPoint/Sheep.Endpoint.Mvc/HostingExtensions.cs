@@ -1,4 +1,5 @@
-﻿using Sheep.Infra.bootstraper;
+﻿using Hangfire;
+using Sheep.Infra.bootstraper;
 
 namespace Sheep.Endpoint.Mvc
 {
@@ -22,8 +23,10 @@ namespace Sheep.Endpoint.Mvc
                 //app.UseExceptionHandler("/Home/Error");
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
             }
+            app.UseHttpsRedirection();
             //app.UseElmah();
             app.UseStaticFiles();
+            app.UseHangfireDashboard();
             app.UseRouting();
             //app.UseAuthentication();
             //app.UseAuthorization();
