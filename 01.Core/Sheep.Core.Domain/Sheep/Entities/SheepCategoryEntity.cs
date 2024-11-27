@@ -8,27 +8,35 @@ namespace Sheep.Core.Domain.Sheep.Entities
     {
         public Guid SheepId { get; set; }
         public Guid CategoryId { get; set; }
-        public bool ActiveCategory { get; set; }
-        public DateTime Start {  get; set; }
-        public DateTime End { get; set; }
+        public CategoryType ActiveCategory { get; set; }
+        public DateTime Start_Zero_Three {  get; set; }
+        public DateTime End_Zero_Three { get; set; }
+        public DateTime End_Three_Six { get; set; }
+        public DateTime End_Six_Eighteen { get; set; }
         public SheepEntity Sheep { get; set; }
         public CategoryEntity Category { get; set; }
         public SheepCategoryEntity() { }
-        public SheepCategoryEntity(Guid sheepId, Guid categoryId, bool activecategory, DateTime start, DateTime end)
+        public SheepCategoryEntity(Guid sheepId, Guid categoryId, CategoryType activecategory, DateTime start_Zero_Three, DateTime end_Zero_Three,
+            DateTime end_Three_Six,DateTime end_Six_Eighteen)
         {
             SheepId = sheepId;
             CategoryId = categoryId;
             ActiveCategory = activecategory;
-            Start = start;
-            End = end;  
+            Start_Zero_Three = start_Zero_Three;
+            End_Zero_Three = end_Zero_Three;
+            End_Three_Six=end_Three_Six;
+            End_Six_Eighteen=end_Six_Eighteen;
         }
-        public void Edit(Guid sheepId, Guid categoryId, bool activecategory, DateTime start, DateTime end)
+        public void Edit(Guid sheepId, Guid categoryId, CategoryType activecategory, DateTime start_Zero_Three, DateTime end_Zero_Three,
+            DateTime end_Three_Six, DateTime end_Six_Eighteen)
         {
             SheepId = sheepId;
             CategoryId = categoryId;
             ActiveCategory = activecategory;
-            Start = start;
-            End = end;
+            Start_Zero_Three = start_Zero_Three;
+            End_Zero_Three = end_Zero_Three;
+            End_Three_Six = end_Three_Six;
+            End_Six_Eighteen = end_Six_Eighteen;
         }
     }
 }
