@@ -3,8 +3,10 @@ using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Sheep.Infra.Data.Sql.Sheep.Repository
 {
@@ -42,6 +44,16 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
         public async Task<SheepEntity> GetSheepBySheepParentNumber(string sheepId, CancellationToken cancellationToken)
         {
          return  await  TableNoTracking.Where(x=>x.SheepNumber== sheepId).SingleOrDefaultAsync(cancellationToken);
+
+        }
+
+        public IQueryable<SheepEntity> GetsheepForAge(CancellationToken cancellationToken, int PageId = 1)
+        {
+            IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false
+            && x.SheepState == State.present);
+            int take = 100;
+            int skip = (PageId - 1) * take;
+            return  result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
 
         }
 

@@ -2,6 +2,7 @@
 using Hangfire.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Sheep.Core.Application.Background;
 using Sheep.Core.Application.Category;
 using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Application.CategoryPrice;
@@ -18,7 +19,7 @@ using Sheep.Infra.Data.Sql.Category.Repository;
 using Sheep.Infra.Data.Sql.CategoryPrice;
 using Sheep.Infra.Data.Sql.Sheep.Repository;
 using Sheep.Infra.Data.Sql.Sheep.SheepCategory;
-
+using Sheep.Infra.BackgroundTask.Background;
 
 
 namespace Sheep.Infra.bootstraper
@@ -37,6 +38,7 @@ namespace Sheep.Infra.bootstraper
             services.AddTransient<ICategoryPriceApp, CategoryPriceApp>();
             services.AddTransient<ISheepCategoryApplication ,SheepCategoryApplication>();
             services.AddTransient<ISheepCategoryRepository,SheepCategoryRepository>();
+            services.AddSingleton<IBackgroundJobs, BackgroundJobs>();
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)

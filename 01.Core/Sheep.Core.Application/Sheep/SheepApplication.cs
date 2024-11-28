@@ -1,4 +1,5 @@
 ﻿using DNTPersianUtils.Core;
+using Sheep.Core.Application.Background;
 using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
 using Sheep.Core.Application.Sheep.SheepCategory;
@@ -15,22 +16,24 @@ namespace Sheep.Core.Application.Sheep
     {
         private readonly ISheepRepository _sheepRepository;
         private readonly ISheepCategoryApplication _sheepCategoryApplication;
-        public SheepApplication(ISheepRepository sheepRepository, ISheepCategoryApplication sheepCategoryApplication)
+        private readonly IBackgroundJobs _backgroundJob;
+        public SheepApplication(ISheepRepository sheepRepository, ISheepCategoryApplication sheepCategoryApplication, IBackgroundJobs backgroundJob)
         {
             _sheepRepository = sheepRepository;
             _sheepCategoryApplication = sheepCategoryApplication;
+            _backgroundJob = backgroundJob;
         }
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {
-            if( await _sheepRepository.Exists(x=>x.SheepNumber==command.SheepNumber))
-                return  OperationResult<bool>.FailureResult(command.SheepNumber,ApplicationMessages.DuplicatedRecord);
-            if(command.SheepParentId != null)
+            if (await _sheepRepository.Exists(x => x.SheepNumber == command.SheepNumber))
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.DuplicatedRecord);
+            if (command.SheepParentId != null)
             {
- 
+
                 if (!await _sheepRepository.Exists(x => x.SheepNumber == command.SheepParentId))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotSheepFound);
                 var sheepEntity = await _sheepRepository.GetSheepBySheepParentNumber(command.SheepParentId, cancellationToken);
-                if (sheepEntity.Gender ==GenderType.Male )
+                if (sheepEntity.Gender == GenderType.Male)
                 {
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepMale);
                 }
@@ -39,22 +42,22 @@ namespace Sheep.Core.Application.Sheep
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepParentnotvalid);
 
                 }
-                command.ParentId= sheepEntity.Id;
+                command.ParentId = sheepEntity.Id;
             }
-            int age = Calculate.CalculateAge(  Convert.ToDateTime( command.SheepbirthDate.ToGregorianDateTime()));
+            int age = Calculate.CalculateAge(Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()));
             SheepEntity entity = new SheepEntity(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(),
                 command.SheepshopDate.ToGregorianDateTime(),
-                command.ParentId, command.SheepState, command.Gender,command.SheepSellDate.ToGregorianDateTime(),
-                command.SheepwastedDate.ToGregorianDateTime(),age);
-             await _sheepRepository.AddAsync(entity, cancellationToken);
+                command.ParentId, command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(),
+                command.SheepwastedDate.ToGregorianDateTime(), age);
+            await _sheepRepository.AddAsync(entity, cancellationToken);
             var sheepcategory = new CreateSheepCategorCommand()
             {
                 SheepId = entity.Id,
                 Age = entity.Age,
                 Gender = entity.Gender,
-                Birthdate=Convert.ToDateTime(entity.SheepbirthDate),
+                Birthdate = Convert.ToDateTime(entity.SheepbirthDate),
             };
-          if( ! _sheepCategoryApplication.Create(sheepcategory, cancellationToken).Result.isSuccedded)
+            if (!_sheepCategoryApplication.Create(sheepcategory, cancellationToken).Result.isSuccedded)
             {
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.AddSheepCategoryError);
             }
@@ -69,10 +72,10 @@ namespace Sheep.Core.Application.Sheep
             return OperationResult<bool>.SuccessResult(true);
         }
 
-        public  async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
-            if((command.PastSheepNumber != command.SheepNumber))
-            { 
+            if ((command.PastSheepNumber != command.SheepNumber))
+            {
                 //check sheep mother is exists
                 if (await _sheepRepository.Exists(x => x.SheepNumber == command.SheepNumber))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.DuplicatedRecord);
@@ -104,7 +107,7 @@ namespace Sheep.Core.Application.Sheep
                 }
             }
             //check sheep has child gender not change to male
-            if(await _sheepRepository.SheepIsParent(command.Id, cancellationToken) &&(command.Gender==GenderType.Male))
+            if (await _sheepRepository.SheepIsParent(command.Id, cancellationToken) && (command.Gender == GenderType.Male))
             {
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.SheepIsParentNotMale);
 
@@ -112,7 +115,7 @@ namespace Sheep.Core.Application.Sheep
 
 
 
-            var sheep =await _sheepRepository.GetByIdAsync(cancellationToken,command.Id);
+            var sheep = await _sheepRepository.GetByIdAsync(cancellationToken, command.Id);
             //check not add new sheepid and lastsheepid add to sheepmother
             if (sheep.Id == command.ParentId)
             {
@@ -135,25 +138,25 @@ namespace Sheep.Core.Application.Sheep
             return await _sheepRepository.IsExistSheep(createCommand, cancellationToken);
         }
 
-        public  async Task<EditCommand> GetDetails(Guid id, CancellationToken cancellationToken)
+        public async Task<EditCommand> GetDetails(Guid id, CancellationToken cancellationToken)
         {
-            var sheep=await _sheepRepository.GetByIdAsync(cancellationToken,id);
+            var sheep = await _sheepRepository.GetByIdAsync(cancellationToken, id);
             EditCommand editCommand = new EditCommand()
             {
-                Id =sheep.Id,
-                SheepbirthDate=sheep.SheepbirthDate.ToShortPersianDateString(),
-                SheepNumber=sheep.SheepNumber,  
-                SheepSellDate= sheep.SheepSellDate.ToShortPersianDateString(),
-                SheepshopDate=sheep.SheepshopDate.ToShortPersianDateString(),
-                SheepwastedDate=sheep.SheepwastedDate.ToShortPersianDateString(),
-                SheepState=sheep.SheepState,
-                Gender=sheep.Gender,
-                ParentId=sheep.ParentId,
+                Id = sheep.Id,
+                SheepbirthDate = sheep.SheepbirthDate.ToShortPersianDateString(),
+                SheepNumber = sheep.SheepNumber,
+                SheepSellDate = sheep.SheepSellDate.ToShortPersianDateString(),
+                SheepshopDate = sheep.SheepshopDate.ToShortPersianDateString(),
+                SheepwastedDate = sheep.SheepwastedDate.ToShortPersianDateString(),
+                SheepState = sheep.SheepState,
+                Gender = sheep.Gender,
+                ParentId = sheep.ParentId,
                 PastSheepNumber = sheep.SheepNumber,
             };
             if (sheep.ParentId != null)
             {
-               SheepEntity entity = await _sheepRepository.GetByIdAsync(cancellationToken, sheep.ParentId);
+                SheepEntity entity = await _sheepRepository.GetByIdAsync(cancellationToken, sheep.ParentId);
                 editCommand.SheepParentId = entity.SheepNumber;
             }
             return editCommand;
@@ -162,7 +165,7 @@ namespace Sheep.Core.Application.Sheep
         public bool CheckSameSheepNumberandMotherNumber(string sheepnumber, string? sheepmothernunber)
         {
             var result = false;
-            if (sheepnumber == sheepmothernunber) result=true;
+            if (sheepnumber == sheepmothernunber) result = true;
             return result;
 
         }
@@ -170,6 +173,29 @@ namespace Sheep.Core.Application.Sheep
         public Task CalcuteCategory(int day)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task CalcuteAge(CancellationToken cancellationToken)
+        {
+            var pageId = 1;
+            for (int i = 0; i < pageId; i++)
+            {
+                IQueryable<SheepEntity> sheep = _sheepRepository.GetsheepForAge(cancellationToken, pageId);
+                foreach (var item in sheep)
+                {
+                    int age = Calculate.CalculateAge(Convert.ToDateTime(Convert.ToDateTime(item.SheepbirthDate)));
+                    var entity = await _sheepRepository.GetByIdAsync(cancellationToken, item.Id);
+                    entity.Age = age;
+                }
+                await _sheepRepository.SaveChangesAsync(cancellationToken);
+                pageId++;
+            }
+
+        }
+
+        public void AgeJob(CancellationToken cancellationToken)
+        {
+            _backgroundJob.AddOrUpdate("Age",  ()=>  CalcuteAge(cancellationToken),RecuringType.Daily,"");
         }
     }
 

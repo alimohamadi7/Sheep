@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Infra.bootstraper", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Framework.Application", "00.Framework\Sheep.Framework.Application\Sheep.Framework.Application.csproj", "{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sheep.Infra.BackgroundTask", "02.Infrastructure\BackgroundTask\Sheep.Infra.BackgroundTask\Sheep.Infra.BackgroundTask.csproj", "{B6471DDF-F165-4CE6-822B-61C2247CD9B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sheep.Infra.BackgroundTask", "02.Infrastructure\BackgroundTask\Sheep.Infra.BackgroundTask\Sheep.Infra.BackgroundTask.csproj", "{B6471DDF-F165-4CE6-822B-61C2247CD9B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Background", "Background", "{27D2403C-6E5F-49CF-905B-100D6775494E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,7 +92,8 @@ Global
 		{49CA742C-E2B5-45DB-8358-7C2587CAF12A} = {D3D50EDA-3094-4FF2-ADED-C18247E55D03}
 		{9E5BC491-0508-45E2-83FD-DC5BC3BA258C} = {49CA742C-E2B5-45DB-8358-7C2587CAF12A}
 		{45A3F24F-6A70-47A2-9CE3-75BACC70CB8C} = {1C40F1A4-11B3-406C-B9AB-1920B50FF4F3}
-		{B6471DDF-F165-4CE6-822B-61C2247CD9B3} = {D3D50EDA-3094-4FF2-ADED-C18247E55D03}
+		{B6471DDF-F165-4CE6-822B-61C2247CD9B3} = {27D2403C-6E5F-49CF-905B-100D6775494E}
+		{27D2403C-6E5F-49CF-905B-100D6775494E} = {D3D50EDA-3094-4FF2-ADED-C18247E55D03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {590EB6C9-AE8A-4E28-8E1B-B785E5BB7F28}

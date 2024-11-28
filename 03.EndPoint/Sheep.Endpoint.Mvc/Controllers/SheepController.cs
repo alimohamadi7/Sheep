@@ -4,6 +4,7 @@ using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Endpoint.Mvc.WebframeWork.Validateattr;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Threading;
+using Sheep.Core.Application.Background;
 
 
 namespace Sheep.Endpoint.Mvc.Controllers
@@ -12,10 +13,11 @@ namespace Sheep.Endpoint.Mvc.Controllers
     {
 
         private readonly ISheepApplication _sheepApplication;
-
-        public SheepController(ISheepApplication sheepApplication)
+        private readonly IBackgroundJobs _backgroundJob;
+        public SheepController(ISheepApplication sheepApplication, IBackgroundJobs backgroundJob)
         {
             _sheepApplication = sheepApplication;
+            _backgroundJob = backgroundJob;
         }
 
         // GET: SheepController
@@ -81,6 +83,14 @@ namespace Sheep.Endpoint.Mvc.Controllers
         {
             var result = await _sheepApplication.Delete(id, cancellationToken);
             return new JsonResult(result);
+        }
+        [HttpGet]
+        [Route("CalcuteAge")]
+        public async Task<IActionResult>CalcuteAge(CancellationToken cancellationToken)
+        {
+            _backgroundJob.AddOrUpdate("Age",  () =>_sheepApplication.CalcuteAge(cancellationToken), RecuringType.Daily, "");
+
+            return Ok();
         }
     }
 }
