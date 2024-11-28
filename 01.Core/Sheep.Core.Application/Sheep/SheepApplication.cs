@@ -187,15 +187,14 @@ namespace Sheep.Core.Application.Sheep
                     var entity = await _sheepRepository.GetByIdAsync(cancellationToken, item.Id);
                     entity.Age = age;
                 }
-                await _sheepRepository.SaveChangesAsync(cancellationToken);
-                pageId++;
+                if (sheep.Any())
+                {
+                    await _sheepRepository.SaveChangesAsync(cancellationToken);
+                    pageId++;
+                }
+
             }
 
-        }
-
-        public void AgeJob(CancellationToken cancellationToken)
-        {
-            _backgroundJob.AddOrUpdate("Age",  ()=>  CalcuteAge(cancellationToken),RecuringType.Daily,"");
         }
     }
 

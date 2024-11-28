@@ -31,7 +31,8 @@ namespace Sheep.Core.Application.Background
         Hourly,
         Weekly,
         Monthly,
-        Yearly
+        Yearly,
+        CronExpression
     }
 
     public enum RecuringTime

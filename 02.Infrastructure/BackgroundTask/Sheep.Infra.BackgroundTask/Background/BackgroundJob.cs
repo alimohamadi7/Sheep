@@ -9,11 +9,14 @@ namespace Sheep.Infra.BackgroundTask.Background
     {
         private readonly IBackgroundJobClient _backgroundClient;
         private readonly IRecurringJobManager _recurringJobManager;
+        RecurringJobOptions timeZoneOptions = new RecurringJobOptions();
 
         public BackgroundJobs(IBackgroundJobClient backgroundJobClient, IRecurringJobManager recurringJobManager)
         {
             _backgroundClient = backgroundJobClient;
             _recurringJobManager = recurringJobManager;
+            
+            timeZoneOptions.TimeZone = TimeZoneInfo.FindSystemTimeZoneById("Iran Standard Time");
         }
 
         public string AddEnque(Expression<Action> methodCall)
@@ -89,32 +92,31 @@ namespace Sheep.Infra.BackgroundTask.Background
             switch (recuringType)
             {
                 case RecuringType.Minutely:
-                     _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Minutely);
+                     _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Minutely, timeZoneOptions);
                     break;
 
                 case RecuringType.Hourly:
-                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Hourly);
+                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Hourly, timeZoneOptions);
                     break;
 
                 case RecuringType.Daily:
-                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Daily);
+                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Daily, timeZoneOptions);
                     break;
 
                 case RecuringType.Weekly:
-                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Weekly);
+                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Weekly, timeZoneOptions);
                     break;
                 case RecuringType.Monthly:
-                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Monthly);
+                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Monthly, timeZoneOptions);
                     break;
                 case RecuringType.Yearly:
-                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Yearly);
+                    _recurringJobManager.AddOrUpdate(JobId, methodCall, Cron.Yearly, timeZoneOptions);
                     break;
 
-                default:
-                    _recurringJobManager.AddOrUpdate(JobId, methodCall, CronExpression);
+                case RecuringType.CronExpression:
+                    _recurringJobManager.AddOrUpdate(JobId, methodCall, CronExpression, timeZoneOptions);
                     break;
             }
-            
 
 
         }
