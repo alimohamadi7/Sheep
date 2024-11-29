@@ -1,5 +1,7 @@
 ﻿using Sheep.Core.Domain.Category;
 using Sheep.Framework.Domain.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Numerics;
 
 
 namespace Sheep.Core.Domain.Sheep.Entities
@@ -9,6 +11,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public Guid SheepId { get; set; }
         public Guid CategoryId { get; set; }
         public CategoryType ActiveCategory { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime Start_Zero_Three {  get; set; }
         public DateTime End_Zero_Three { get; set; }
         public DateTime End_Three_Six { get; set; }

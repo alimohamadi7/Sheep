@@ -88,7 +88,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [Route("CalcuteAge")]
         public async Task<IActionResult>CalcuteAge(CancellationToken cancellationToken)
         {
-            _backgroundJob.AddOrUpdate("Age",  () =>_sheepApplication.CalcuteAge(cancellationToken), RecuringType.Daily, "");
+            _backgroundJob.AddOrUpdate("Age",  () =>_sheepApplication.CalculateAge(cancellationToken), RecuringType.Daily, "");
 
             return Ok();
         }

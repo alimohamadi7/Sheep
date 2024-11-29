@@ -175,7 +175,7 @@ namespace Sheep.Core.Application.Sheep
             throw new NotImplementedException();
         }
 
-        public async Task CalcuteAge(CancellationToken cancellationToken)
+        public async Task CalculateAge(CancellationToken cancellationToken)
         {
             var pageId = 1;
             for (int i = 0; i < pageId; i++)

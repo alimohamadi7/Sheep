@@ -12,6 +12,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         Task<OperationResult<bool>> Edit(EditSheepCategoryCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken);
         Task<GetSheepCategoryQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "");
+        Task CalculateSheepCategory (CancellationToken cancellationToken);
 
     }
 }

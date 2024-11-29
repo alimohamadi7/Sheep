@@ -7,6 +7,7 @@ using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Domain.Entities;
 using System.Linq.Expressions;
 using System.Xml.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Sheep.Core.Application.Sheep.SheepCategory
@@ -27,34 +28,12 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
 
         public async Task<OperationResult<bool>> Create(CreateSheepCategorCommand command, CancellationToken cancellationToken)
         {
-
-            CategoryType categoryType = CategoryType.none;
-            if (Enumerable.Range(One, Ninety).Contains(command.Age))
-            {
-                categoryType = CategoryType.Zero_Three;
-            }
-            else if (Enumerable.Range(Ninety + One, One_hundred_eighty).Contains(command.Age))
-            {
-                categoryType = CategoryType.Three_Six;
-            }
-            else if (Enumerable.Range(One_hundred_eighty+One,Five_hundred_forty).Contains(command.Age))
-            {
-                categoryType = CategoryType.Six_Eighteen;
-            }
-            else if ((command.Age >Five_hundred_forty)&& (command.Gender == GenderType.Male))
-            {
-                categoryType = CategoryType.Ram;
-            }
-            else if ((command.Age > Five_hundred_forty) && (command.Gender == GenderType.Female))
-            {
-                categoryType = CategoryType.Ewe;
-            }
             command.Start_Zero_Three = command.Birthdate;
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
-            command.ActiveCategory = categoryType;
-            var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(categoryType, cancellationToken);
+            command.ActiveCategory = OutCategory(command.Age,command.Gender);
+            var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             SheepCategoryEntity sheepCategoryEntity = new SheepCategoryEntity(command.SheepId, categoryEntity.Id,
                 command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three,command.End_Three_Six,
                 command.End_Six_Eighteen);
@@ -85,6 +64,44 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public Task<OperationResult<bool>> IsExistSheep(CreateSheepCategorCommand createCommand, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task CalculateSheepCategory(CancellationToken cancellationToken)
+        {
+            var sheepCategoryCount = await _SheepCategoryrepository.GetCount();
+            IEnumerable<int> numbers = Enumerable.Range(1, sheepCategoryCount);
+            IEnumerable<int[]> chunks = numbers.Chunk(100);
+            var sheepcategory = _SheepCategoryrepository.GetsheepForCategory(cancellationToken, chunks.First(), chunks.Last());
+
+            foreach (int[] chunk in chunks)
+            {
+
+            }
+        }
+        public CategoryType OutCategory(int Age, GenderType Gender)
+        {
+            CategoryType categoryType = CategoryType.none;
+            if (Enumerable.Range(One, Ninety).Contains(Age))
+            {
+              return  categoryType = CategoryType.Zero_Three;
+            }
+            else if (Enumerable.Range(Ninety + One, One_hundred_eighty).Contains(Age))
+            {
+               return categoryType = CategoryType.Three_Six;
+            }
+            else if (Enumerable.Range(One_hundred_eighty + One, Five_hundred_forty).Contains(Age))
+            {
+              return  categoryType = CategoryType.Six_Eighteen;
+            }
+            else if ((Age > Five_hundred_forty) && (Gender == GenderType.Male))
+            {
+               return categoryType = CategoryType.Ram;
+            }
+            else if ((Age > Five_hundred_forty) && (Gender == GenderType.Female))
+            {
+              return  categoryType = CategoryType.Ewe;
+            }
+            return categoryType;
         }
     }
 }
