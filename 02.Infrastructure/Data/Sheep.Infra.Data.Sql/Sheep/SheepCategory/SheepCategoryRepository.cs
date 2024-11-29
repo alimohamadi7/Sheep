@@ -28,10 +28,12 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
           return  TableNoTracking.Count();
         }
 
-        public IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken ,int rang1,int range2)
+        public IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken ,int PageId)
         {
             IQueryable<SheepCategoryEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);
-            return result.OrderByDescending(x=>x.CreatedDate).Take(rang1-range2);
+            int take = 100;
+            int skip = (PageId - 1) * take;
+            return result.OrderByDescending(x=>x.CreatedDate).Skip(skip).Take(take);
         }
     }
 }

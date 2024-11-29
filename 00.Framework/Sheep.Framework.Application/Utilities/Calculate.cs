@@ -64,8 +64,7 @@ namespace Sheep.Framework.Application.Utilities
         public static int CalculateAge(DateTime dateOfBirth)
         {
             TimeSpan age = DateTime.Now - dateOfBirth;
-            var a = Math.Round(age.TotalDays, 0);
-            return Convert.ToInt32(Math.Round(age.TotalDays, 0));
+            return Convert.ToInt32(Math.Floor(age.TotalDays));
         }
     }
 }

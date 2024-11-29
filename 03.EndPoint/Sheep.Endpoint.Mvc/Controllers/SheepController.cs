@@ -5,6 +5,7 @@ using Sheep.Endpoint.Mvc.WebframeWork.Validateattr;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Threading;
 using Sheep.Core.Application.Background;
+using Sheep.Core.Application.Sheep.SheepCategory;
 
 
 namespace Sheep.Endpoint.Mvc.Controllers
@@ -14,10 +15,12 @@ namespace Sheep.Endpoint.Mvc.Controllers
 
         private readonly ISheepApplication _sheepApplication;
         private readonly IBackgroundJobs _backgroundJob;
-        public SheepController(ISheepApplication sheepApplication, IBackgroundJobs backgroundJob)
+        private readonly ISheepCategoryApplication _sheepCategoryApplication;
+        public SheepController(ISheepApplication sheepApplication, IBackgroundJobs backgroundJob, ISheepCategoryApplication sheepCategoryApplication)
         {
             _sheepApplication = sheepApplication;
             _backgroundJob = backgroundJob;
+            _sheepCategoryApplication = sheepCategoryApplication;
         }
 
         // GET: SheepController
@@ -85,11 +88,11 @@ namespace Sheep.Endpoint.Mvc.Controllers
             return new JsonResult(result);
         }
         [HttpGet]
-        [Route("CalcuteAge")]
-        public async Task<IActionResult>CalcuteAge(CancellationToken cancellationToken)
+        [Route("Calcute")]
+        public async Task<IActionResult>Calcute(CancellationToken cancellationToken)
         {
-            _backgroundJob.AddOrUpdate("Age",  () =>_sheepApplication.CalculateAge(cancellationToken), RecuringType.Daily, "");
-
+            _backgroundJob.AddOrUpdate("CalcuteAge",  () =>_sheepApplication.CalculateAge(cancellationToken), RecuringType.Daily, "");
+            _backgroundJob.AddOrUpdate("CalcuteCategory", () => _sheepCategoryApplication.CalculateSheepCategory(cancellationToken), RecuringType.Daily, "");
             return Ok();
         }
     }

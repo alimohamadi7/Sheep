@@ -32,10 +32,10 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
-            command.ActiveCategory = OutCategory(command.Age,command.Gender);
+            command.ActiveCategory = OutCategory(command.Age, command.Gender);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             SheepCategoryEntity sheepCategoryEntity = new SheepCategoryEntity(command.SheepId, categoryEntity.Id,
-                command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three,command.End_Three_Six,
+               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three, command.End_Three_Six,
                 command.End_Six_Eighteen);
             await _SheepCategoryrepository.AddAsync(sheepCategoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
@@ -69,13 +69,39 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public async Task CalculateSheepCategory(CancellationToken cancellationToken)
         {
             var sheepCategoryCount = await _SheepCategoryrepository.GetCount();
-            IEnumerable<int> numbers = Enumerable.Range(1, sheepCategoryCount);
-            IEnumerable<int[]> chunks = numbers.Chunk(100);
-            var sheepcategory = _SheepCategoryrepository.GetsheepForCategory(cancellationToken, chunks.First(), chunks.Last());
-
-            foreach (int[] chunk in chunks)
+            //IEnumerable<int> numbers = Enumerable.Range(1, sheepCategoryCount);
+            //IEnumerable<int[]> chunks = numbers.Chunk(100);
+            var pageId = 1;
+            IQueryable<SheepCategoryEntity> sheepcategory;
+            for (int i = 0; i < pageId; i++)
             {
-
+                sheepcategory = _SheepCategoryrepository.GetsheepForCategory(cancellationToken, pageId);
+                foreach (var item in sheepcategory)
+                {
+                    var sheep=await _SheepCategoryrepository.GetByIdAsync(cancellationToken, item.Id);
+                    switch (sheep.ActiveCategory)
+                    {
+                        case CategoryType.Zero_Three:
+                            if (item.End_Zero_Three < DateTime.Now)
+                                sheep.ActiveCategory = CategoryType.Three_Six;
+                            break;
+                        case CategoryType.Three_Six:
+                            if (sheep.End_Three_Six < DateTime.Now)
+                                sheep.ActiveCategory = CategoryType.Six_Eighteen;
+                            break;
+                        case CategoryType.Six_Eighteen:
+                            if (sheep.End_Six_Eighteen < DateTime.Now && sheep.Gender == GenderType.Male)
+                                sheep.ActiveCategory = CategoryType.Ewe;
+                            else if(sheep.End_Six_Eighteen < DateTime.Now && sheep.Gender == GenderType.Female)
+                               sheep.ActiveCategory = CategoryType.Ram;
+                            break;
+                    }
+                }
+                if (sheepcategory.Any())
+                {
+                    pageId++;
+                    await _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
+                }
             }
         }
         public CategoryType OutCategory(int Age, GenderType Gender)
@@ -83,23 +109,23 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             CategoryType categoryType = CategoryType.none;
             if (Enumerable.Range(One, Ninety).Contains(Age))
             {
-              return  categoryType = CategoryType.Zero_Three;
+                return categoryType = CategoryType.Zero_Three;
             }
             else if (Enumerable.Range(Ninety + One, One_hundred_eighty).Contains(Age))
             {
-               return categoryType = CategoryType.Three_Six;
+                return categoryType = CategoryType.Three_Six;
             }
             else if (Enumerable.Range(One_hundred_eighty + One, Five_hundred_forty).Contains(Age))
             {
-              return  categoryType = CategoryType.Six_Eighteen;
+                return categoryType = CategoryType.Six_Eighteen;
             }
             else if ((Age > Five_hundred_forty) && (Gender == GenderType.Male))
             {
-               return categoryType = CategoryType.Ram;
+                return categoryType = CategoryType.Ram;
             }
             else if ((Age > Five_hundred_forty) && (Gender == GenderType.Female))
             {
-              return  categoryType = CategoryType.Ewe;
+                return categoryType = CategoryType.Ewe;
             }
             return categoryType;
         }
