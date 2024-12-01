@@ -28,6 +28,11 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
           return  TableNoTracking.Count();
         }
 
+        public   Task<SheepCategoryEntity> GetSheepCategoryBySheepId(Guid Id, CancellationToken cancellationToken)
+        {
+            return  Table.SingleOrDefaultAsync(x => x.SheepId == Id,cancellationToken);
+        }
+
         public IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken ,int PageId)
         {
             IQueryable<SheepCategoryEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);

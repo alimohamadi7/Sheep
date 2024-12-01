@@ -9,5 +9,6 @@ namespace Sheep.Core.Application.Sheep.SheepCategory.Contracts
         Task<List< GetSheepCategoryQuery>> GetAll(Guid SheepId,CancellationToken cancellationToken);
         Task<int> GetCount();
         IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken, int PageId);
+        Task<SheepCategoryEntity> GetSheepCategoryBySheepId(Guid Id,CancellationToken cancellationToken);
     }
 }

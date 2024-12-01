@@ -20,7 +20,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
         public async Task<GetSheepQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
         {
             IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false 
-            &&x.SheepState ==State.present);
+            &&x.SheepState ==State.present).Include(x=>x.SheepCategories);
             if (!string.IsNullOrEmpty(trim))
             {
                 result = result.Where(u => u.SheepNumber.Contains(trim));

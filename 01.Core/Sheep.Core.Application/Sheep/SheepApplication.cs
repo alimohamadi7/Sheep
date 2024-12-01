@@ -8,6 +8,7 @@ using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace Sheep.Core.Application.Sheep
@@ -24,7 +25,9 @@ namespace Sheep.Core.Application.Sheep
             _backgroundJob = backgroundJob;
         }
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
-        {
+        {   //باید انجام شود
+            // چک کرن تاریخ فروش از تاریخ تولد بیشتر یا کمتر نباشد
+            //چک کردن تاریخ تولد بزرگتر از تاریخ روز نباشد
             if (await _sheepRepository.Exists(x => x.SheepNumber == command.SheepNumber))
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.DuplicatedRecord);
             if (command.SheepParentId != null)
@@ -45,19 +48,23 @@ namespace Sheep.Core.Application.Sheep
                 command.ParentId = sheepEntity.Id;
             }
             int age = Calculate.CalculateAge(Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()));
-            SheepEntity entity = new SheepEntity(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(),
+            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()).AddHours(23).
+                AddMinutes(59).AddSeconds(59).AddMilliseconds(99);
+            SheepEntity entity = new SheepEntity(command.SheepNumber, Sheep_BirthDate,
                 command.SheepshopDate.ToGregorianDateTime(),
                 command.ParentId, command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(),
                 command.SheepwastedDate.ToGregorianDateTime(), age);
             await _sheepRepository.AddAsync(entity, cancellationToken);
-            var sheepcategory = new CreateSheepCategorCommand()
+            var createSheepcategorCommand = new CreateSheepCategorCommand()
             {
                 SheepId = entity.Id,
                 Age = entity.Age,
                 Gender = entity.Gender,
                 Birthdate = Convert.ToDateTime(entity.SheepbirthDate),
             };
-            if (!_sheepCategoryApplication.Create(sheepcategory, cancellationToken).Result.isSuccedded)
+            //add sheepcategory
+            if(entity.SheepState==State.present)
+            if (!_sheepCategoryApplication.Create(createSheepcategorCommand, cancellationToken).Result.isSuccedded)
             {
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.AddSheepCategoryError);
             }
@@ -68,7 +75,8 @@ namespace Sheep.Core.Application.Sheep
         {
             var sheep = await _sheepRepository.GetByIdAsync(cancellationToken, id);
             sheep.Delete();
-            await _sheepRepository.UpdateAsync(sheep, cancellationToken);
+            await _sheepRepository.SaveChangesAsync( cancellationToken);
+            await _sheepCategoryApplication.Delete(sheep.Id,cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
@@ -122,9 +130,30 @@ namespace Sheep.Core.Application.Sheep
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
 
             }
-            sheep.Edit(command.SheepNumber, command.SheepbirthDate.ToGregorianDateTime(), command.SheepshopDate.ToGregorianDateTime(), command.ParentId,
-                command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(), command.SheepwastedDate.ToGregorianDateTime());
-            await _sheepRepository.UpdateAsync(sheep, cancellationToken);
+            int age = Calculate.CalculateAge(Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()));
+            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()).AddHours(23).
+           AddMinutes(59).AddSeconds(59).AddMilliseconds(99);
+            sheep.Edit(command.SheepNumber,
+                Sheep_BirthDate, command.SheepshopDate.ToGregorianDateTime(),
+                command.ParentId, command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(),
+                command.SheepwastedDate.ToGregorianDateTime() ,age);
+            await _sheepRepository.SaveChangesAsync( cancellationToken);
+            //Edit SheepCategory
+            var EditsheepCategorCommand = new EditSheepCategoryCommand()
+            {
+                SheepId = command.Id,
+                Age = sheep.Age,
+                Gender = sheep.Gender,
+                Birthdate = Convert.ToDateTime(sheep.SheepbirthDate),
+            };
+            if (!_sheepCategoryApplication.Edit(EditsheepCategorCommand, cancellationToken).Result.isSuccedded)
+            {
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.AddSheepCategoryError);
+            }
+            if(sheep.SheepState==State.Sell || sheep.SheepState== State.wasted)
+            {
+                await _sheepCategoryApplication.Delete(sheep.Id, cancellationToken);
+            }
             return OperationResult<bool>.SuccessResult(true);
         }
 

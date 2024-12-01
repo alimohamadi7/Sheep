@@ -20,7 +20,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public ICollection<SheepCategoryEntity> SheepCategories { get; set; }
         public ICollection<SheepFullPriceEntity> SheepFullPrices { get; set; }
         public SheepEntity() { }
-        public SheepEntity(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
+        public SheepEntity(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
             DateTime? sheepselldate,DateTime? sheepwasteddate , int age)
         {
             switch (sheepState)
@@ -48,7 +48,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
             Age = age;
         }
         public void Edit(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
-            DateTime? sheepselldate, DateTime? sheepwasteddate)
+            DateTime? sheepselldate, DateTime? sheepwasteddate, int age)
         {
             switch (sheepState)
             {
@@ -71,6 +71,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
             Gender = gender;
             SheepSellDate = sheepselldate;
             SheepwastedDate = sheepwasteddate;
+            Age= age;
         }
         public void Delete()
         {

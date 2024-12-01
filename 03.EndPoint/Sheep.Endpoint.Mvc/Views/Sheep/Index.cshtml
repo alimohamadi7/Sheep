@@ -51,6 +51,7 @@
                                         <th>شماره دام</th>
                                         <th>تاریخ تولد</th>
                                         <th>سن</th>
+                                        <th>گروه</th>
                                         <th>جنسیت</th>
                                         <th></th>
                                     </tr>
@@ -66,6 +67,7 @@
                                             <td>@item.SheepNumber</td>
                                             <td>@item.SheepbirthDate.ToPersianDateTextify() </td>
                                             <td>@Calculate.CalculateYourAge(Convert.ToDateTime( item.SheepbirthDate))</td>
+                                            <td>@EnumExtensions.ToDisplay(item.SheepCategories.SingleOrDefault().ActiveCategory)</td>
                                           <td>@EnumExtensions.ToDisplay(@item.Gender)</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"

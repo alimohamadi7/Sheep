@@ -10,7 +10,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         Task<OperationResult<bool>> Create(CreateSheepCategorCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> IsExistSheep(CreateSheepCategorCommand createCommand, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Edit(EditSheepCategoryCommand command, CancellationToken cancellationToken);
-        Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken);
+        Task<OperationResult<bool>> Delete(Guid SheepId, CancellationToken cancellationToken);
         Task<GetSheepCategoryQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "");
         Task CalculateSheepCategory (CancellationToken cancellationToken);
 

@@ -44,5 +44,9 @@ namespace Sheep.Core.Domain.Sheep.Entities
             End_Six_Eighteen = end_Six_Eighteen;
             Gender = gender;
         }
+        public void Delete() 
+        {
+            IsDeleted = true;
+        }
     }
 }
