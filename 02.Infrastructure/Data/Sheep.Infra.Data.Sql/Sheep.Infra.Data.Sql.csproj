@@ -20,4 +20,8 @@
     <ProjectReference Include="..\..\..\01.Core\Sheep.Core.Domain\Sheep.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sheep\SheepCategory\Configuration\" />
+  </ItemGroup>
+
 </Project>
