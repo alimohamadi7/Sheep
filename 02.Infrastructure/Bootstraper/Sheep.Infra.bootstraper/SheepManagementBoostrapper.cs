@@ -5,8 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Sheep.Core.Application.Background;
 using Sheep.Core.Application.Category;
 using Sheep.Core.Application.Category.Contracts;
-using Sheep.Core.Application.CategoryPrice;
-using Sheep.Core.Application.CategoryPrice.Contracts;
 using Sheep.Core.Application.Sheep;
 using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Application.Sheep.Contracts.Repository;
@@ -20,6 +18,8 @@ using Sheep.Infra.Data.Sql.CategoryPrice;
 using Sheep.Infra.Data.Sql.Sheep.Repository;
 using Sheep.Infra.Data.Sql.Sheep.SheepCategory;
 using Sheep.Infra.BackgroundTask.Background;
+using Sheep.Core.Application.Category.CategoryPrice.Contracts;
+using Sheep.Core.Application.Category.CategoryPrice;
 
 
 namespace Sheep.Infra.bootstraper
@@ -34,8 +34,8 @@ namespace Sheep.Infra.bootstraper
             services.AddTransient<ISheepApplication, SheepApplication>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICategoryApplication, CategoryApplication>();
-            services.AddTransient<ICategoryPriceRepo, CategoryPriceRepo>();
-            services.AddTransient<ICategoryPriceApp, CategoryPriceApp>();
+            services.AddTransient<ICategoryPriceRepository, CategoryPriceRepo>();
+            services.AddTransient<ICategoryPriceApplication, CategoryPriceApplication>();
             services.AddTransient<ISheepCategoryApplication ,SheepCategoryApplication>();
             services.AddTransient<ISheepCategoryRepository,SheepCategoryRepository>();
             services.AddSingleton<IBackgroundJobs, BackgroundJobs>();
