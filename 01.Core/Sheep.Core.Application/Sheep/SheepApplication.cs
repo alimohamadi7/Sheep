@@ -48,8 +48,7 @@ namespace Sheep.Core.Application.Sheep
                 command.ParentId = sheepEntity.Id;
             }
             int age = Calculate.CalculateAge(Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()));
-            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()).AddHours(23).
-                AddMinutes(59).AddSeconds(59).AddMilliseconds(99);
+            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
             SheepEntity entity = new SheepEntity(command.SheepNumber, Sheep_BirthDate,
                 command.SheepshopDate.ToGregorianDateTime(),
                 command.ParentId, command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(),
@@ -131,8 +130,7 @@ namespace Sheep.Core.Application.Sheep
 
             }
             int age = Calculate.CalculateAge(Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()));
-            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()).AddHours(23).
-           AddMinutes(59).AddSeconds(59).AddMilliseconds(99);
+            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
             sheep.Edit(command.SheepNumber,
                 Sheep_BirthDate, command.SheepshopDate.ToGregorianDateTime(),
                 command.ParentId, command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(),
