@@ -1,6 +1,8 @@
 ﻿using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Application.Validation;
+using Sheep.Framework.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
 
 namespace Sheep.Core.Application.Category.CategoryPrice
 {
@@ -17,6 +19,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
         [Display(Name = "تاریخ پایان")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string End { get; set; }
+        public GenderType Gender { get; set; }  
         public Guid CategoryId { get; set; }
     }
 }

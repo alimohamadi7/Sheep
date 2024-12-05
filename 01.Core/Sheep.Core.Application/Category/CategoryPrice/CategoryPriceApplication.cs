@@ -5,9 +5,16 @@ namespace Sheep.Core.Application.Category.CategoryPrice
 {
     public class CategoryPriceApplication : ICategoryPriceApplication
     {
-        public Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        private readonly ICategoryPriceRepository _categoryPriceRepository;
+
+        public CategoryPriceApplication(ICategoryPriceRepository categoryPriceRepository)
         {
-            throw new NotImplementedException();
+            _categoryPriceRepository = categoryPriceRepository;
+        }
+
+        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        {
+            return await _categoryPriceRepository.GetAll(cancellationToken, PageId, trim);
         }
     }
 }

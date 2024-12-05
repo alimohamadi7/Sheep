@@ -1,6 +1,7 @@
 ﻿using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
 
 namespace Sheep.Core.Application.Category
@@ -18,7 +19,8 @@ namespace Sheep.Core.Application.Category
             {
                 return OperationResult<bool>.FailureResult(" ", ApplicationMessages.DuplicatedRecord);
             }
-            CategoryEntity categoryEntity = new CategoryEntity(command.Category);
+            var categoryname = @EnumExtensions.ToDisplay(command.Category);
+            CategoryEntity categoryEntity = new CategoryEntity(command.Category, categoryname);
             await _repository.AddAsync(categoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
@@ -34,7 +36,8 @@ namespace Sheep.Core.Application.Category
         public async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
             var category = await _repository.GetByIdAsync(cancellationToken, command.Id);
-            category.Edit(command.Category);
+            var categoryname = @EnumExtensions.ToDisplay(command.Category);
+            category.Edit(command.Category, categoryname);
             await _repository.UpdateAsync(category, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
@@ -46,9 +49,9 @@ namespace Sheep.Core.Application.Category
 
         }
 
-        public Task<List<CategoryEntity>> GetAllCategoryForFood(CancellationToken cancellationToken)
+        public async Task<List<CategoryEntity>> GetAllCategoryForFood(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+         return   await _repository.GetAllCategoryForFood(cancellationToken);
         }
 
         public async Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType ,CancellationToken cancellationToken)

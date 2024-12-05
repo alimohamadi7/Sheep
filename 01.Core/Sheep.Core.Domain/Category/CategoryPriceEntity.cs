@@ -6,6 +6,7 @@ namespace Sheep.Core.Domain.Category
     {
         public bool IsDeleted { get; set; }
         public long Food { get; set; }
+        public GenderType Gender { get; set; }
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
         public Guid CategoryId { get; set; }
