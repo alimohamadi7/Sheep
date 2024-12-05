@@ -1,4 +1,4 @@
-﻿@model Sheep.Core.Application.Sheep.Contracts.GetSheepQuery
+﻿@model Sheep.Core.Application.Category.CategoryPrice.GetCategoryPriceQuery
 @using Sheep.Framework.Application.Utilities
 @using DNTPersianUtils.Core
 <div class="content-wrapper" style="min-height: 1301.27px;">
@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
-                        <li class="breadcrumb-item active">اطلاعات دام</li>
+                        <li class="breadcrumb-item active">قیمت خوراک</li>
                     </ol>
                 </div>
             </div>
@@ -21,24 +21,22 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col col-md-12 m-md-2">
-                    <a class="btn btn-success btn-lg m-1" href="#showmodal=@Url.Action("Create", "Sheep")">ثبت دام</a>
-                    <a class="btn btn-info  btn-lg m-1" href="#showmodal=@Url.Action("Create", "Sheep",new{SheepBirth=true})">ثبت دام متولد شده</a>
+                    <a class="btn btn-success btn-lg m-1" href="#showmodal=@Url.Action("Create", "CategoryPrice")">ثبت قیمت</a>
                 </div>
- 
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">اطلاعات دام</h3>
+                            <h3 class="card-title">اطلاعات قیمت خوراک</h3>
                             <div class="card-tools">
-                                 <form action="/Sheep" method="get">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="trim" value="@Model.trim" class="form-control float-right" placeholder="جستجو">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
+                                <form action="/Sheep" method="get">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="trim" value="@Model.trim" class="form-control float-right" placeholder="جستجو">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
                                 </form>
                             </div>
                         </div>
@@ -48,11 +46,10 @@
                                 <thead>
                                     <tr>
                                         <th>ردیف</th>
-                                        <th>شماره دام</th>
-                                        <th>تاریخ تولد</th>
-                                        <th>سن</th>
+                                        <th>قیمت  (ریال)</th>
+                                        <th>تاریخ شروع</th>
+                                        <th>تاریخ پایان</th>
                                         <th>گروه</th>
-                                        <th>جنسیت</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -60,23 +57,22 @@
                                     @{
                                         int i = 1;
                                     }
-                                    @foreach (var item in Model.sheepEntities)
+                                    @foreach (var item in Model.CategoryPriceEntities)
                                     {
                                         <tr>
                                             <td>@i</td>
-                                            <td>@item.SheepNumber</td>
-                                            <td>@item.SheepbirthDate.ToPersianDateTextify() </td>
-                                            <td>@Calculate.CalculateYourAge(Convert.ToDateTime( item.SheepbirthDate))</td>
-                                            <td>@EnumExtensions.ToDisplay(item.SheepCategories.SingleOrDefault().ActiveCategory)</td>
-                                          <td>@EnumExtensions.ToDisplay(@item.Gender)</td>
+                                            <td>@item.Food</td>
+                                            <td>@item.Start.ToShortPersianDateString()</td>
+                                            <td>@item.End.ToShortPersianDateString()</td>
+                                            <td>@item.CategoryEntity</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
-                                                   href="#showmodal=@Url.Action("Edit", "Sheep", new { id = item.Id})">
+                                                   href="#showmodal=@Url.Action("Edit", "CategoryPrice", new { id = item.Id})">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a class="btn btn-danger pull-right m-rl-5"
-                                                   href="#showmodal=@Url.Action("Delete", "Sheep", new { id = item.Id})">
-                                                    <i class="fa fa-trash"></i> 
+                                                   href="#showmodal=@Url.Action("Delete", "CategoryPrice", new { id = item.Id})">
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -110,50 +106,50 @@
                     selector: '.modal input[data-jdp]'
                 });
             });
-            $("#Sheep").addClass("active");
+            $("#CategoryPrice").addClass("active");
         });
 
     </script>
     <script>
         function myFunction() {
             var x = document.getElementById("SheepState").value;
-            if(x==2){
+            if (x == 2) {
                 removewasteddate()
                 addselldate()
-                }
-                if (x == 1 || x==0) {
+            }
+            if (x == 1 || x == 0) {
                 removeselldate();
                 removewasteddate()
-                    }
+            }
             if (x == 3) {
                 removeselldate();
                 addwasteddate()
             }
+        }
+        function addselldate() {
+            let p = document.getElementsByClassName("SheepSellDate");
+            for (i = 0; i < p.length; i++) {
+                p[i].removeAttribute("hidden");
             }
-            function addselldate() {
-                let p = document.getElementsByClassName("SheepSellDate");
-                for (i = 0; i < p.length; i++) {
-                    p[i].removeAttribute("hidden");
-                }
+        }
+        function removeselldate() {
+            let p = document.getElementsByClassName("SheepSellDate");
+            for (i = 0; i < p.length; i++) {
+                p[i].hidden = true;
             }
-                function removeselldate(){
-                    let p = document.getElementsByClassName("SheepSellDate");
-                    for (i = 0; i < p.length; i++) {
-                        p[i].hidden = true;
-                    }
-                }
-            function addwasteddate() {
-                let p = document.getElementsByClassName("SheepwastedDate");
-                for (i = 0; i < p.length; i++) {
-                    p[i].removeAttribute("hidden");
-                }
+        }
+        function addwasteddate() {
+            let p = document.getElementsByClassName("SheepwastedDate");
+            for (i = 0; i < p.length; i++) {
+                p[i].removeAttribute("hidden");
             }
-            function removewasteddate() {
-                let p = document.getElementsByClassName("SheepwastedDate");
-                for (i = 0; i < p.length; i++) {
-                    p[i].hidden = true;
-                }
+        }
+        function removewasteddate() {
+            let p = document.getElementsByClassName("SheepwastedDate");
+            for (i = 0; i < p.length; i++) {
+                p[i].hidden = true;
             }
-</script>
+        }
+    </script>
 
 }

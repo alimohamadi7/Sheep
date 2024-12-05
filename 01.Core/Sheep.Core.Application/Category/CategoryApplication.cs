@@ -3,7 +3,6 @@ using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Domain.Entities;
 
-
 namespace Sheep.Core.Application.Category
 {
     public class CategoryApplication : ICategoryApplication
@@ -45,6 +44,11 @@ namespace Sheep.Core.Application.Category
             return await _repository.GetAll(cancellationToken);
 
 
+        }
+
+        public Task<List<CategoryEntity>> GetAllCategoryForFood(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType ,CancellationToken cancellationToken)

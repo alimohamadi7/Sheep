@@ -13,5 +13,6 @@ namespace Sheep.Core.Application.Category.Contracts
         Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken);
         Task<OperationResult<GetCategoryQouery>> GetAllCategory(CancellationToken cancellationToken);
         Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType,CancellationToken cancellationToken);
+        Task<List<CategoryEntity>> GetAllCategoryForFood(CancellationToken cancellationToken);
     }
 }

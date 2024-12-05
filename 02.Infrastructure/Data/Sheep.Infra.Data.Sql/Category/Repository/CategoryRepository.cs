@@ -34,6 +34,11 @@ namespace Sheep.Infra.Data.Sql.Category.Repository
             return operation;
         }
 
+        public async Task<List<CategoryEntity>> GetAllCategoryForFood(CancellationToken cancellationToken)
+        {
+            return await Entities.ToListAsync(cancellationToken);
+        }
+
         public async Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType,CancellationToken cancellationToken )
         {
             return await TableNoTracking.SingleOrDefaultAsync(x => x.Category == categoryType,cancellationToken);

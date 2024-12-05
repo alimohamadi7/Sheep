@@ -1,8 +1,11 @@
-﻿using Sheep.Core.Application.Category.CategoryPrice;
+﻿using Microsoft.EntityFrameworkCore;
+using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
+using Sheep.Core.Application.Sheep.Contracts;
 using Sheep.Core.Domain.Category;
+using Sheep.Core.Domain.Sheep.Entities;
+using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
-
 
 namespace Sheep.Infra.Data.Sql.CategoryPrice
 {
@@ -14,9 +17,28 @@ namespace Sheep.Infra.Data.Sql.CategoryPrice
             _context = dbContext;
         }
 
-        public Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
         {
-            throw new NotImplementedException();
+            IQueryable<CategoryPriceEntity> result = TableNoTracking.Where(x => x.IsDeleted == false).
+                Include(x=>x.CategoryEntity);
+            if (!string.IsNullOrEmpty(trim))
+            {
+                //result = result.Where(u => u.SheepNumber.Contains(trim));
+            }
+            int take = 50;
+            int skip = (PageId - 1) * take;
+            string Addres = "";
+
+            GetCategoryPriceQuery CategoryPriceQuery = new GetCategoryPriceQuery()
+            {
+                trim = trim,
+                CategoryPriceEntities = await result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take)
+                .ToListAsync(cancellationToken)
+
+            };
+
+            CategoryPriceQuery.GeneratePagging(result, PageId, take, trim, Addres);
+            return CategoryPriceQuery;
         }
     }
 }

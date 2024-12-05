@@ -25,7 +25,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
             {
                 result = result.Where(u => u.SheepNumber.Contains(trim));
             }
-            int take = 20;
+            int take = 50;
             int skip = (PageId - 1) * take;
             string Addres = "";
 

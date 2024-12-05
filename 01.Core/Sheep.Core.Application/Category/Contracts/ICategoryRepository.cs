@@ -12,5 +12,6 @@ namespace Sheep.Core.Application.Category.Contracts
         Task<OperationResult<GetCategoryQouery>> GetAll(CancellationToken cancellationToken);
         Task<bool> IsExistCategory(CategoryType Category, CancellationToken cancellationToken);
         Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType,CancellationToken cancellationToken );
+        Task<List<CategoryEntity>> GetAllCategoryForFood(CancellationToken cancellationToken);
     }
 }

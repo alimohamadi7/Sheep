@@ -12,4 +12,7 @@
     <ProjectReference Include="..\Sheep.Core.Domain\Sheep.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Wages-overheads\Contracts\" />
+  </ItemGroup>
 </Project>

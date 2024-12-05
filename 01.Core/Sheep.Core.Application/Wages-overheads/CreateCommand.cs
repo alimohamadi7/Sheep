@@ -1,22 +1,22 @@
 ﻿using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Application.Validation;
+
 using System.ComponentModel.DataAnnotations;
 
-namespace Sheep.Core.Application.Category.CategoryPrice
+
+namespace Sheep.Core.Application.Wages_overheads
 {
     public class CreateCommand
     {
-        [Display(Name = "خوراک")]
+        [Display(Name = "دستمزد")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         [NotZero(ErrorMessage = ValidationMessages.NotZero)]
         [RegularExpression(@"^[0-9]+$", ErrorMessage = ValidationMessages.Invalidnumber)]
-        public long Food { get; set; }
-        [Display(Name = "تاریخ شروع")]
+        public long Salary { get; set; }
+        [Display(Name = "سربار")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        public string Start { get; set; }
-        [Display(Name = "تاریخ پایان")]
-        [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        public string End { get; set; }
-        public Guid CategoryId { get; set; }
+        [NotZero(ErrorMessage = ValidationMessages.NotZero)]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = ValidationMessages.Invalidnumber)]
+        public long Overhead { get; set; }
     }
 }
