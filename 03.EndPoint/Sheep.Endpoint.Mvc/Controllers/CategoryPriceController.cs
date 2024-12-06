@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Application.Category.Contracts;
 using System.Text.RegularExpressions;
@@ -31,5 +33,12 @@ namespace Sheep.Endpoint.Mvc.Controllers
             ViewData["Category"] = new SelectList(Selectlist, "Value", "Text");
             return PartialView(nameof (Create));
         }
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateCommand Command,CancellationToken cancellationToken)
+        {
+            var result=_categoryPriceApplication.Create(Command,cancellationToken);
+            return new JsonResult(result);  
+        }
+
     }
 }

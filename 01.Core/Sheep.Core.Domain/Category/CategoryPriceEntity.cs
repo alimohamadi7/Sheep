@@ -1,4 +1,5 @@
 ﻿using Sheep.Framework.Domain.Entities;
+using System.Reflection;
 
 namespace Sheep.Core.Domain.Category
 {
@@ -12,15 +13,24 @@ namespace Sheep.Core.Domain.Category
         public Guid CategoryId { get; set; }
         public CategoryEntity CategoryEntity { get; set; }
         public CategoryPriceEntity() { }
-        public CategoryPriceEntity(long food)
+        public CategoryPriceEntity(long food,GenderType gender ,DateTime start,DateTime end ,Guid categoryid)
         {
             Food = food;
             IsDeleted = false;
+            Gender = gender;
+            Start = start;
+            End = end;
+            CategoryId = categoryid;
 
         }
-        public void Edit(long food)
+        public void Edit(long food,GenderType gender ,DateTime start,DateTime end ,Guid categoryid)
         {
             Food = food;
+            Gender = gender;
+            Start = start;
+            End = end;
+            CategoryId = categoryid;
+
         }
         public void Delete()
         {

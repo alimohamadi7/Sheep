@@ -57,7 +57,7 @@
                                     {
                                         <tr>
                                             <td>@i</td>
-                                            <td>@EnumExtensions.ToDisplay(item.Category)</td>
+                                            <td>@item.CategoryName</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Edit", "Category", new { id = item.Id})">

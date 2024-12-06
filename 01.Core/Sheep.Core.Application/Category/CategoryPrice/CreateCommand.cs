@@ -10,9 +10,9 @@ namespace Sheep.Core.Application.Category.CategoryPrice
     {
         [Display(Name = "خوراک")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        [NotZero(ErrorMessage = ValidationMessages.NotZero)]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = ValidationMessages.Invalidnumber)]
-        public long Food { get; set; }
+        //[NotZero(ErrorMessage = ValidationMessages.NotZero)]
+        [RegularExpression(@"[1-9][0-9]*(,[0-9]*)*", ErrorMessage = ValidationMessages.Invalidnumber)]
+        public string Food { get; set; }
         [Display(Name = "تاریخ شروع")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string Start { get; set; }
