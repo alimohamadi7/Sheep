@@ -24,29 +24,10 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">نام گروه</label>
                                 <select class="form-control form-myselect" asp-for="Category" asp-items="Html.GetEnumSelectList<CategoryType>()">
+                                    <option value="" disabled selected hidden>انتخاب کنید</option>
                                 </select>
                                 <span asp-validation-for="Category" class="error"></span>
                             </div>
-@*                             <div class="form-group">
-                                <label for="exampleInputPassword1">جنسیت</label>
-                                <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
-                                </select>
-                            </div> *@
-@*                             <div class="form-group">
-                                <label for="exampleInputEmail1">خوراک مصرفی</label>
-                                <input type="number" asp-for=Food class="form-control" id="exampleInputEmail1" placeholder="خوراک مصرفی">
-                                <span asp-validation-for="Food" class="error"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">دستمزد</label>
-                                <input type="number" asp-for="Salary" class="form-control" id="exampleInputEmail1" placeholder="دستمزد">
-                                <span asp-validation-for="Salary" class="error"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">سربار</label>
-                                <input type="number" asp-for=Overhead class="form-control" id="exampleInputEmail1" placeholder="سربار">
-                                <span asp-validation-for="Overhead" class="error"></span>
-                            </div> *@
                         </div>
                         <!-- /.card-body -->
                         <div class="d-flex justify-content-center">

@@ -29,10 +29,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="Category">گروه</label>
-                                <select class="form-control form-myselect" asp-for="CategoryId" asp-items="@(ViewData["Category"] as SelectList)">
+                                <select class="form-control form-myselect" asp-for="Category" asp-items="Html.GetEnumSelectList<CategoryType>()">
                                     <option value="" disabled selected hidden>انتخاب کنید</option>
                                 </select>
-                                <span asp-validation-for="CategoryId" class="error"></span>
+                                <span asp-validation-for="Category" class="error"></span>
                                 <span id='output'></span>
                             </div>
                             <div class="form-group">

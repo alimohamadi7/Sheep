@@ -19,7 +19,14 @@ namespace Sheep.Core.Application.Category.CategoryPrice
         [Display(Name = "تاریخ پایان")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string End { get; set; }
-        public GenderType Gender { get; set; }  
+        [Display(Name = "جنسیت")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        [NotZero(ErrorMessage = ValidationMessages.NotZero)]
+        public GenderType Gender { get; set; }
+        [Display(Name = "گروه")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        [NotZero(ErrorMessage = ValidationMessages.NotZero)]
+        public CategoryType Category { get; set; }
         public Guid CategoryId { get; set; }
     }
 }

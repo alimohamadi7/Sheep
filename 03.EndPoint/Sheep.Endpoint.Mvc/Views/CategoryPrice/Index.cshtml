@@ -61,10 +61,10 @@
                                     {
                                         <tr>
                                             <td>@i</td>
-                                            <td>@item.Food</td>
+                                            <td>@item.Food.ToString("#,0")</td>
                                             <td>@item.Start.ToShortPersianDateString()</td>
                                             <td>@item.End.ToShortPersianDateString()</td>
-                                            <td>@item.CategoryEntity</td>
+                                            <td>@item.CategoryEntity.CategoryName</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Edit", "CategoryPrice", new { id = item.Id})">

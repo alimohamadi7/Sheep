@@ -8,12 +8,13 @@ namespace Sheep.Core.Domain.Category
         public bool IsDeleted { get; set; }
         public long Food { get; set; }
         public GenderType Gender { get; set; }
+        public CategoryType Category { get; set; }
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
         public Guid CategoryId { get; set; }
         public CategoryEntity CategoryEntity { get; set; }
         public CategoryPriceEntity() { }
-        public CategoryPriceEntity(long food,GenderType gender ,DateTime start,DateTime end ,Guid categoryid)
+        public CategoryPriceEntity(long food,GenderType gender , CategoryType category, DateTime start,DateTime end ,Guid categoryid)
         {
             Food = food;
             IsDeleted = false;
@@ -21,15 +22,17 @@ namespace Sheep.Core.Domain.Category
             Start = start;
             End = end;
             CategoryId = categoryid;
+            Category=category;
 
         }
-        public void Edit(long food,GenderType gender ,DateTime start,DateTime end ,Guid categoryid)
+        public void Edit(long food,GenderType gender, CategoryType category, DateTime start,DateTime end ,Guid categoryid)
         {
             Food = food;
             Gender = gender;
             Start = start;
             End = end;
             CategoryId = categoryid;
+            Category= category;
 
         }
         public void Delete()

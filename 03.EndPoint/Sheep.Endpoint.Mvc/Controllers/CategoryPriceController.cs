@@ -36,7 +36,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCommand Command,CancellationToken cancellationToken)
         {
-            var result=_categoryPriceApplication.Create(Command,cancellationToken);
+            var result=await _categoryPriceApplication.Create(Command,cancellationToken);
             return new JsonResult(result);  
         }
 

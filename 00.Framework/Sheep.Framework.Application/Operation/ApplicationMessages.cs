@@ -14,6 +14,11 @@
         public static string NotChangeAble = "  امکان تغییر وجود ندارد";
         public static string SheepParentnotvalid = "  شماره دام مادر در گله در وضعیت   *موجود*  نیست ";
         public static string AddSheepCategoryError = "  در ثبت گروه دامی مشکلی به وجود آمده است ";
+        public static string RamIsnotFemale = "  قوچ نمیتواند جنسیت ماده داشته باشد ";
+        public static string EveIsnotMale = "  میش نمیتواند جنسیت نر داشته باشد ";
+        public static string DuplicateDate = "  این تاریخ قبلا ثبت شده است  ";
+        public static string InvalidStartDate = "  تاریخ شروع از پایان بزرگتر است  ";
+        public static string StartDateEqualEndDate = " تاریخ شروع و پایان برابر است ";
     }
 }
 

@@ -6,7 +6,7 @@ namespace Sheep.Framework.Domain.Entities
     public enum GenderType
     {
         [Display(Name = "انتخاب کنید")]
-        None =0, 
+        None = 0,
         [Display(Name = "نر")]
         Male = 1,
 

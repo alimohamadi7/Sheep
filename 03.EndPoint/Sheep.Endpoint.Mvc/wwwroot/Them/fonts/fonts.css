@@ -11,7 +11,25 @@
   font-style: normal;
   font-display: swap;
 }
-*,html,body{
-	font-family: Vazirmatn;
+@font-face {
+	font-family: 'iransans';
+	src: url('iransansweb(fanum)-pack/font/woff/iransansweb(fanum).woff') format('woff');
+	font-weight: normal;
+	font-style: normal
+}
+@font-face {
+	font-family: 'iransans_medium';
+	src: url('iransansweb(fanum)-pack/font/woff/iransansweb(fanum)_medium.woff') format('woff');
+	font-weight: 500;
+	font-style: normal
+}
+@font-face {
+	font-family: 'iransansbold';
+	src: url('iransansweb(fanum)-pack/font/woff/iransansweb(fanum)_bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal
+}
+*, html, body {
+	font-family: iransans;
 }
 
