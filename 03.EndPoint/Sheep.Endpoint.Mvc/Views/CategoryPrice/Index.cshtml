@@ -31,9 +31,9 @@
                             <div class="card-tools">
                                 <form action="/CategoryPrice" method="get">
                                     <div class="input-group input-group-sm" style="width: 100%;">
-                                        <select type="text" name="category" asp-items="@Html.GetEnumSelectList<CategoryType>()" value="@Model.Category" class="form-control float-right" placeholder="گروه">
+                                        <select type="text" name="category" asp-for="Category" asp-items="@Html.GetEnumSelectList<CategoryType>()"  class="form-control float-right" placeholder="گروه">
                                             </select>
-                                        <select type="text" name="gender" asp-items="@Html.GetEnumSelectList<GenderType>()" value="@Model.Gender" class="form-control float-right" placeholder="گروه">
+                                        <select type="text" name="gender" asp-for="Gender" asp-items="@Html.GetEnumSelectList<GenderType>()"  class="form-control float-right" placeholder="گروه">
                                         </select>
                                         <input type="text" name="start" data-jdp value="" onclick="me()" class="form-control float-right" placeholder="از تاریخ">
                                         <input type="text" name="end" data-jdp value="" class="form-control float-right" placeholder="تا تاریخ">
