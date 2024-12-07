@@ -7,7 +7,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice.Contracts
 {
     public interface ICategoryPriceRepository : IRepository<CategoryPriceEntity>
     {
-        Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "");
+        Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, string? start, string? end, CategoryType categoryType, GenderType genderType, int PageId = 1);
         Task<IQueryable<CategoryPriceEntity>> GetCategoryByType(CategoryType categoryType,CancellationToken cancellationToken, int PageId = 1);
     }
 }

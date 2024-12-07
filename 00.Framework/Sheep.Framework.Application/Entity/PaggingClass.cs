@@ -1,4 +1,6 @@
-﻿namespace Framework.Application.Entity
+﻿using Sheep.Framework.Domain.Entities;
+
+namespace Framework.Application.Entity
 {
     public class BasePagging
     {
@@ -12,6 +14,10 @@
         public string Trim { get; set; }
         public string Addres { get; set; }
         public long Id { get; set; }
+        public string? Start {  get; set; }
+        public string? End { get; set; }
+        public GenderType Gender { get; set; }
+        public CategoryType Category { get; set; }
         public void GeneratePagging(IQueryable<object> data, int pageId, int take, string trim, string addres)
         {
             DataCount = data.Count();
@@ -31,6 +37,18 @@
             MonthId = monthId;
             Addres = addres;
             Id = id;
+        }
+        public void GeneratePagging_V3(IQueryable<object> data, int pageId, int take, string addres,string ?start,string?end, GenderType gender,CategoryType category )
+        {
+            DataCount = data.Count();
+            CurentPage = pageId;
+            PageCount = (int)Math.Ceiling(data.Count() / (double)take);
+            Take = take;
+            Addres = addres;
+            Start = start;
+            End = end;
+            Gender = gender;
+            Category=category;
         }
     }
 }

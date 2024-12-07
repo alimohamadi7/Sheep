@@ -63,19 +63,40 @@ namespace Sheep.Core.Application.Category.CategoryPrice
 
         public async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
+            DateTime Start = Convert.ToDateTime(command.Start.ToGregorianDateTime());
+            DateTime End = Convert.ToDateTime(command.End.ToGregorianDateTime());
+            //check category ram not gendertype female
+            if (command.Gender == GenderType.Female && command.Category == CategoryType.Ram)
+                return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.RamIsnotFemale);
+            //check ewe not gendertype male
+            if (command.Gender == GenderType.Male && command.Category == CategoryType.Ewe)
+                return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.EveIsnotMale);
+            //Check StartDate not big from End
+            if (Start > End)
+                return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.InvalidStartDate);
+            //Check StartDate not Equal End
+            if (Start == End)
+                return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.StartDateEqualEndDate);
+            //check datarange
+            if (Start != command.StartLaste &&End !=command.EndLaste)
+            {
+                var CheckDateRage = await CheckDateForCtegory(command.Category, Start, End, cancellationToken);
+                if (CheckDateRage)
+                    return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.DuplicateDate);
+            }
+            //End check daterange
             var categoryId = await _categoryApplication.GetCategoryByCategoryType(command.Category, cancellationToken);
             var Foodstring = command.Food.Replace(",", string.Empty);
             var Food = Convert.ToInt64(Foodstring);
             var result = await _categoryPriceRepository.GetByIdAsync(cancellationToken, command.Id);
-            result.Edit(Food, command.Gender, command.Category, Convert.ToDateTime(command.Start.ToPersianDateTime()),
-              Convert.ToDateTime(command.End.ToPersianDateTime()), categoryId.Id);
+            result.Edit(Food, command.Gender, command.Category, Start, End, categoryId.Id);
             await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
-        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, string? start, string? end, CategoryType category, GenderType gender ,int PageId = 1)
         {
-            return await _categoryPriceRepository.GetAll(cancellationToken, PageId, trim);
+            return await _categoryPriceRepository.GetAll(cancellationToken, start,end,category,gender,PageId);
         }
 
         public async Task<bool> CheckDateForCtegory(CategoryType categoryType, DateTime Start, DateTime End, CancellationToken cancellationToken)
@@ -100,6 +121,22 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 }
             }
             return false;
+        }
+
+        public async Task<EditCommand> GetDetails(Guid id, CancellationToken cancellationToken)
+        {
+           var result= await _categoryPriceRepository.GetByIdAsync(cancellationToken, id);
+            return new EditCommand() 
+            {Id=result.Id,
+            Category=result.Category,
+            CategoryId=result.CategoryId,
+            End=result.End.ToShortPersianDateString(),
+            Food=Convert.ToString( result.Food),
+            Start=result.Start.ToShortPersianDateString(),  
+            Gender=result.Gender,
+            StartLaste=result.Start,
+            EndLaste=result.End,    
+            };
         }
     }
 }

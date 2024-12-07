@@ -27,7 +27,11 @@ namespace Sheep.Core.Application.Sheep
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
         {   //باید انجام شود
             // چک کرن تاریخ فروش از تاریخ تولد بیشتر یا کمتر نباشد
-            //چک کردن تاریخ تولد بزرگتر از تاریخ روز نباشد
+            //چک کردن تاریخ تولد بزرگتر از تاریخ روز نباشد 
+            var SheepBirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
+            var SheepSellDate = command.SheepSellDate.ToGregorianDateTime();
+            var SheepShopDate=command.SheepshopDate.ToGregorianDateTime();
+            var SheepWastedDate=command.SheepwastedDate.ToGregorianDateTime();
             if (await _sheepRepository.Exists(x => x.SheepNumber == command.SheepNumber))
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.DuplicatedRecord);
             if (command.SheepParentId != null)
@@ -47,12 +51,10 @@ namespace Sheep.Core.Application.Sheep
                 }
                 command.ParentId = sheepEntity.Id;
             }
-            int age = Calculate.CalculateAge(Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()));
-            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
-            SheepEntity entity = new SheepEntity(command.SheepNumber, Sheep_BirthDate,
-                command.SheepshopDate.ToGregorianDateTime(),
-                command.ParentId, command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(),
-                command.SheepwastedDate.ToGregorianDateTime(), age);
+            int age = Calculate.CalculateAge(SheepBirthDate);
+            SheepEntity entity = new SheepEntity(command.SheepNumber, SheepBirthDate,
+                SheepShopDate, command.ParentId, command.SheepState, command.Gender, SheepSellDate,
+                SheepWastedDate, age);
             await _sheepRepository.AddAsync(entity, cancellationToken);
             var createSheepcategorCommand = new CreateSheepCategorCommand()
             {
@@ -81,6 +83,10 @@ namespace Sheep.Core.Application.Sheep
 
         public async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
+            var SheepBirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
+            var SheepSellDate = command.SheepSellDate.ToGregorianDateTime();
+            var SheepShopDate = command.SheepshopDate.ToGregorianDateTime();
+            var SheepWastedDate =command.SheepwastedDate.ToGregorianDateTime();
             if ((command.PastSheepNumber != command.SheepNumber))
             {
                 //check sheep mother is exists
@@ -129,12 +135,10 @@ namespace Sheep.Core.Application.Sheep
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
 
             }
-            int age = Calculate.CalculateAge(Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime()));
-            var Sheep_BirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
+            int age = Calculate.CalculateAge(SheepBirthDate);
             sheep.Edit(command.SheepNumber,
-                Sheep_BirthDate, command.SheepshopDate.ToGregorianDateTime(),
-                command.ParentId, command.SheepState, command.Gender, command.SheepSellDate.ToGregorianDateTime(),
-                command.SheepwastedDate.ToGregorianDateTime() ,age);
+                SheepBirthDate, SheepShopDate, command.ParentId, command.SheepState, command.Gender, SheepSellDate,
+                SheepWastedDate ,age);
             await _sheepRepository.SaveChangesAsync( cancellationToken);
             //Edit SheepCategory
             var EditsheepCategorCommand = new EditSheepCategoryCommand()

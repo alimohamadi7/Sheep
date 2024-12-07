@@ -1,5 +1,6 @@
 ﻿@model Sheep.Core.Application.Category.CategoryPrice.GetCategoryPriceQuery
 @using Sheep.Framework.Application.Utilities
+@using Sheep.Framework.Domain.Entities
 @using DNTPersianUtils.Core
 <div class="content-wrapper" style="min-height: 1301.27px;">
     <section class="content-header">
@@ -28,9 +29,14 @@
                         <div class="card-header">
                             <h3 class="card-title">اطلاعات قیمت خوراک</h3>
                             <div class="card-tools">
-                                <form action="/Sheep" method="get">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="trim" value="@Model.trim" class="form-control float-right" placeholder="جستجو">
+                                <form action="/CategoryPrice" method="get">
+                                    <div class="input-group input-group-sm" style="width: 100%;">
+                                        <select type="text" name="category" asp-items="@Html.GetEnumSelectList<CategoryType>()" value="@Model.Category" class="form-control float-right" placeholder="گروه">
+                                            </select>
+                                        <select type="text" name="gender" asp-items="@Html.GetEnumSelectList<GenderType>()" value="@Model.Gender" class="form-control float-right" placeholder="گروه">
+                                        </select>
+                                        <input type="text" name="start" data-jdp value="" onclick="me()" class="form-control float-right" placeholder="از تاریخ">
+                                        <input type="text" name="end" data-jdp value="" class="form-control float-right" placeholder="تا تاریخ">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
@@ -64,7 +70,7 @@
                                             <td>@item.Food.ToString("#,0")</td>
                                             <td>@item.Start.ToShortPersianDateString()</td>
                                             <td>@item.End.ToShortPersianDateString()</td>
-                                            <td>@item.CategoryEntity.CategoryName</td>
+                                            <td>@EnumExtensions.ToDisplay(item.Category)</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Edit", "CategoryPrice", new { id = item.Id})">
@@ -89,7 +95,7 @@
             </div>
         </div>
     </section>
-    <partial name="_Pagination" data="@Model.trim,@Model.Addres,@Model.CurentPage,@Model.PageId,@Model.PageCount" />
+    <partial name="_Pagination_V3" data="@Model.Start,@Model.End,@Model.Category,@Model.Gender,@Model.Addres,@Model.CurentPage,@Model.PageId,@Model.PageCount" />
 </div>
 
 @section Scripts {
@@ -105,25 +111,31 @@
                     container: "body .modal.show",
                     selector: '.modal input[data-jdp]'
                 });
+             var Food=$("#Food").val();
+             if(Food !=null)
+             {
+                 Food= document.getElementById("Food");
+                 format(Food)
+             }
             });
             $("#CategoryPrice").addClass("active");
         });
-
+        }
     </script>
 
     <script>
-          function format(input)
-            {
-                var nStr = input.value + '';
-                nStr = nStr.replace( /\,/g, "");
-                x = nStr.split( '.' );
-                x1 = x[0];
-                x2 = x.length > 1 ? '.' + x[1] : '';
-                var rgx = /(\d+)(\d{3})/;
-                while ( rgx.test(x1) ) {
-                    x1 = x1.replace( rgx, '$1' + ',' + '$2' );
-                }
-                input.value = x1 + x2;
-            }
+        function format(input)
+          {
+              var nStr = input.value + '';
+              nStr = nStr.replace( /\,/g, "");
+              x = nStr.split( '.' );
+              x1 = x[0];
+              x2 = x.length > 1 ? '.' + x[1] : '';
+              var rgx = /(\d+)(\d{3})/;
+              while ( rgx.test(x1) ) {
+                  x1 = x1.replace( rgx, '$1' + ',' + '$2' );
+              }
+              input.value = x1 + x2;
+          }
     </script>
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DNTPersianUtils.Core;
+using Microsoft.EntityFrameworkCore;
 using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Domain.Category;
@@ -15,13 +16,14 @@ namespace Sheep.Infra.Data.Sql.CategoryPrice
             _context = dbContext;
         }
 
-        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, int PageId = 1, string trim = "")
+        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, string? start, string? end, CategoryType category, GenderType gender, int PageId = 1)
         {
-            IQueryable<CategoryPriceEntity> result = TableNoTracking.Where(x => x.IsDeleted == false).
-                Include(x=>x.CategoryEntity);
-            if (!string.IsNullOrEmpty(trim))
+            var Start = Convert.ToDateTime(start.ToGregorianDateTime());
+            var End = Convert.ToDateTime(end.ToGregorianDateTime());
+            IQueryable<CategoryPriceEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);
+            if (!string.IsNullOrEmpty(start) && !string.IsNullOrEmpty(end))
             {
-                //result = result.Where(u => u.SheepNumber.Contains(trim));
+                result = result.Where(u =>( u.Start>=Start && u.End<=End) && u.Category==category &&u.Gender==gender);
             }
             int take = 50;
             int skip = (PageId - 1) * take;
@@ -29,13 +31,16 @@ namespace Sheep.Infra.Data.Sql.CategoryPrice
 
             GetCategoryPriceQuery CategoryPriceQuery = new GetCategoryPriceQuery()
             {
-                trim = trim,
+                Start=start,
+                End=end,
+                Category=category,
+                Gender=gender,
                 CategoryPriceEntities = await result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take)
                 .ToListAsync(cancellationToken)
 
             };
 
-            CategoryPriceQuery.GeneratePagging(result, PageId, take, trim, Addres);
+            CategoryPriceQuery.GeneratePagging_V3(result, PageId, take, Addres,start,end,gender,category);
             return CategoryPriceQuery;
         }
 

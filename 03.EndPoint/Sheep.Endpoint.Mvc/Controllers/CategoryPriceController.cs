@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Application.Category.Contracts;
+using Sheep.Framework.Domain.Entities;
 using System.Text.RegularExpressions;
 
 namespace Sheep.Endpoint.Mvc.Controllers
@@ -11,26 +12,19 @@ namespace Sheep.Endpoint.Mvc.Controllers
     public class CategoryPriceController : Controller
     {
         private readonly ICategoryPriceApplication _categoryPriceApplication;
-        private readonly ICategoryApplication _categoryApplication;
-        public CategoryPriceController(ICategoryPriceApplication categoryPriceApplication, ICategoryApplication categoryApplication)
+        public CategoryPriceController(ICategoryPriceApplication categoryPriceApplication)
         {
             _categoryPriceApplication = categoryPriceApplication;
-            _categoryApplication = categoryApplication;
+
         }
 
-        public async Task< IActionResult> Index(CancellationToken cancellationToken ,int PageId=1, string trim="")
+        public async Task< IActionResult> Index(CancellationToken cancellationToken,string? start, string? end,CategoryType category,GenderType gender, int PageId=1)
         {
-            return View(await _categoryPriceApplication.GetAll(cancellationToken , PageId,trim));
+            return View(await _categoryPriceApplication.GetAll(cancellationToken , start,end,category,gender,PageId));
         }
         public async Task<IActionResult> Create(CancellationToken cancellationToken)
         {
-            var result = await _categoryApplication.GetAllCategoryForFood(cancellationToken);
-        var Selectlist=  result.Select(x => new SelectListItem 
-            {
-                Text = x.CategoryName,
-                Value = x.Id.ToString()
-            });
-            ViewData["Category"] = new SelectList(Selectlist, "Value", "Text");
+
             return PartialView(nameof (Create));
         }
         [HttpPost]
@@ -39,6 +33,16 @@ namespace Sheep.Endpoint.Mvc.Controllers
             var result=await _categoryPriceApplication.Create(Command,cancellationToken);
             return new JsonResult(result);  
         }
-
+        public async Task<IActionResult> Edit(Guid Id, CancellationToken cancellationToken)
+        {
+            var result = await _categoryPriceApplication.GetDetails(Id, cancellationToken);
+            return PartialView (result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCommand Command, CancellationToken cancellationToken)
+        {
+            var result=await _categoryPriceApplication.Edit(Command, cancellationToken); 
+            return new JsonResult (result);
+        }
     }
 }
