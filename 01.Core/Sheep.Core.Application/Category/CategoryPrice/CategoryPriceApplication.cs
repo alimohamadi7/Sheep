@@ -32,7 +32,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             {
                 if ((End - Start).TotalDays + 1 < 30)
                 {
-                    if (Start.DayOfYear == 50)
+                    if (Start.DayOfYear == 50 || Start.DayOfYear==51)
                     {
                         break;
                     }

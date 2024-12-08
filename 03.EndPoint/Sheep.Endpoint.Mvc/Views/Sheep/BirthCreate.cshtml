@@ -22,43 +22,65 @@
                           data-action="Refresh"
                           enctype="multipart/form-data">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="SheepNumber">شماره دام</label>
-                                <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
-                                <span asp-validation-for="SheepNumber" class="error"></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepNumber">شماره دام</label>
+                                        <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
+                                        <span asp-validation-for="SheepNumber" class="error"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepParentId"> شماره دام مادر</label>
+                                        <input type="text" asp-for="SheepParentId" class="form-control" id="SheepParentId" placeholder="شماره دام">
+                                        <span asp-validation-for="SheepParentId" class="error"></span>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="SheepParentId"> شماره دام مادر</label>
-                                <input type="text" asp-for="SheepParentId" class="form-control" id="SheepParentId" placeholder="شماره دام">
-                                <span asp-validation-for="SheepParentId" class="error"></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Gender">جنسیت</label>
+                                        <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
+                                        </select>
+                                        <span asp-validation-for="Gender" class="error"></span>
+                                        <span id='output'></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepbirthDate">تاریخ تولد</label>
+                                        <input type="text" data-jdp data-jdp-max-date="today" asp-for=SheepbirthDate class="form-control DatePicker" placeholder="تاریخ تولد">
+                                        <span asp-validation-for="SheepbirthDate" class="error"></span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="Gender">جنسیت</label>
-                                <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
-                                </select>
-                                <span asp-validation-for="Gender" class="error"></span>
-                                <span id='output'></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="SheepbirthDate">تاریخ تولد</label>
-                                <input type="text" data-jdp data-jdp-max-date="today" asp-for=SheepbirthDate class="form-control DatePicker" placeholder="تاریخ تولد">
-                                <span asp-validation-for="SheepbirthDate" class="error"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="SheepState">وضعیت</label>
-                                <select class="form-control" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
-                                </select>
-                                <span asp-validation-for="SheepState" class="error"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="Sheepshop" class="SheepSellDate" hidden>تاریخ فروش</label>
-                                <input type="text" data-jdp data-jdp-max-date="today" hidden asp-for="SheepSellDate" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
-                                <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="SheepwastedDate" class="SheepwastedDate" hidden>تاریخ تلف شدن</label>
-                                <input type="text" data-jdp data-jdp-max-date="today" hidden asp-for="SheepwastedDate" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
-                                <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepState">وضعیت</label>
+                                        <select class="form-control" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
+                                        </select>
+                                        <span asp-validation-for="SheepState" class="error"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group SheepSellDate">
+                                        <label for="SheepSellDate" class="SheepSellDate" hidden>تاریخ فروش</label>
+                                        <input type="text" data-jdp data-jdp-max-date="today" hidden asp-for="SheepSellDate" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
+                                        <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
+                                    </div>
+                                    <div class="form-group SheepwastedDate">
+                                        <label for="SheepwastedDate" class="SheepwastedDate" hidden>تاریخ تلف شدن</label>
+                                        <input type="text" data-jdp data-jdp-max-date="today" hidden asp-for="SheepwastedDate" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                        <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
