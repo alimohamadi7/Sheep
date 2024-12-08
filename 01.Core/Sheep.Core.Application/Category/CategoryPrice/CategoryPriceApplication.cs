@@ -26,6 +26,21 @@ namespace Sheep.Core.Application.Category.CategoryPrice
         {
             DateTime Start = Convert.ToDateTime(command.Start.ToGregorianDateTime());
             DateTime End = Convert.ToDateTime(command.End.ToGregorianDateTime());
+            // Check start and end not less 30 day
+            var a = Start.DayOfYear;
+            do
+            {
+                if ((End - Start).TotalDays + 1 < 30)
+                {
+                    if (Start.DayOfYear == 50)
+                    {
+                        break;
+                    }
+                    return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.DatePeriodNotValid);
+
+                }
+            }
+            while (false);
             //check category ram not gendertype female
             if (command.Gender == GenderType.Female && command.Category == CategoryType.Ram)
                 return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.RamIsnotFemale);
@@ -78,7 +93,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             if (Start == End)
                 return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.StartDateEqualEndDate);
             //check datarange
-            if (Start != command.StartLaste &&End !=command.EndLaste)
+            if (Start != command.StartLaste && End != command.EndLaste)
             {
                 var CheckDateRage = await CheckDateForCtegory(command.Category, Start, End, cancellationToken);
                 if (CheckDateRage)
@@ -94,9 +109,9 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             return OperationResult<bool>.SuccessResult(true);
         }
 
-        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, string? start, string? end, CategoryType category, GenderType gender ,int PageId = 1)
+        public async Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, string? start, string? end, CategoryType category, GenderType gender, int PageId = 1)
         {
-            return await _categoryPriceRepository.GetAll(cancellationToken, start,end,category,gender,PageId);
+            return await _categoryPriceRepository.GetAll(cancellationToken, start, end, category, gender, PageId);
         }
 
         public async Task<bool> CheckDateForCtegory(CategoryType categoryType, DateTime Start, DateTime End, CancellationToken cancellationToken)
@@ -104,7 +119,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             var pageId = 1;
             for (int i = 0; i < pageId; i++)
             {
-                var category = await _categoryPriceRepository.GetCategoryByType(categoryType,cancellationToken,pageId);
+                var category = await _categoryPriceRepository.GetCategoryByType(categoryType, cancellationToken, pageId);
 
                 foreach (var item in category)
                 {
@@ -125,17 +140,18 @@ namespace Sheep.Core.Application.Category.CategoryPrice
 
         public async Task<EditCommand> GetDetails(Guid id, CancellationToken cancellationToken)
         {
-           var result= await _categoryPriceRepository.GetByIdAsync(cancellationToken, id);
-            return new EditCommand() 
-            {Id=result.Id,
-            Category=result.Category,
-            CategoryId=result.CategoryId,
-            End=result.End.ToShortPersianDateString(),
-            Food=Convert.ToString( result.Food),
-            Start=result.Start.ToShortPersianDateString(),  
-            Gender=result.Gender,
-            StartLaste=result.Start,
-            EndLaste=result.End,    
+            var result = await _categoryPriceRepository.GetByIdAsync(cancellationToken, id);
+            return new EditCommand()
+            {
+                Id = result.Id,
+                Category = result.Category,
+                CategoryId = result.CategoryId,
+                End = result.End.ToShortPersianDateString(),
+                Food = Convert.ToString(result.Food),
+                Start = result.Start.ToShortPersianDateString(),
+                Gender = result.Gender,
+                StartLaste = result.Start,
+                EndLaste = result.End,
             };
         }
     }
