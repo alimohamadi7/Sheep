@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Domain.Category;
+using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
 
@@ -40,7 +41,7 @@ namespace Sheep.Infra.Data.Sql.CategoryPrice
 
             };
 
-            CategoryPriceQuery.GeneratePagging_V3(result, PageId, take, Addres,start,end,gender,category);
+            CategoryPriceQuery.GeneratePagging_V3(result, PageId,take, Addres,start,end,gender,category);
             return CategoryPriceQuery;
         }
 

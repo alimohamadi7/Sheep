@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
-using Sheep.Core.Application.Category.Contracts;
 using Sheep.Framework.Domain.Entities;
-using System.Text.RegularExpressions;
+
 
 namespace Sheep.Endpoint.Mvc.Controllers
 {
@@ -43,6 +40,18 @@ namespace Sheep.Endpoint.Mvc.Controllers
         {
             var result=await _categoryPriceApplication.Edit(Command, cancellationToken); 
             return new JsonResult (result);
+        }
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        {
+            var result = await _categoryPriceApplication.GetDetails(id, cancellationToken);
+            return PartialView(nameof(Delete), result);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfrim(Guid id, CancellationToken cancellationToken)
+        {
+            var result = await _categoryPriceApplication.Delete(id, cancellationToken);
+            return new JsonResult(result);
         }
     }
 }
