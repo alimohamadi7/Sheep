@@ -1,0 +1,48 @@
+﻿@model Framework.Application.Entity.BasePagging
+<nav aria-label="..." class="">
+    <ul class="pagination d-flex justify-content-center align-self-center">
+        @if (Model.CurentPage > 1)
+        {
+            <li class="page-item ">
+                <a class="page-link" href="@Model.Addres?pageId =1&start=@Model.Start&end=@Model.End" tabindex="-1">اولین </a>
+            </li>
+            <li class="page-item ">
+                <a class="page-link" href="@Model.Addres?pageId=@(Model.CurentPage - 1)&start=@Model.Start&end=@Model.End tabindex="-1">قبلی</a>
+            </li>
+        }
+        @if (Model.CurentPage + 7 < Model.PageCount)
+        {
+            for (int i = Model.CurentPage - 4; i <= Model.PageCount; i++)
+            {
+                if (i >= 1)
+                {
+                    <li class="page-item @((i == Model.CurentPage) ? "active" : "")">
+                        <a class="page-link" href="@Model.Addres?pageId=@i&start=@Model.Start&end=@Model.End">@i</a>
+                    </li>
+                }
+            }
+        }
+        @if (Model.CurentPage + 7 >= Model.PageCount)
+        {
+            for (int j = Model.CurentPage - 4; j <= Model.PageCount; j++)
+            {
+                if (j >= 1)
+                {
+                    <li class="page-item @((j == Model.CurentPage) ? "active" : "")">
+                        <a class="page-link" href="@Model.Addres?pageId=@j&start=@Model.Start&end=@Model.End">@j</a>
+                    </li>
+                }
+            }
+        }
+        @if (Model.CurentPage < Model.PageCount)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Model.Addres?pageId=@(Model.CurentPage + 1)&start=@Model.Start&end=@Model.End">بعدی</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="@Model.Addres?pageId=@(Model.PageCount)&start=@Model.Start&end=@Model.End">آخرین </a>
+            </li>
+        }
+    </ul>
+    <div class="d-flex justify-content-center align-self-center"> تعداد کل صفحات:@Model.PageCount - صفحه:@Model.CurentPage</div>
+</nav>

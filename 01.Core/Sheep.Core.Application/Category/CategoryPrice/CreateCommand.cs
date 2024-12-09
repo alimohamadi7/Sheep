@@ -2,7 +2,7 @@
 using Sheep.Framework.Application.Validation;
 using Sheep.Framework.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
+
 
 namespace Sheep.Core.Application.Category.CategoryPrice
 {

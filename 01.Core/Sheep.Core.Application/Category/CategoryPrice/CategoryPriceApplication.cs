@@ -53,7 +53,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             //Check StartDate not Equal End
             if (Start == End)
                 return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.StartDateEqualEndDate);
-            //check datarange
+            //check datarange not to exist
             var CheckDateRage = await CheckDateForCtegory(command.Category, Start, End, cancellationToken);
             if (CheckDateRage)
                 return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.DuplicateDate);
@@ -80,6 +80,21 @@ namespace Sheep.Core.Application.Category.CategoryPrice
         {
             DateTime Start = Convert.ToDateTime(command.Start.ToGregorianDateTime());
             DateTime End = Convert.ToDateTime(command.End.ToGregorianDateTime());
+            // Check start and end not less 30 day
+            var a = Start.DayOfYear;
+            do
+            {
+                if ((End - Start).TotalDays + 1 < 30)
+                {
+                    if (Start.DayOfYear == 50 || Start.DayOfYear == 51)
+                    {
+                        break;
+                    }
+                    return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.DatePeriodNotValid);
+
+                }
+            }
+            while (false);
             //check category ram not gendertype female
             if (command.Gender == GenderType.Female && command.Category == CategoryType.Ram)
                 return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.RamIsnotFemale);
@@ -92,7 +107,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             //Check StartDate not Equal End
             if (Start == End)
                 return OperationResult<bool>.FailureResult(command.Category.ToString(), ApplicationMessages.StartDateEqualEndDate);
-            //check datarange
+            //check datarange not to exist
             if (Start != command.StartLaste && End != command.EndLaste)
             {
                 var CheckDateRage = await CheckDateForCtegory(command.Category, Start, End, cancellationToken);

@@ -20,6 +20,9 @@ using Sheep.Infra.Data.Sql.Sheep.SheepCategory;
 using Sheep.Infra.BackgroundTask.Background;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Application.Category.CategoryPrice;
+using Sheep.Core.Application.Wages_overheads.Contracts;
+using Sheep.Core.Application.Wages_overheads;
+using Sheep.Infra.Data.Sql.Wages_overheads;
 
 
 namespace Sheep.Infra.bootstraper
@@ -39,6 +42,8 @@ namespace Sheep.Infra.bootstraper
             services.AddTransient<ISheepCategoryApplication ,SheepCategoryApplication>();
             services.AddTransient<ISheepCategoryRepository,SheepCategoryRepository>();
             services.AddSingleton<IBackgroundJobs, BackgroundJobs>();
+            services.AddTransient<IWagesoverheadsApplication,WagesoverheadsApplication>();
+            services.AddTransient<IWagesoverheadsRepository,WagesOverheadRepository>();
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)

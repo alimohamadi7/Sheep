@@ -11,17 +11,21 @@ namespace Sheep.Core.Domain.Wages_overheads
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public Wages_overheadsEntity() { }  
-        public Wages_overheadsEntity(long salary, long overhead)
+        public Wages_overheadsEntity(long salary, long overhead ,DateTime start,DateTime end)
         {
             Salary = salary;
             Overhead = overhead;
             IsDeleted = false;
+            Start = start;
+            End = end;
 
         }
-        public void Edit( long salary, long overhead)
+        public void Edit( long salary, long overhead, DateTime start, DateTime end)
         {
             Salary = salary;
             Overhead = overhead;
+            Start = start;
+            End = end;
         }
         public void Delete()
         {

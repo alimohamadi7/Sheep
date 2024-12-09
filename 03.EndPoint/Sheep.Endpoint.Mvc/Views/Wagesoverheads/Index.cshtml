@@ -1,4 +1,4 @@
-﻿@model Sheep.Core.Application.Category.CategoryPrice.GetCategoryPriceQuery
+﻿@model Sheep.Core.Application.Wages_overheads.GetWagesOverheadQuery
 @using Sheep.Framework.Application.Utilities
 @using Sheep.Framework.Domain.Entities
 @using DNTPersianUtils.Core
@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
-                        <li class="breadcrumb-item active">قیمت خوراک</li>
+                        <li class="breadcrumb-item active">قیمت دستمزد و سربار</li>
                     </ol>
                 </div>
             </div>
@@ -22,23 +22,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col col-md-12 m-md-2">
-                    <a class="btn btn-success btn-lg m-1" href="#showmodal=@Url.Action("Create", "CategoryPrice")">ثبت قیمت</a>
+                    <a class="btn btn-success btn-lg m-1" href="#showmodal=@Url.Action("Create", "Wagesoverheads")">ثبت قیمت</a>
                 </div>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">اطلاعات قیمت خوراک</h3>
+                            <h3 class="card-title">اطلاعات خوراک و سربار</h3>
                             <div class="card-tools">
-                                <form action="/CategoryPrice" method="get">
+                                <form action="/Wagesoverheads" method="get">
                                     <div class="input-group input-group-sm" style="width: 100%;">
-                                        <a href="/Categoryprice" class="btn btn-primary form-control float-right" style="text-align:center">خالی کردن</a>
-                                        <select type="text" name="category" asp-for="Category" asp-items="@Html.GetEnumSelectList<CategoryType>()"  class="form-control float-right" placeholder="گروه">
-                                            </select>
-                                        <select type="text" name="gender" asp-for="Gender" asp-items="@Html.GetEnumSelectList<GenderType>()"  class="form-control float-right" placeholder="گروه">
-                                    
-                                        </select>
-                                        <input type="text" name="start"  value="@Model.Start" id="Start"  class="form-control float-right" placeholder="از تاریخ">
-                                        <input type="text" name="end"  value="@Model.End" id="End" class="form-control float-right" placeholder="تا تاریخ">
+                                        <a href="/Wagesoverheads" class="btn btn-primary form-control float-right" style="text-align:center">خالی کردن</a>
+                                        <input type="text" name="start" value="@Model.Start" id="Start" class="form-control float-right" placeholder="از تاریخ">
+                                        <input type="text" name="end" value="@Model.End" id="End" class="form-control float-right" placeholder="تا تاریخ">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
@@ -54,10 +49,10 @@
                                 <thead>
                                     <tr>
                                         <th>ردیف</th>
-                                        <th>قیمت  (ریال)</th>
+                                        <th>دستمزد (ریال)</th>
+                                        <th>سربار (ریال)</th>
                                         <th>تاریخ شروع</th>
                                         <th>تاریخ پایان</th>
-                                        <th>گروه</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -65,21 +60,21 @@
                                     @{
                                         int i = 1;
                                     }
-                                    @foreach (var item in Model.CategoryPriceEntities)
+                                    @foreach (var item in Model.wagesOverheads)
                                     {
                                         <tr>
                                             <td>@i</td>
-                                            <td>@item.Food.ToString("#,0")</td>
+                                            <td>@item.Salary.ToString("#,0")</td>
+                                            <td>@item.Overhead.ToString("#,0")</td>
                                             <td>@item.Start.ToShortPersianDateString()</td>
                                             <td>@item.End.ToShortPersianDateString()</td>
-                                            <td>@EnumExtensions.ToDisplay(item.Category)</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
-                                                   href="#showmodal=@Url.Action("Edit", "CategoryPrice", new { id = item.Id})">
+                                                   href="#showmodal=@Url.Action("Edit", "Wagesoverheads", new { id = item.Id})">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <a class="btn btn-danger pull-right m-rl-5"
-                                                   href="#showmodal=@Url.Action("Delete", "CategoryPrice", new { id = item.Id})">
+                                                   href="#showmodal=@Url.Action("Delete", "Wagesoverheads", new { id = item.Id})">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -97,7 +92,7 @@
             </div>
         </div>
     </section>
-    <partial name="_Pagination_V3" data="@Model.Start,@Model.End,@Model.Category,@Model.Gender,@Model.Addres,@Model.CurentPage,@Model.PageId,@Model.PageCount" />
+    <partial name="_Pagination_V4" data="@Model.Start,@Model.End,@Model.Addres,@Model.CurentPage,@Model.PageId,@Model.PageCount" />
 </div>
 
 @section Scripts {
@@ -116,14 +111,20 @@
                     container: "body .modal.show",
                     selector: '.modal input[data-jdp]'
                 });
-             var Food=$("#Food").val();
-             if(Food !=null)
+             var Salary=$("#Salary").val();
+              var Overhead=$("#Overhead").val();
+             if(Salary !=null)
              {
-                 Food= document.getElementById("Food");
-                 format(Food)
+                 Salary= document.getElementById("Salary");
+                 format(Salary)
+             }
+              if(Overhead !=null)
+             {
+                 Overhead= document.getElementById("Overhead");
+                 format(Salary)
              }
             });
-            $("#CategoryPrice").addClass("active");
+            $("#Wagesoverheads").addClass("active");
             $("#Start").pDatepicker({
             initialValue: false,
             format: 'YYYY/MM/DD',
@@ -142,7 +143,7 @@
             }
         });
         });
-       
+
     </script>
 
     <script>
@@ -161,3 +162,4 @@
           }
     </script>
 }
+

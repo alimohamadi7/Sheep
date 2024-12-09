@@ -50,5 +50,15 @@ namespace Framework.Application.Entity
             Gender = gender;
             Category=category;
         }
+        public void GeneratePagging_V4(IQueryable<object> data, int pageId, int take, string addres, string? start, string? end)
+        {
+            DataCount = data.Count();
+            CurentPage = pageId;
+            PageCount = (int)Math.Ceiling(data.Count() / (double)take);
+            Take = take;
+            Addres = addres;
+            Start = start;
+            End = end;
+        }
     }
 }

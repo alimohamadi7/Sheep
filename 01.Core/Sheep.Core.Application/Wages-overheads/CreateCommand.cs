@@ -10,13 +10,19 @@ namespace Sheep.Core.Application.Wages_overheads
     {
         [Display(Name = "دستمزد")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        [NotZero(ErrorMessage = ValidationMessages.NotZero)]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = ValidationMessages.Invalidnumber)]
-        public long Salary { get; set; }
+
+        [RegularExpression(@"[1-9][0-9]*(,[0-9]*)*", ErrorMessage = ValidationMessages.Invalidnumber)]
+        public string Salary { get; set; }
         [Display(Name = "سربار")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        [NotZero(ErrorMessage = ValidationMessages.NotZero)]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = ValidationMessages.Invalidnumber)]
-        public long Overhead { get; set; }
+
+        [RegularExpression(@"[1-9][0-9]*(,[0-9]*)*", ErrorMessage = ValidationMessages.Invalidnumber)]
+        public string Overhead { get; set; }
+        [Display(Name = "تاریخ شروع")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        public string Start { get; set; }
+        [Display(Name = "تاریخ پایان")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        public string End { get; set; }
     }
 }
