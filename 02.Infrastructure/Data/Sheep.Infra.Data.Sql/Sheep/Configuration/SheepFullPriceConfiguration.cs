@@ -11,7 +11,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.Configuration
             builder.ToTable(nameof(SheepFullPriceEntity));
             builder.HasKey(e => e.Id);
             builder.Property(x => x.PriceSheep).IsRequired(false);
-            builder.Property(x => x.Expectations).IsRequired(false);
+            builder.Property(x => x.Unabsorbedcosts).IsRequired(false);
             builder.HasOne(x => x.SheepEntity).WithMany(x => x.SheepFullPrices).
                 HasForeignKey(x => x.SheepId);
         }
