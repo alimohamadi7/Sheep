@@ -10,5 +10,7 @@ namespace Sheep.Core.Application.Fiscalyear
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string Start { get; set; }
         [Display(Name = "تاریخ پایان")]
+        [Required(ErrorMessage = ValidationMessages.IsRequired)]
+        public string End { get; set; }
     }
 }

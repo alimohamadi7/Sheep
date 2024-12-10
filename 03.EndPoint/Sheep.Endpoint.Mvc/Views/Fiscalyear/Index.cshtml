@@ -1,5 +1,5 @@
-﻿@model Sheep.Framework.Application.Operation.OperationResult<Sheep.Core.Application.Category.GetCategoryQouery>
-@using Sheep.Framework.Application.Utilities
+﻿@model Sheep.Core.Application.Fiscalyear.GetFiscalyearQuery
+@using DNTPersianUtils.Core
 
 <div class="content-wrapper" style="min-height: 1301.27px;">
     <section class="content-header">
@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">صفحه نخست</a></li>
-                        <li class="breadcrumb-item active">گروه دامی</li>
+                        <li class="breadcrumb-item active">سال مالی</li>
                     </ol>
                 </div>
             </div>
@@ -21,13 +21,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col col-md-3 m-md-2">
-                    <a class="btn btn-success btn-lg" href="#showmodal=@Url.Action("Create", "Category")">ثبت گروه جدید</a>
+                    <a class="btn btn-success btn-lg" href="#showmodal=@Url.Action("Create", "Fiscalyear")">ثبت سال مالی جدید</a>
 
                 </div>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">اطلاعات گروه دام</h3>
+                            <h3 class="card-title">اطلاعات سال مالی</h3>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
@@ -45,7 +45,8 @@
                                 <thead>
                                     <tr>
                                         <th>ردیف</th>
-                                        <th>نام گروه</th>
+                                        <th>از تاریخ</th>
+                                        <th>تا تاریخ</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -53,18 +54,19 @@
                                     @{
                                         int i = 1;
                                     }
-                                    @foreach (var item in Model.Result.categoryEntities)
+                                    @foreach (var item in Model.fiscalyearEntities)
                                     {
                                         <tr>
                                             <td>@i</td>
-                                            <td>@item.CategoryName</td>
+                                            <td>@item.Start.ToShortPersianDateString()</td>
+                                            <td>@item.End.ToShortPersianDateString()</td>
                                             <td>
-                                                <a class="btn btn-warning pull-right m-rl-5"
+    @*                                             <a class="btn btn-warning pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Edit", "Category", new { id = item.Id})">
                                                     <i class="fa fa-edit"></i> ویرایش
-                                                </a>
+                                                </a> *@
                                                 <a class="btn btn-danger pull-right m-rl-5"
-                                                   href="#showmodal=@Url.Action("Delete", "Category", new { id = item.Id})">
+                                                   href="#showmodal=@Url.Action("Delete", "Fiscalyear", new { id = item.Id})">
                                                     <i class="fa fa-trash"></i> حذف
                                                 </a>
                                             </td>
@@ -83,10 +85,38 @@
         </div>
     </section>
 </div>
-@section Scripts{
+@section Scripts {
+    <link href="~/lib/datepicker/jalalidatepicker.min.css" rel="stylesheet" />
+    <script src="~/lib/datepicker/jalalidatepicker.min.js"></script>
     <script>
-        $("#SheepHead").addClass("active");
-        $("#Category").addClass("active");
-  
+                $(document).ready(function () {
+            $("#MainModal").on('show.bs.modal', function () {
+                jalaliDatepicker.startWatch({
+                    minDate: "attr",
+                    maxDate: "attr",
+                    zIndex: '1999',
+                    container: ".modal.show",
+                    selector: '.modal input[data-jdp]'
+                });
+            });
+            $("#Fiscalyear").addClass("active");
+            $("#Start").pDatepicker({
+            initialValue: false,
+            format: 'YYYY/MM/DD',
+            calendar:{
+                persian: {leapYearMode: 'astronomical', 'locale': 'fa',},
+            },
+
+        });
+           $('#End').persianDatepicker({
+            initialValue: false,
+             format: 'YYYY/MM/DD',
+            calendar:{
+            persian: {
+            leapYearMode: 'astronomical'
+                },
+            }
+        });
+        });
     </script>
 }

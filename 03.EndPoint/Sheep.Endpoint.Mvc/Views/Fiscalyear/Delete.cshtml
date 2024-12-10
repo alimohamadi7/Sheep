@@ -1,0 +1,28 @@
+﻿@model Sheep.Core.Application.Fiscalyear.EditCommand
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <form asp-action="Delete" asp-controller="Fiscalyear"
+              method="post"
+              data-ajax="true"
+              data-callback=""
+              data-action="Refresh"
+              enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <label class="control-label">آیا از حذف اطمینان دارید؟</label>
+                </div>
+
+                <input type="hidden" hidden class="form-control" asp-for="Id">
+            </div>
+            <!-- /.card-body -->
+            <div class="d-flex justify-content-center">
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-danger waves-effect">بلی</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">خیر</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>

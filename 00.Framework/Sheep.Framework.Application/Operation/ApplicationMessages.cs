@@ -20,6 +20,7 @@
         public static string InvalidStartDate = "  تاریخ شروع از پایان بزرگتر است  ";
         public static string StartDateEqualEndDate = " تاریخ شروع و پایان برابر است ";
         public static string DatePeriodNotValid = " بازه تاریخی نامعتبر است ";
+        public static string NotFisCalYearValid = " سال مالی وجود دارد  ";
     }
 }
 

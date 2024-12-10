@@ -1,10 +1,11 @@
 ﻿
 
+using Sheep.Core.Domain.Fiscalyear;
+
 namespace Sheep.Core.Application.Fiscalyear
 {
     public class GetFiscalyearQuery
     {
-        public DateTime Start {  get; set; }
-        public DateTime End { get; set; }
+       public List<FiscalyearEntity> fiscalyearEntities { get; set; }
     }
 }

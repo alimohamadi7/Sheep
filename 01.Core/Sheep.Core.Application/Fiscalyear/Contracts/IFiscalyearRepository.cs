@@ -9,6 +9,6 @@ namespace Sheep.Core.Application.Fiscalyear.Contracts
     public interface IFiscalyearRepository:IRepository<FiscalyearEntity>
     {
         Task<GetFiscalyearQuery> GetAll(CancellationToken cancellationToken);
-
+        Task<FiscalyearEntity> GetLastFiscalYear(CancellationToken cancellationToken);
     }
 }

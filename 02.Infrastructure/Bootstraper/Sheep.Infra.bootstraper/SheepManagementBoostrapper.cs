@@ -23,6 +23,9 @@ using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Wages_overheads.Contracts;
 using Sheep.Core.Application.Wages_overheads;
 using Sheep.Infra.Data.Sql.Wages_overheads;
+using Sheep.Core.Application.Fiscalyear.Contracts;
+using Sheep.Core.Application.Fiscalyear;
+using Sheep.Infra.Data.Sql.Fiscalyear;
 
 
 namespace Sheep.Infra.bootstraper
@@ -44,6 +47,8 @@ namespace Sheep.Infra.bootstraper
             services.AddSingleton<IBackgroundJobs, BackgroundJobs>();
             services.AddTransient<IWagesoverheadsApplication,WagesoverheadsApplication>();
             services.AddTransient<IWagesoverheadsRepository,WagesOverheadRepository>();
+            services.AddTransient<IFiscalyearApplication, FiscalyearApplication>();
+            services.AddTransient<IFiscalyearRepository,FiscalyearRepository>();
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)

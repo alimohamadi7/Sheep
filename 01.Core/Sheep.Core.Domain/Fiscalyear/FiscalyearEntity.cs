@@ -9,18 +9,18 @@ namespace Sheep.Core.Domain.Fiscalyear
         public bool IsDeleted { get; set; }
         public bool IsActive {  get; set; } 
         public FiscalyearEntity() { }
-        public FiscalyearEntity(DateTime start , DateTime end, bool isactive) 
+        public FiscalyearEntity(DateTime start , DateTime end) 
         { 
             Start = start;
             End = end;
-            IsActive = isactive;
+            IsActive = true;
             IsDeleted = false;
         }
-        public void Edit(DateTime start, DateTime end, bool isactive)
+        public void Edit(DateTime start, DateTime end)
         {
             Start = start;
             End = end;
-            IsActive=  isactive;
+            IsActive= true;
         }
         public void Delete() 
         {
