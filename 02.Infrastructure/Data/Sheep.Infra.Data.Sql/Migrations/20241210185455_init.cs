@@ -16,7 +16,8 @@ namespace Sheep.Infra.Data.Sql.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    CategoryName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -24,6 +25,23 @@ namespace Sheep.Infra.Data.Sql.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CategoryEntity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FiscalyearEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FiscalyearEntity", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,15 +74,36 @@ namespace Sheep.Infra.Data.Sql.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Wages_overheadsEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    Salary = table.Column<long>(type: "bigint", nullable: false),
+                    Overhead = table.Column<long>(type: "bigint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wages_overheadsEntity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategoryPriceEntity",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Food = table.Column<long>(type: "bigint", nullable: false),
-                    Salary = table.Column<long>(type: "bigint", nullable: false),
-                    Overhead = table.Column<long>(type: "bigint", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Calculated = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -86,7 +125,20 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     SheepId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ActiveGroup = table.Column<bool>(type: "bit", nullable: false),
+                    ActiveCategory = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Start_Zero_Three = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Zero_ThreeCalacute = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    End_Zero_Three = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start_Three_Six = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Three_SixCalcute = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    End_Three_Six = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start_Six_Eighteen = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Six_EighteenCalcute = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    End_Six_Eighteen = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start_Ram_Ewe = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Ram_EweCalcute = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -113,7 +165,7 @@ namespace Sheep.Infra.Data.Sql.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     PriceSheep = table.Column<long>(type: "bigint", nullable: true),
-                    Expectations = table.Column<long>(type: "bigint", nullable: true),
+                    Unabsorbedcosts = table.Column<long>(type: "bigint", nullable: true),
                     SheepId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -162,10 +214,16 @@ namespace Sheep.Infra.Data.Sql.Migrations
                 name: "CategoryPriceEntity");
 
             migrationBuilder.DropTable(
+                name: "FiscalyearEntity");
+
+            migrationBuilder.DropTable(
                 name: "SheepCategoryEntity");
 
             migrationBuilder.DropTable(
                 name: "SheepFullPriceEntity");
+
+            migrationBuilder.DropTable(
+                name: "Wages_overheadsEntity");
 
             migrationBuilder.DropTable(
                 name: "CategoryEntity");

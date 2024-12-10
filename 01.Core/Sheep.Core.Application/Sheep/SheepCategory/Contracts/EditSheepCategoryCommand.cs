@@ -2,7 +2,7 @@
 
 namespace Sheep.Core.Application.Sheep.SheepCategory.Contracts
 {
-    public class EditSheepCategoryCommand: CreateSheepCategorCommand
+    public class EditSheepCategoryCommand: CreateSheepCategoryCommand
     {
     }
 }

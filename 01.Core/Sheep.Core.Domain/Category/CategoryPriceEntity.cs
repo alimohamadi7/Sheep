@@ -12,6 +12,7 @@ namespace Sheep.Core.Domain.Category
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
         public Guid CategoryId { get; set; }
+        public bool Calculated { get; set; }
         public CategoryEntity CategoryEntity { get; set; }
         public CategoryPriceEntity() { }
         public CategoryPriceEntity(long food,GenderType gender , CategoryType category, DateTime start,DateTime end ,Guid categoryid)
@@ -23,7 +24,7 @@ namespace Sheep.Core.Domain.Category
             End = end;
             CategoryId = categoryid;
             Category=category;
-
+            Calculated = false;
         }
         public void Edit(long food,GenderType gender, CategoryType category, DateTime start,DateTime end ,Guid categoryid)
         {

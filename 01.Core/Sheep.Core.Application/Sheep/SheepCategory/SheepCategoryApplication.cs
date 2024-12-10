@@ -26,17 +26,20 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             _categoryApplication = categoryApplication;
         }
 
-        public async Task<OperationResult<bool>> Create(CreateSheepCategorCommand command, CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> Create(CreateSheepCategoryCommand command, CancellationToken cancellationToken)
         {
             command.Start_Zero_Three = command.Birthdate;
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
+            command.Start_Three_Six = command.Birthdate.AddDays(Ninety +One);
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
+            command.Start_Six_Eighteen= command.Birthdate.AddDays(One_hundred_eighty+One);
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
+            command.Start_Ram_Ewe= command.Birthdate.AddDays(Five_hundred_forty+One);
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             SheepCategoryEntity sheepCategoryEntity = new SheepCategoryEntity(command.SheepId, categoryEntity.Id,
-               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three, command.End_Three_Six,
-                command.End_Six_Eighteen);
+               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three, command.Start_Three_Six,command.End_Three_Six,
+              command.Start_Six_Eighteen,command.End_Six_Eighteen,command.Start_Ram_Ewe);
             await _SheepCategoryrepository.AddAsync(sheepCategoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
@@ -53,14 +56,16 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         {
             command.Start_Zero_Three = command.Birthdate;
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
+            command.Start_Three_Six = command.Birthdate.AddDays(Ninety + One);
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
+            command.Start_Six_Eighteen = command.Birthdate.AddDays(One_hundred_eighty + One);
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
-            command.ActiveCategory = OutCategory(command.Age, command.Gender);
+            command.Start_Ram_Ewe = command.Birthdate.AddDays(Five_hundred_forty + One);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             var CategorySheepEntity=await _SheepCategoryrepository.GetSheepCategoryBySheepId(command.SheepId,cancellationToken);
             CategorySheepEntity.Edit(command.SheepId, categoryEntity.Id,
-               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three, command.End_Three_Six,
-                command.End_Six_Eighteen);
+               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three, command.Start_Three_Six,command.End_Three_Six,
+                command.Start_Six_Eighteen,command.End_Six_Eighteen,command.Start_Ram_Ewe);
 
           await  _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
@@ -76,7 +81,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             throw new NotImplementedException();
         }
 
-        public Task<OperationResult<bool>> IsExistSheep(CreateSheepCategorCommand createCommand, CancellationToken cancellationToken)
+        public Task<OperationResult<bool>> IsExistSheep(CreateSheepCategoryCommand createCommand, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

@@ -6,34 +6,32 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sheep.Infra.Data.Sql.Migrations
 {
     /// <inheritdoc />
-    public partial class sortcolmnsheepentity : Migration
+    public partial class update : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<DateTime>(
-                name: "Start_Zero_Three",
+                name: "Ram_EweCalcute",
                 table: "SheepCategoryEntity",
                 type: "datetime2",
-                nullable: false,
+                nullable: true,
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2")
-                .Annotation("Relational:ColumnOrder", 7)
-                .OldAnnotation("Relational:ColumnOrder", 8);
+                oldType: "datetime2");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<DateTime>(
-                name: "Start_Zero_Three",
+                name: "Ram_EweCalcute",
                 table: "SheepCategoryEntity",
                 type: "datetime2",
                 nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2")
-                .Annotation("Relational:ColumnOrder", 8)
-                .OldAnnotation("Relational:ColumnOrder", 7);
+                oldType: "datetime2",
+                oldNullable: true);
         }
     }
 }

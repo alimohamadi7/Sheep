@@ -8,7 +8,6 @@ using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace Sheep.Core.Application.Sheep
@@ -28,6 +27,7 @@ namespace Sheep.Core.Application.Sheep
         {   //باید انجام شود
             // چک کرن تاریخ فروش از تاریخ تولد بیشتر یا کمتر نباشد
             //چک کردن تاریخ تولد بزرگتر از تاریخ روز نباشد 
+            //میش حتما 540 را برای ثبت بره طی کرده باشد
             var SheepBirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
             var SheepSellDate = command.SheepSellDate.ToGregorianDateTime();
             var SheepShopDate=command.SheepshopDate.ToGregorianDateTime();
@@ -56,7 +56,7 @@ namespace Sheep.Core.Application.Sheep
                 SheepShopDate, command.ParentId, command.SheepState, command.Gender, SheepSellDate,
                 SheepWastedDate, age);
             await _sheepRepository.AddAsync(entity, cancellationToken);
-            var createSheepcategorCommand = new CreateSheepCategorCommand()
+            var createSheepcategorCommand = new CreateSheepCategoryCommand()
             {
                 SheepId = entity.Id,
                 Age = entity.Age,

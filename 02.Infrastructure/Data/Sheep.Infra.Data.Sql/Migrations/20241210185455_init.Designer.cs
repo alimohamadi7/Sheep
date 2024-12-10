@@ -12,15 +12,15 @@ using Sheep.Infra.Data.Sql;
 namespace Sheep.Infra.Data.Sql.Migrations
 {
     [DbContext(typeof(SheepDbcontext))]
-    [Migration("20241129142410_add column gender to sheepcategory")]
-    partial class addcolumngendertosheepcategory
+    [Migration("20241210185455_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -34,6 +34,11 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -56,6 +61,12 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
+                    b.Property<bool>("Calculated")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
@@ -68,17 +79,14 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<long>("Food")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<long>("Overhead")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Salary")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -88,6 +96,36 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("CategoryPriceEntity");
+                });
+
+            modelBuilder.Entity("Sheep.Core.Domain.Fiscalyear.FiscalyearEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FiscalyearEntity", (string)null);
                 });
 
             modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepCategoryEntity", b =>
@@ -124,12 +162,32 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Ram_EweCalcute")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("SheepId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("Six_EighteenCalcute")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start_Ram_Ewe")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start_Six_Eighteen")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start_Three_Six")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("Start_Zero_Three")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(6);
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Three_SixCalcute")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Zero_ThreeCalacute")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -176,8 +234,7 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<int>("SheepState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("SheepbirthDate")
-                        .IsRequired()
+                    b.Property<DateTime>("SheepbirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("SheepshopDate")
@@ -203,9 +260,6 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("Expectations")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
@@ -215,11 +269,47 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<Guid>("SheepId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long?>("Unabsorbedcosts")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SheepId");
 
                     b.ToTable("SheepFullPriceEntity", (string)null);
+                });
+
+            modelBuilder.Entity("Sheep.Core.Domain.Wages_overheads.Wages_overheadsEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Overhead")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Salary")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Wages_overheadsEntity", (string)null);
                 });
 
             modelBuilder.Entity("Sheep.Core.Domain.Category.CategoryPriceEntity", b =>
