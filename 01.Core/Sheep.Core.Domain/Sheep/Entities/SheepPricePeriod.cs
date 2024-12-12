@@ -1,10 +1,11 @@
 ﻿using Sheep.Framework.Domain.Entities;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace Sheep.Core.Domain.Sheep.Entities
 {
     public class SheepPricePeriod:BaseEntity<Guid>
     {
+        public Guid SheepNumber { get; set; }
         public long? PriceSheep { get; set; }
         public long? Unabsorbedcosts { get; set; }
         public DateTime Start {  get; set; }
