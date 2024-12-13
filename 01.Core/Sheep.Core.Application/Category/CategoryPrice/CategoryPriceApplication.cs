@@ -1,14 +1,13 @@
 ﻿using DNTPersianUtils.Core;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Application.Category.Contracts;
-using Sheep.Core.Application.Sheep.Contracts.Repository;
+
+using Sheep.Core.Application.Sheep.SheepCategory;
 using Sheep.Core.Domain.Category;
+using Sheep.Framework.Application.Entity;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
-using System.Globalization;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sheep.Core.Application.Category.CategoryPrice
 {
@@ -16,10 +15,12 @@ namespace Sheep.Core.Application.Category.CategoryPrice
     {
         private readonly ICategoryPriceRepository _categoryPriceRepository;
         private readonly ICategoryApplication _categoryApplication;
-        public CategoryPriceApplication(ICategoryPriceRepository categoryPriceRepository, ICategoryApplication categoryApplication)
+        private readonly ISheepCategoryApplication _sheepCategoryApplication;
+        public CategoryPriceApplication(ICategoryPriceRepository categoryPriceRepository, ICategoryApplication categoryApplication, ISheepCategoryApplication sheepCategoryApplication)
         {
             _categoryPriceRepository = categoryPriceRepository;
             _categoryApplication = categoryApplication;
+            _sheepCategoryApplication = sheepCategoryApplication;
         }
 
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
@@ -168,6 +169,42 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 StartLaste = result.Start,
                 EndLaste = result.End,
             };
+        }
+
+        public async Task<OperationResult<bool>> CalculatedPriceZeroThree(CalcuteCommand command, CancellationToken cancellationToken)
+        {
+            SheepCategoryQuery Command = new SheepCategoryQuery()
+            { 
+            GenderType=command.Gender,
+            Start= command.Start,
+            End= command.End,
+            };
+            var SheepZeroThree = await _sheepCategoryApplication.GetAllZeroThree(Command, cancellationToken);
+            foreach (var item in SheepZeroThree)
+            {
+
+            }
+            //var livestockday=
+            throw new NotImplementedException();
+        }
+
+        public async Task<OperationResult<bool>> CalculatedPriceThreeSix(CalcuteCommand command, CancellationToken cancellationToken)
+        {
+            SheepCategoryQuery Command = new SheepCategoryQuery()
+            {
+                GenderType = command.Gender,
+                Start = command.Start,
+                End = command.End,
+            };
+            var SheepThreesix = await _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken);
+
+            foreach (var item in SheepThreesix)
+            {
+                TimeSpan livestockday = DateTime.Now.Date - item.Start_Three_Six;
+                 Convert.ToInt32(Math.Floor(livestockday.TotalDays));
+                //var livestockday =
+            }
+            throw new NotImplementedException();
         }
     }
 }

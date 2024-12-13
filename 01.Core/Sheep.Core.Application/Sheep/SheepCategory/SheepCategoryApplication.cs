@@ -1,14 +1,11 @@
 ﻿
-
 using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Application.Sheep.SheepCategory.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
+using Sheep.Framework.Application.Entity;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Domain.Entities;
-using System.Linq.Expressions;
-using System.Xml.Linq;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Sheep.Core.Application.Sheep.SheepCategory
 {
@@ -71,7 +68,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             return OperationResult<bool>.SuccessResult(true);
         }
 
-        public Task<GetSheepCategoryQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "")
+        public Task<GetSheepCategoryQuery> GetAllSheepCategory(CancellationToken cancellationToken, int pageId = 1, string trim = "")
         {
             throw new NotImplementedException();
         }
@@ -81,10 +78,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             throw new NotImplementedException();
         }
 
-        public Task<OperationResult<bool>> IsExistSheep(CreateSheepCategoryCommand createCommand, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public async Task CalculateSheepCategory(CancellationToken cancellationToken)
         {
@@ -148,6 +142,17 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                 return categoryType = CategoryType.Ewe;
             }
             return categoryType;
+        }
+
+        public Task<IQueryable<SheepCategoryEntity>> GetAllZeroThree(SheepCategoryQuery Command, CancellationToken cancellationToken)
+        {
+            return _SheepCategoryrepository.GetAllZeroThree(Command, cancellationToken); 
+        }
+
+        public Task<IQueryable<SheepCategoryEntity>> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken)
+        {
+            return _SheepCategoryrepository.GetAllThreeSix(Command , cancellationToken);
+
         }
     }
 }

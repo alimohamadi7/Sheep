@@ -1,5 +1,8 @@
-﻿using Sheep.Core.Domain.Sheep.Entities;
+﻿
+using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Cotrats.Data;
+using Sheep.Framework.Application.Entity;
+using Sheep.Framework.Domain.Entities;
 
 
 namespace Sheep.Core.Application.Sheep.SheepCategory.Contracts
@@ -10,5 +13,8 @@ namespace Sheep.Core.Application.Sheep.SheepCategory.Contracts
         Task<int> GetCount();
         IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken, int PageId);
         Task<SheepCategoryEntity> GetSheepCategoryBySheepId(Guid Id,CancellationToken cancellationToken);
+        Task<IQueryable<SheepCategoryEntity>> GetAllZeroThree(SheepCategoryQuery Command, CancellationToken cancellationToken);
+        Task<IQueryable<SheepCategoryEntity>> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken);
+
     }
 }
