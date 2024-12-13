@@ -26,17 +26,22 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public async Task<OperationResult<bool>> Create(CreateSheepCategoryCommand command, CancellationToken cancellationToken)
         {
             command.Start_Zero_Three = command.Birthdate;
+            command.Zero_ThreeCalacute = command.Birthdate;
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
-            command.Start_Three_Six = command.Birthdate.AddDays(Ninety +One);
+            command.Start_Three_Six = command.Birthdate.AddDays(Ninety + One);
+            command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One);
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
-            command.Start_Six_Eighteen= command.Birthdate.AddDays(One_hundred_eighty+One);
+            command.Start_Six_Eighteen = command.Birthdate.AddDays(One_hundred_eighty + One);
+            command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty + One);
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
-            command.Start_Ram_Ewe= command.Birthdate.AddDays(Five_hundred_forty+One);
+            command.Start_Ram_Ewe = command.Birthdate.AddDays(Five_hundred_forty + One);
+            command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One);
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             SheepCategoryEntity sheepCategoryEntity = new SheepCategoryEntity(command.SheepId, categoryEntity.Id,
-               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three, command.Start_Three_Six,command.End_Three_Six,
-              command.Start_Six_Eighteen,command.End_Six_Eighteen,command.Start_Ram_Ewe);
+               command.Gender, command.ActiveCategory, command.Start_Zero_Three,command.Zero_ThreeCalacute, command.End_Zero_Three,
+               command.Start_Three_Six,command.Three_SixCalcute,command.End_Three_Six,
+              command.Start_Six_Eighteen,command.Six_EighteenCalcute,command.End_Six_Eighteen,command.Start_Ram_Ewe,command.Ram_EweCalcute);
             await _SheepCategoryrepository.AddAsync(sheepCategoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
@@ -52,17 +57,22 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public async Task<OperationResult<bool>> Edit(EditSheepCategoryCommand command, CancellationToken cancellationToken)
         {
             command.Start_Zero_Three = command.Birthdate;
+            command.Zero_ThreeCalacute = command.Birthdate;
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
             command.Start_Three_Six = command.Birthdate.AddDays(Ninety + One);
+            command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One);
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
             command.Start_Six_Eighteen = command.Birthdate.AddDays(One_hundred_eighty + One);
+            command.Six_EighteenCalcute= command.Birthdate.AddDays(One_hundred_eighty + One);
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
             command.Start_Ram_Ewe = command.Birthdate.AddDays(Five_hundred_forty + One);
+            command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One);
+            command.ActiveCategory = OutCategory(command.Age, command.Gender);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             var CategorySheepEntity=await _SheepCategoryrepository.GetSheepCategoryBySheepId(command.SheepId,cancellationToken);
             CategorySheepEntity.Edit(command.SheepId, categoryEntity.Id,
-               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.End_Zero_Three, command.Start_Three_Six,command.End_Three_Six,
-                command.Start_Six_Eighteen,command.End_Six_Eighteen,command.Start_Ram_Ewe);
+               command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.Zero_ThreeCalacute,command.End_Zero_Three, command.Start_Three_Six,command.Three_SixCalcute,command.End_Three_Six,
+                command.Start_Six_Eighteen,command.Six_EighteenCalcute,command.End_Six_Eighteen,command.Start_Ram_Ewe,command.Ram_EweCalcute);
 
           await  _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
@@ -73,7 +83,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             throw new NotImplementedException();
         }
 
-        public Task<EditSheepCategoryCommand> GetDetails(Guid id, CancellationToken cancellationToken)
+        public async Task<EditSheepCategoryCommand> GetDetails(Guid id, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
@@ -149,10 +159,20 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             return _SheepCategoryrepository.GetAllZeroThree(Command, cancellationToken); 
         }
 
-        public Task<IQueryable<SheepCategoryEntity>> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken)
+        public IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken)
         {
             return _SheepCategoryrepository.GetAllThreeSix(Command , cancellationToken);
 
+        }
+
+        public async Task<SheepCategoryEntity> GetSheepCategoryById(Guid id, CancellationToken cancellationToken)
+        {
+           return await _SheepCategoryrepository.GetByIdAsync(cancellationToken,id);
+        }
+
+        public Task<bool> CheckCaluteCategoryPeriod(Guid sheepId, CancellationToken cancellationToken)
+        {
+            return _SheepCategoryrepository.Exists(x =>x.SheepId==sheepId&&( x.Zero_ThreeCalacute > x.Start_Zero_Three || x.Three_SixCalcute > x.Start_Three_Six || x.Six_EighteenCalcute > x.Start_Six_Eighteen));
         }
     }
 }

@@ -22,71 +22,98 @@
                           data-action="Refresh"
                           enctype="multipart/form-data">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="SheepNumber">شماره دام</label>
-                                <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
-                                <input type="text" asp-for="Id" hidden class="form-control">
-                                <input type="text" asp-for="PastSheepNumber" hidden class="form-control">
-                                <input type="text" asp-for="ParentId" hidden />
-                                <span asp-validation-for="SheepNumber" class="error"></span>
-                            </div>
-                            @if (Model.ParentId != null)
-                            {
-                                <div class="form-group">
-                                    <label for="SheepParentId"> شماره دام مادر</label>
-                                    <input type="text" asp-for="SheepParentId" class="form-control" id="SheepParentId" placeholder="شماره دام">
-                                    <span asp-validation-for="SheepParentId" class="error"></span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepNumber">شماره دام</label>
+                                        <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
+                                        <input type="text" asp-for="Id" hidden class="form-control">
+                                        <input type="text" asp-for="PastSheepNumber" hidden class="form-control">
+                                        <input type="text" asp-for="ParentId" hidden />
+                                        <span asp-validation-for="SheepNumber" class="error"></span>
+                                    </div>
+
                                 </div>
-                            }
-                            <div class="form-group">
-                                <label for="Gender">جنسیت</label>
-                                <select class="form-control form-myselect" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
-                                </select>
-                                <span asp-validation-for="Gender" class="error"></span>
-                                <span id='output'></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="SheepbirthDate">تاریخ تولد</label>
-                                <input type="text" asp-for=SheepbirthDate class="form-control DatePicker" placeholder="تاریخ تولد">
-                                <span asp-validation-for="SheepbirthDate" class="error"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="Sheepshop">تاریخ خرید</label>
-                                <input type="text" asp-for="SheepshopDate" class="form-control DatePicker" placeholder="تاریخ خرید">
-                                <span asp-validation-for="SheepshopDate" class="error"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="SheepState">وضعیت</label>
-                                <select class="form-control form-myselect" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
-                                </select>
-                                <span asp-validation-for="SheepState" class="error"></span>
-                            </div>
-                            @if (Model.SheepState == State.Sell)
-                            {
-                                <div class="form-group">
-                                    <label for="Sheepshop" class="SheepSellDate" >تاریخ فروش</label>
-                                    <input type="text"  asp-for="SheepSellDate" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
-                                    <span asp-validation-for="SheepSellDate"  class="error SheepSellDate"></span>
+                                <div class="col-md-6">
+                                    @if (Model.ParentId != null)
+                                    {
+                                        <div class="form-group">
+                                            <label for="SheepParentId"> شماره دام مادر</label>
+                                            <input type="text" asp-for="SheepParentId" class="form-control" id="SheepParentId" placeholder="شماره دام">
+                                            <span asp-validation-for="SheepParentId" class="error"></span>
+                                        </div>
+                                    }
                                 </div>
-                                <div class="form-group">
-                                    <label for="SheepwastedDate" hidden class="SheepwastedDate">تاریخ تلف شدن</label>
-                                    <input type="text" asp-for="SheepwastedDate" hidden class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
-                                    <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepbirthDate">تاریخ تولد</label>
+                                        <input type="text" asp-for=SheepbirthDate data-jdp data-jdp-max-date="today" class="form-control DatePicker" placeholder="تاریخ تولد">
+                                        <span asp-validation-for="SheepbirthDate" class="error"></span>
+                                    </div>
+
                                 </div>
-                            }
-                            @if (Model.SheepState == State.wasted)
-                            {
-                                <div class="form-group">
-                                    <label for="SheepwastedDate" class="SheepwastedDate" >تاریخ تلف شدن</label>
-                                    <input type="text"  asp-for="SheepwastedDate" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
-                                    <span asp-validation-for="SheepwastedDate"  class="error SheepwastedDate"></span>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Sheepshop">تاریخ خرید</label>
+                                        <input type="text" asp-for="SheepshopDate" data-jdp data-jdp-max-date="today" class="form-control DatePicker" placeholder="تاریخ خرید">
+                                        <span asp-validation-for="SheepshopDate" class="error"></span>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="Sheepshop" hidden class="SheepSellDate">تاریخ فروش</label>
-                                    <input type="text" asp-for="SheepSellDate" hidden class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
-                                    <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
+                            </div>
+                            <div class="row">  
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepState">وضعیت</label>
+                                        <select class="form-control form-myselect" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
+                                        </select>
+                                        <span asp-validation-for="SheepState" class="error"></span>
+                                    </div>
                                 </div>
-                            }
+                                <div class="col-md-6 SheepSellDate">
+                                    <div class="form-group SheepSellDate">
+                                            <label for="SheepSellDate" hidden class="SheepSellDate">تاریخ فروش</label>
+                                            <input type="text" asp-for="SheepSellDate" data-jdp data-jdp-max-date="today" hidden class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
+                                            <span asp-validation-for="SheepSellDate" class="error SheepSellDate"></span>
+                                        </div>
+                                        </div>
+                                <div class="col-md-6 SheepwastedDate">
+                                    <div class="form-group SheepwastedDate">
+                                            <label for="SheepwastedDate" hidden class="SheepwastedDate">تاریخ تلف شدن</label>
+                                            <input type="text" asp-for="SheepwastedDate" data-jdp data-jdp-max-date="today" hidden class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                            <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
+                                        </div>
+
+@*                                     @if (Model.SheepState == State.wasted)
+                                    {
+                                        <div class="form-group">
+                                            <label for="SheepwastedDate" class="SheepwastedDate">تاریخ تلف شدن</label>
+                                            <input type="text" asp-for="SheepwastedDate" data-jdp data-jdp-max-date="today" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                            <span asp-validation-for="SheepwastedDate" class="error SheepwastedDate"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="SheepSellDate" hidden class="SheepSellDate">تاریخ فروش</label>
+                                            <input type="text" asp-for="SheepSellDate" hidden data-jdp data-jdp-max-date="today" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
+                                            <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
+                                        </div>
+                                    } *@
+
+                                </div>
+                            </div>
+                            <div class="row">   
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Gender">جنسیت</label>
+                                        <select class="form-control form-myselect" asp-for="Gender" asp-items="Html.GetEnumSelectList<GenderType>()">
+                                        </select>
+                                        <span asp-validation-for="Gender" class="error"></span>
+                                        <span id='output'></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6"></div>
+                        </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="d-flex justify-content-center">

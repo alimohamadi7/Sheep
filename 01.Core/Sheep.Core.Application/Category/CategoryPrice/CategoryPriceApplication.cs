@@ -196,15 +196,34 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 Start = command.Start,
                 End = command.End,
             };
-            var SheepThreesix = await _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken);
-
+            var SheepThreesix = _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken);
+            int livestockday = 0;
+            long PricePerdaySheep = 0;
             foreach (var item in SheepThreesix)
             {
-                TimeSpan livestockday = DateTime.Now.Date - item.Start_Three_Six;
-                 Convert.ToInt32(Math.Floor(livestockday.TotalDays));
-                //var livestockday =
+                var ThreeSixCal = Convert.ToDateTime(item.Three_SixCalcute);
+                var livestockpersheep = Calculate.Calculatelivestockday(ThreeSixCal);
+                var Sheepcategory =await _sheepCategoryApplication.GetSheepCategoryById(item.CategoryId, cancellationToken);
+                Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(livestockpersheep);
+                livestockday = livestockday + livestockpersheep;
             }
+            var categoryPriceEntity=await _categoryPriceRepository.GetCategoryPriceById(command.Id ,cancellationToken);
+            if (categoryPriceEntity != null && livestockday != 0)
+                PricePerdaySheep = categoryPriceEntity.Food / livestockday;
+            categoryPriceEntity.PricePerSheep= PricePerdaySheep;
+            categoryPriceEntity.Calculated = true;
+           await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
             throw new NotImplementedException();
+        }
+
+        public async Task<CategoryPriceEntity> GetCategoryPriceById(Guid Id, CancellationToken cancellationToken)
+        {
+           return await _categoryPriceRepository.GetCategoryPriceById(Id, cancellationToken);  
+        }
+
+        public async Task<CalcuteCommand> GetDetailsForCalcute(Guid id, CancellationToken cancellationToken)
+        {
+           return await  _categoryPriceRepository.GetDetailsForCalcute(id, cancellationToken);
         }
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Domain.Category;
-using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
 
@@ -45,6 +44,11 @@ namespace Sheep.Infra.Data.Sql.CategoryPrice
             return CategoryPriceQuery;
         }
 
+        public async Task<CategoryPriceEntity> GetCategoryPriceById(Guid Id, CancellationToken cancellationToken)
+        {
+            return await Table.SingleOrDefaultAsync(x => x.Id==Id,cancellationToken);
+        }
+
         public async Task<IQueryable<CategoryPriceEntity>> GetCategoryByType(CategoryType categoryType,CancellationToken cancellationToken, int PageId=1)
         {
             int take = 20;
@@ -52,6 +56,26 @@ namespace Sheep.Infra.Data.Sql.CategoryPrice
             var Result = TableNoTracking.Where(x => x.Category == categoryType);
             return Result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
 
+        }
+
+        public async Task<CategoryPriceEntity> GetSheepCategoryBySheepId(Guid Id, CancellationToken cancellationToken)
+        {
+            return await TableNoTracking.SingleOrDefaultAsync(x => x.Id == Id, cancellationToken);
+
+        }
+
+        public async Task<CalcuteCommand> GetDetailsForCalcute(Guid id, CancellationToken cancellationToken)
+        {
+            var result=await TableNoTracking.SingleOrDefaultAsync(x=>x.Id== id, cancellationToken);
+            return new CalcuteCommand() 
+            {
+                Id=result.Id,
+                CategoryId=result.CategoryId,
+                Start=result.Start,
+                End=result.End,
+                Gender=result.Gender,
+
+            };
         }
     }
 }

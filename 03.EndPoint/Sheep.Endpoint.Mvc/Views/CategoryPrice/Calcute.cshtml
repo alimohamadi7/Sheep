@@ -1,0 +1,32 @@
+﻿@model Sheep.Core.Application.Category.CategoryPrice.CalcuteCommand
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <form asp-action="Calcute" asp-controller="CategoryPrice"
+              method="post"
+              data-ajax="true"
+              data-callback=""
+              data-action="Refresh"
+              enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <label class="control-label">آیامیخواهید محاسبه کنید؟</label>
+                </div>
+
+                <input type="hidden" hidden class="form-control" asp-for="Id">
+                <input type="hidden" hidden class="form-control" asp-for="Start">
+                <input type="hidden" hidden class="form-control" asp-for="End">
+                <input type="hidden" hidden class="form-control" asp-for="Gender">
+                <input type="hidden" hidden class="form-control" asp-for="CategoryId">
+            </div>
+            <!-- /.card-body -->
+            <div class="d-flex justify-content-center">
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-info waves-effect">بلی</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">خیر</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>

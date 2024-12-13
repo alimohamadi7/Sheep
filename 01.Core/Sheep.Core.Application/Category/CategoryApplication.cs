@@ -49,11 +49,6 @@ namespace Sheep.Core.Application.Category
 
         }
 
-        public async Task<List<CategoryEntity>> GetAllCategoryForFood(CancellationToken cancellationToken)
-        {
-         return   await _repository.GetAllCategoryForFood(cancellationToken);
-        }
-
         public async Task<CategoryEntity> GetCategoryByCategoryType(CategoryType categoryType ,CancellationToken cancellationToken)
         {
           return  await _repository.GetCategoryByCategoryType(categoryType ,cancellationToken);

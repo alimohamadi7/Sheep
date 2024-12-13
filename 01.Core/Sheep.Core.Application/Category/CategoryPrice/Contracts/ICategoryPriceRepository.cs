@@ -9,5 +9,8 @@ namespace Sheep.Core.Application.Category.CategoryPrice.Contracts
     {
         Task<GetCategoryPriceQuery> GetAll(CancellationToken cancellationToken, string? start, string? end, CategoryType categoryType, GenderType genderType, int PageId = 1);
         Task<IQueryable<CategoryPriceEntity>> GetCategoryByType(CategoryType categoryType,CancellationToken cancellationToken, int PageId = 1);
+        Task<CategoryPriceEntity> GetCategoryPriceById(Guid Id, CancellationToken cancellationToken);
+        Task<CalcuteCommand> GetDetailsForCalcute(Guid id, CancellationToken cancellationToken);
+
     }
 }

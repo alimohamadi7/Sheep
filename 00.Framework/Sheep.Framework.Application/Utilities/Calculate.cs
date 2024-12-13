@@ -66,5 +66,10 @@ namespace Sheep.Framework.Application.Utilities
             TimeSpan age = DateTime.Now.Date - dateOfBirth;
             return Convert.ToInt32(Math.Floor(age.TotalDays));
         }
+        public static int Calculatelivestockday(DateTime dateOfStrat)
+        {
+            TimeSpan age = DateTime.Now.Date - dateOfStrat;
+            return Convert.ToInt32(Math.Floor(age.TotalDays));
+        }
     }
 }

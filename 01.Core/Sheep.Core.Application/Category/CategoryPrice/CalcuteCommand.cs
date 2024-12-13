@@ -1,11 +1,11 @@
-﻿
-using Sheep.Framework.Domain.Entities;
+﻿using Sheep.Framework.Domain.Entities;
 
 
-namespace Sheep.Core.Application.Category.CategoryPrice.Contracts
+namespace Sheep.Core.Application.Category.CategoryPrice
 {
     public class CalcuteCommand
     {
+        public Guid Id { get; set; }
         public string Food { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

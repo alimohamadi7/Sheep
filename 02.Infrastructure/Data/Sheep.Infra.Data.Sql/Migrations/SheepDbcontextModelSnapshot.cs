@@ -162,13 +162,13 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Ram_EweCalcute")
+                    b.Property<DateTime>("Ram_EweCalcute")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("SheepId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("Six_EighteenCalcute")
+                    b.Property<DateTime>("Six_EighteenCalcute")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Start_Ram_Ewe")
@@ -183,7 +183,7 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Property<DateTime>("Start_Zero_Three")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Three_SixCalcute")
+                    b.Property<DateTime>("Three_SixCalcute")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Zero_ThreeCalacute")

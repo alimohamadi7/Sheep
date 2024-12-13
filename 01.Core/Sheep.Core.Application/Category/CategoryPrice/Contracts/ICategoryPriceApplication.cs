@@ -2,6 +2,7 @@
 
 
 
+using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Domain.Entities;
 
@@ -14,6 +15,8 @@ namespace Sheep.Core.Application.Category.CategoryPrice.Contracts
         Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken);
         Task<EditCommand> GetDetails(Guid id, CancellationToken cancellationToken);
+        Task <CalcuteCommand> GetDetailsForCalcute(Guid id,CancellationToken cancellationToken);
+        Task<CategoryPriceEntity> GetCategoryPriceById(Guid Id, CancellationToken cancellationToken);
         Task<OperationResult<bool>> CalculatedPriceZeroThree(CalcuteCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> CalculatedPriceThreeSix(CalcuteCommand command, CancellationToken cancellationToken);
 

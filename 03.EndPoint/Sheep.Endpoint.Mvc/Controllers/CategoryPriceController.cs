@@ -53,5 +53,17 @@ namespace Sheep.Endpoint.Mvc.Controllers
             var result = await _categoryPriceApplication.Delete(id, cancellationToken);
             return new JsonResult(result);
         }
+        public async Task<IActionResult> Calcute(Guid Id, CancellationToken cancellationToken)
+        {
+            var result = await _categoryPriceApplication.GetDetailsForCalcute(Id, cancellationToken);
+            return PartialView(nameof(Calcute),result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Calcute(CalcuteCommand Command, CancellationToken cancellationToken)
+        {
+            var result = await _categoryPriceApplication.CalculatedPriceThreeSix(Command, cancellationToken);
+            return new JsonResult(result);
+        }
+
     }
 }

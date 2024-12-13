@@ -28,6 +28,7 @@ namespace Sheep.Core.Application.Sheep
             // چک کرن تاریخ فروش از تاریخ تولد بیشتر یا کمتر نباشد
             //چک کردن تاریخ تولد بزرگتر از تاریخ روز نباشد 
             //میش حتما 540 را برای ثبت بره طی کرده باشد
+            // چک کرن تاریخ تلف شدن از تاریخ تولد بیشتر یا کمتر نباشد
             var SheepBirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
             var SheepSellDate = command.SheepSellDate.ToGregorianDateTime();
             var SheepShopDate=command.SheepshopDate.ToGregorianDateTime();
@@ -127,7 +128,6 @@ namespace Sheep.Core.Application.Sheep
             }
 
 
-
             var sheep = await _sheepRepository.GetByIdAsync(cancellationToken, command.Id);
             //check not add new sheepid and lastsheepid add to sheepmother
             if (sheep.Id == command.ParentId)
@@ -135,6 +135,10 @@ namespace Sheep.Core.Application.Sheep
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
 
             }
+            //Check if sheep Price Calcuted not allow change birthday
+            if (await _sheepCategoryApplication.CheckCaluteCategoryPeriod(sheep.Id,cancellationToken))
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
+
             int age = Calculate.CalculateAge(SheepBirthDate);
             sheep.Edit(command.SheepNumber,
                 SheepBirthDate, SheepShopDate, command.ParentId, command.SheepState, command.Gender, SheepSellDate,
