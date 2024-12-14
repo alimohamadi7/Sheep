@@ -1,4 +1,5 @@
 ﻿using DNTPersianUtils.Core;
+using Microsoft.EntityFrameworkCore;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Application.Category.Contracts;
 
@@ -196,24 +197,42 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 Start = command.Start,
                 End = command.End,
             };
-            var SheepThreesix = _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken);
             int livestockday = 0;
-            long PricePerdaySheep = 0;
-            foreach (var item in SheepThreesix)
+            double PricePerdaySheep = 0;
+            var pageId = 1;
+            //calcute livestockday
+            for (int i = 0; i < pageId; i++)
             {
-                var ThreeSixCal = Convert.ToDateTime(item.Three_SixCalcute);
-                var livestockpersheep = Calculate.Calculatelivestockday(ThreeSixCal);
-                var Sheepcategory =await _sheepCategoryApplication.GetSheepCategoryById(item.CategoryId, cancellationToken);
-                Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(livestockpersheep);
-                livestockday = livestockday + livestockpersheep;
+                var SheepThreesix =  _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken,pageId);
+                foreach (var item in SheepThreesix)
+                {
+                    var ThreeSixCal = Convert.ToDateTime(item.Three_SixCalcute);
+                    var livestockpersheep = Calculate.Calculatelivestockday(ThreeSixCal, Command.End);
+                    if (livestockpersheep > 180)
+                        livestockpersheep = 180;
+                    var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
+                    Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(livestockpersheep);
+                    livestockday = livestockday + livestockpersheep;
+                }
+                if (SheepThreesix.Any())
+                {
+                    //await _sheepCategoryApplication.SaveChangeAsync(cancellationToken);
+                    pageId++;
+                }
+                //End calcute livestockday
             }
+            //category price update price pership
             var categoryPriceEntity=await _categoryPriceRepository.GetCategoryPriceById(command.Id ,cancellationToken);
             if (categoryPriceEntity != null && livestockday != 0)
-                PricePerdaySheep = categoryPriceEntity.Food / livestockday;
+                PricePerdaySheep = categoryPriceEntity.Food / livestockday; 
             categoryPriceEntity.PricePerSheep= PricePerdaySheep;
             categoryPriceEntity.Calculated = true;
            await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
-            throw new NotImplementedException();
+            //End category price update price pership
+            //sheep price Calcute
+
+            //End sheep price Calcute
+            return OperationResult<bool>.SuccessResult(true);
         }
 
         public async Task<CategoryPriceEntity> GetCategoryPriceById(Guid Id, CancellationToken cancellationToken)

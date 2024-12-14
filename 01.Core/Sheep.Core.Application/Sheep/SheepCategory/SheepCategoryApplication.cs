@@ -159,7 +159,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             return _SheepCategoryrepository.GetAllZeroThree(Command, cancellationToken); 
         }
 
-        public IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken)
+        public IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
             return _SheepCategoryrepository.GetAllThreeSix(Command , cancellationToken);
 
@@ -173,6 +173,11 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public Task<bool> CheckCaluteCategoryPeriod(Guid sheepId, CancellationToken cancellationToken)
         {
             return _SheepCategoryrepository.Exists(x =>x.SheepId==sheepId&&( x.Zero_ThreeCalacute > x.Start_Zero_Three || x.Three_SixCalcute > x.Start_Three_Six || x.Six_EighteenCalcute > x.Start_Six_Eighteen));
+        }
+
+        public async Task SaveChangeAsync(CancellationToken cancellationToken)
+        {
+           await _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
         }
     }
 }
