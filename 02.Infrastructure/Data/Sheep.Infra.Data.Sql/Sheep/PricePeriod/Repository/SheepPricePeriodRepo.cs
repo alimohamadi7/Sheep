@@ -5,7 +5,7 @@ using Sheep.Framework.Infrastructure.Data;
 
 namespace Sheep.Infra.Data.Sql.Sheep.PricePeriod.Repository
 {
-    public class SheepPricePeriodRepo:Repository<SheepFullPriceEntity>,ISheepPricePeriodRepo
+    public class SheepPricePeriodRepo:Repository<SheepPricePeriodEntity>,ISheepPricePeriodRepo
     {
         private readonly SheepDbcontext _context;
         public SheepPricePeriodRepo(SheepDbcontext dbContext) : base(dbContext)

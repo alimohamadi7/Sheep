@@ -172,7 +172,8 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
 
         public Task<bool> CheckCaluteCategoryPeriod(Guid sheepId, CancellationToken cancellationToken)
         {
-            return _SheepCategoryrepository.Exists(x =>x.SheepId==sheepId&&( x.Zero_ThreeCalacute > x.Start_Zero_Three || x.Three_SixCalcute > x.Start_Three_Six || x.Six_EighteenCalcute > x.Start_Six_Eighteen));
+            return _SheepCategoryrepository.Exists(x =>x.SheepId==sheepId&&( x.Zero_ThreeCalacute > x.Start_Zero_Three || x.Three_SixCalcute > x.Start_Three_Six ||
+            x.Six_EighteenCalcute > x.Start_Six_Eighteen||x.ActiveCategory==CategoryType.Ewe||x.ActiveCategory==CategoryType.Ram));
         }
 
         public async Task SaveChangeAsync(CancellationToken cancellationToken)

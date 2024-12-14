@@ -1,11 +1,12 @@
 ﻿
 
-using Sheep.Core.Domain.Sheep.Entities;
+
+using Sheep.Framework.Application.Operation;
 
 namespace Sheep.Core.Application.Sheep.PricePeriod.Contracts
 {
-    public class ISheepPricePeriodApp
+    public interface ISheepPricePeriodApp
     {
-        IQueryable<SheepPricePeriodEntity>
+        Task<OperationResult<bool>> Create(CreateCommand command  , CancellationToken cancellationToken);
     }
 }

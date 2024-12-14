@@ -11,14 +11,14 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
         public SheepPricePeriodEntity() { }
-        public SheepPricePeriodEntity(long pricesheep,long unabsorbedcosts ,DateTime start,DateTime end)
+        public SheepPricePeriodEntity(long? pricesheep,long? unabsorbedcosts ,DateTime start,DateTime end)
         {
             PriceSheep = pricesheep;
             Unabsorbedcosts = unabsorbedcosts;
             Start = start;
             End = end;
         }
-        public void Edit(long pricesheep, long unabsorbedcosts, DateTime start, DateTime end)
+        public void Edit(long? pricesheep, long? unabsorbedcosts, DateTime start, DateTime end)
         {
             PriceSheep = pricesheep;
             Unabsorbedcosts = unabsorbedcosts;

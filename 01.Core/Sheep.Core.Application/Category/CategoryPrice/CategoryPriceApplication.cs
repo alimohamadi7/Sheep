@@ -191,17 +191,21 @@ namespace Sheep.Core.Application.Category.CategoryPrice
 
         public async Task<OperationResult<bool>> CalculatedPriceThreeSix(CalcuteCommand command, CancellationToken cancellationToken)
         {
-            SheepCategoryQuery Command = new SheepCategoryQuery()
-            {
-                GenderType = command.Gender,
-                Start = command.Start,
-                End = command.End,
-            };
             int livestockday = 0;
             double PricePerdaySheep = 0;
             var pageId = 1;
+            int i;
+            SheepCategoryQuery Command = new SheepCategoryQuery()
+            {
+                    GenderType = command.Gender,
+                Start = command.Start,
+                End = command.End,
+            };
+            var Sheepthreesix = _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken, pageId).Count();
+            if (Sheepthreesix == 0)
+                return OperationResult<bool>.FailureResult("", ApplicationMessages.NotSheepFuondInRaneDate);
             //calcute livestockday
-            for (int i = 0; i < pageId; i++)
+            for ( i =0; i < pageId; i++)
             {
                 var SheepThreesix =  _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken,pageId);
                 foreach (var item in SheepThreesix)
@@ -227,6 +231,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 PricePerdaySheep = categoryPriceEntity.Food / livestockday; 
             categoryPriceEntity.PricePerSheep= PricePerdaySheep;
             categoryPriceEntity.Calculated = true;
+            categoryPriceEntity.CountSheep = i;
            await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
             //End category price update price pership
             //sheep price Calcute

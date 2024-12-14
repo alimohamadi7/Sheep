@@ -13,6 +13,7 @@ namespace Sheep.Core.Domain.Category
         public DateTime End { get; set; }
         public Guid CategoryId { get; set; }
         public double PricePerSheep { get; set; } 
+        public int CountSheep { get; set; }
         public bool Calculated { get; set; }
         public CategoryEntity CategoryEntity { get; set; }
         public CategoryPriceEntity() { }
@@ -41,6 +42,5 @@ namespace Sheep.Core.Domain.Category
         {
             IsDeleted = true;
         }
-
     }
 }
