@@ -111,6 +111,16 @@
     </section>
     <partial name="_Pagination_V3" data="@Model.Start,@Model.End,@Model.Category,@Model.Gender,@Model.Addres,@Model.CurentPage,@Model.PageId,@Model.PageCount" />
 </div>
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="z-index:100000000000">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center" id="myModalBody">
+                در حال انجام عملیات لطفا منتظر بمانید
+                <div><img src="~/them/dist/img/icons8-dot-bricks.gif" /></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <link href="~/lib/datepicker/jalalidatepicker.min.css" rel="stylesheet" />
@@ -155,7 +165,10 @@
             }
         });
         });
-       
+     function Myfunction(){
+            $("#myModal").modal({ backdrop: false, keyboard: false, });
+        }
+        
     </script>
 
     <script>

@@ -88,6 +88,7 @@ function CallBackHandler(data, action, form) {
             break;
         case "Refresh":
             if (data.isSuccedded) {
+                $("#myModal").modal("hide"); // For Watting and Background Disable
                 var delayInMilliseconds = 1000;
                 Swal.fire({
                     icon: "success",

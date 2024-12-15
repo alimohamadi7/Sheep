@@ -61,6 +61,7 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Calcute(CalcuteCommand Command, CancellationToken cancellationToken)
         {
+           // Thread.Sleep(9000);
             var result = await _categoryPriceApplication.CalculatedPriceThreeSix(Command, cancellationToken);
             return new JsonResult(result);
         }
