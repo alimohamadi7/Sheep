@@ -38,6 +38,6 @@ namespace Sheep.Core.Application.Sheep.Contracts
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         [Display(Name = "جنسیت")]
         public GenderType Gender { get; set; }
-
+        public GenderType LastGender { get; set; }
     }
 }

@@ -136,9 +136,12 @@ namespace Sheep.Core.Application.Sheep
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
 
             }
-            //Check if sheep Price Calcuted not allow change birthday
-            if (await _sheepCategoryApplication.CheckCaluteCategoryPeriod(sheep.Id,cancellationToken)&& command.SheepbirthDate != command.LastSheepbirthDate)
-                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
+            //Check if sheep Price Calcuted not allow change birthday or Gendertype
+            if (command.SheepbirthDate != command.LastSheepbirthDate|| command.Gender !=command.LastGender)
+            {
+                if (await _sheepCategoryApplication.CheckCaluteCategoryPeriod(sheep.Id, cancellationToken))
+                    return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
+            }
 
             int age = Calculate.CalculateAge(SheepBirthDate);
             sheep.Edit(command.SheepNumber,
@@ -195,6 +198,7 @@ namespace Sheep.Core.Application.Sheep
                 SheepwastedDate = sheep.SheepwastedDate.ToShortPersianDateString(),
                 SheepState = sheep.SheepState,
                 Gender = sheep.Gender,
+                LastGender=sheep.Gender,
                 ParentId = sheep.ParentId,
                 PastSheepNumber = sheep.SheepNumber,
             };

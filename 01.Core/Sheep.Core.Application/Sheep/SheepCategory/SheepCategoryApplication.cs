@@ -213,20 +213,20 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     result.End_Three_Six = Date;
                     result.Six_EighteenCalcute = Date;
                     result.End_Six_Eighteen = Date;
-                    result.Start_Ram_Ewe = Date;
+                    result.Ram_EweCalcute= Date;
                     result.EndRam_Ewe= Date;
                     break;
                 case CategoryType.Three_Six:
                     result.End_Three_Six = Date;
                     result.Six_EighteenCalcute = Date;
                     result.End_Six_Eighteen = Date;
-                    result.Start_Ram_Ewe = Date;
+                    result.Ram_EweCalcute = Date;
                     result.EndRam_Ewe = Date;
                     break;
                 case CategoryType.Six_Eighteen:
                     result.End_Six_Eighteen = Date;
+                    result.Ram_EweCalcute = Date;
                     result.Start_Ram_Ewe = Date;
-                    result.EndRam_Ewe = Date;
                     break;
                 case CategoryType.Ewe:
                     result.EndRam_Ewe = Date;
