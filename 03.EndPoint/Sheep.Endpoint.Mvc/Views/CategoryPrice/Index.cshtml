@@ -82,10 +82,18 @@
                                                    href="#showmodal=@Url.Action("Delete", "CategoryPrice", new { id = item.Id})">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
-                                                <a class="btn btn-primary pull-right m-rl-5"
-                                                   href="#showmodal=@Url.Action("Calcute", "CategoryPrice", new { id = item.Id})">
-                                                    <i class="fa fa-calculator"></i>
-                                                </a>
+                                                @if (!item.Calculated)
+                                                {
+                                                    <a class="btn btn-primary pull-right m-rl-5"
+                                                       href="#showmodal=@Url.Action("Calcute", "CategoryPrice", new { id = item.Id})">
+                                                        <i class="fa fa-calculator"></i>
+                                                    </a>
+                                                }
+                                                else{
+                                                    <a class="btn btn-light pull-right m-rl-5">
+                                                        <i class="fa fa-check" style="color:green; font-size:21px"></i>
+                                                    </a>
+                                                }
                                             </td>
                                         </tr>
                                         i++;

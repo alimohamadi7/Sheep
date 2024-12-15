@@ -23,6 +23,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public DateTime End_Six_Eighteen { get; set; }
         public DateTime Start_Ram_Ewe { get; set; }
         public DateTime Ram_EweCalcute { get; set; }
+        public DateTime? EndRam_Ewe { get; set; }
         public bool IsDeleted { get; set; }
         public SheepEntity Sheep { get; set; }
         public CategoryEntity Category { get; set; }

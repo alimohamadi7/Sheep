@@ -1,9 +1,9 @@
-﻿
-using Sheep.Core.Application.Category.Contracts;
+﻿using Sheep.Core.Application.Category.Contracts;
 using Sheep.Core.Application.Sheep.SheepCategory.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Entity;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
 
 
@@ -37,6 +37,15 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             command.Start_Ram_Ewe = command.Birthdate.AddDays(Five_hundred_forty + One);
             command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One);
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
+            if (command.SheepshopDate != null)
+            {
+                var sheepshopDate = Convert.ToDateTime(command.SheepshopDate);
+                var Days = Calculate.CalculateDateRange(command.Birthdate, sheepshopDate);
+                command.Zero_ThreeCalacute = command.Birthdate.AddDays(Days);
+                command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One + Days);
+                command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty + One + Days);
+                command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One + Days);
+            }
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             SheepCategoryEntity sheepCategoryEntity = new SheepCategoryEntity(command.SheepId, categoryEntity.Id,
                command.Gender, command.ActiveCategory, command.Start_Zero_Three,command.Zero_ThreeCalacute, command.End_Zero_Three,
@@ -67,6 +76,15 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
             command.Start_Ram_Ewe = command.Birthdate.AddDays(Five_hundred_forty + One);
             command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One);
+            if (command.SheepshopDate != null)
+            {
+                var sheepshopDate = Convert.ToDateTime(command.SheepshopDate);
+                var Days = Calculate.CalculateDateRange(command.Birthdate, sheepshopDate);
+                command.Zero_ThreeCalacute = command.Birthdate.AddDays(Days);
+                command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One + Days);
+                command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty + One + Days);
+                command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One + Days);
+            }
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             var CategorySheepEntity=await _SheepCategoryrepository.GetSheepCategoryBySheepId(command.SheepId,cancellationToken);
@@ -161,7 +179,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
 
         public IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            return _SheepCategoryrepository.GetAllThreeSix(Command , cancellationToken);
+            return _SheepCategoryrepository.GetAllThreeSix(Command , cancellationToken, PageId);
 
         }
 
@@ -179,6 +197,46 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public async Task SaveChangeAsync(CancellationToken cancellationToken)
         {
            await _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<OperationResult<bool>> CalcuteSheepCategoryDate(Guid SheepId,DateTime Date , CancellationToken cancellationToken)
+        {
+            var result=await _SheepCategoryrepository.GetSheepCategoryBySheepId(SheepId, cancellationToken);
+            var activeCategory=result.ActiveCategory;
+            switch (activeCategory)
+            {
+                case CategoryType.none:
+                    break;
+                case CategoryType.Zero_Three:
+                    result.End_Zero_Three = Date;
+                    result.Three_SixCalcute = Date;
+                    result.End_Three_Six = Date;
+                    result.Six_EighteenCalcute = Date;
+                    result.End_Six_Eighteen = Date;
+                    result.Start_Ram_Ewe = Date;
+                    result.EndRam_Ewe= Date;
+                    break;
+                case CategoryType.Three_Six:
+                    result.End_Three_Six = Date;
+                    result.Six_EighteenCalcute = Date;
+                    result.End_Six_Eighteen = Date;
+                    result.Start_Ram_Ewe = Date;
+                    result.EndRam_Ewe = Date;
+                    break;
+                case CategoryType.Six_Eighteen:
+                    result.End_Six_Eighteen = Date;
+                    result.Start_Ram_Ewe = Date;
+                    result.EndRam_Ewe = Date;
+                    break;
+                case CategoryType.Ewe:
+                    result.EndRam_Ewe = Date;
+                    break;
+                case CategoryType.Ram:
+                    result.EndRam_Ewe = Date;
+                    break;
+            }
+         await   _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
+            return OperationResult<bool>.SuccessResult(true);
         }
     }
 }

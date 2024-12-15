@@ -24,7 +24,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         public  IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken , int PageId = 1)
         {
-            var result=  TableNoTracking.Where(x => x.Gender == Command.GenderType&& x.Three_SixCalcute<x.End_Three_Six &&x.Three_SixCalcute>=Command.Start);
+            var result=  TableNoTracking.Where(x => x.Gender == Command.GenderType&&x.IsDeleted==false&& x.Three_SixCalcute<x.End_Three_Six &&x.Three_SixCalcute>=Command.Start);
             int take = 100;
             int skip = (PageId - 1) * take;
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);

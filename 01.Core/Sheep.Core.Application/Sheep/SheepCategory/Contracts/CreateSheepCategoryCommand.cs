@@ -20,6 +20,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory.Contracts
         public DateTime Start_Ram_Ewe { get; set; }
         public DateTime Ram_EweCalcute { get; set; }
         public DateTime Birthdate { get; set; }
+        public DateTime? SheepshopDate { get; set; }
         public int Age {  get; set; }
         public GenderType Gender { get; set; } 
     }

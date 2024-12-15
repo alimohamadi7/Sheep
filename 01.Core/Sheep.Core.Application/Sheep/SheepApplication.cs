@@ -63,6 +63,7 @@ namespace Sheep.Core.Application.Sheep
                 Age = entity.Age,
                 Gender = entity.Gender,
                 Birthdate = Convert.ToDateTime(entity.SheepbirthDate),
+                SheepshopDate = SheepShopDate
             };
             //add sheepcategory
             if(entity.SheepState==State.present)
@@ -85,9 +86,9 @@ namespace Sheep.Core.Application.Sheep
         public async Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken)
         {
             var SheepBirthDate = Convert.ToDateTime(command.SheepbirthDate.ToGregorianDateTime());
-            var SheepSellDate = command.SheepSellDate.ToGregorianDateTime();
-            var SheepShopDate = command.SheepshopDate.ToGregorianDateTime();
-            var SheepWastedDate =command.SheepwastedDate.ToGregorianDateTime();
+            var SheepSellDate =  command.SheepSellDate.ToGregorianDateTime();
+            var SheepShopDate =  command.SheepshopDate.ToGregorianDateTime();
+            var SheepWastedDate = command.SheepwastedDate.ToGregorianDateTime();
             if ((command.PastSheepNumber != command.SheepNumber))
             {
                 //check sheep mother is exists
@@ -151,14 +152,21 @@ namespace Sheep.Core.Application.Sheep
                 Age = sheep.Age,
                 Gender = sheep.Gender,
                 Birthdate = Convert.ToDateTime(sheep.SheepbirthDate),
+                SheepshopDate=SheepShopDate
             };
             if (!_sheepCategoryApplication.Edit(EditsheepCategorCommand, cancellationToken).Result.isSuccedded)
             {
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.AddSheepCategoryError);
             }
-            if(sheep.SheepState==State.Sell || sheep.SheepState== State.wasted)
+            if(sheep.SheepState==State.Sell)
             {
-                await _sheepCategoryApplication.Delete(sheep.Id, cancellationToken);
+               
+                await _sheepCategoryApplication.CalcuteSheepCategoryDate(sheep.Id,Convert.ToDateTime( SheepSellDate) ,cancellationToken);
+            }
+            if (sheep.SheepState == State.wasted)
+            {
+
+                await _sheepCategoryApplication.CalcuteSheepCategoryDate(sheep.Id, Convert.ToDateTime( SheepWastedDate), cancellationToken);
             }
             return OperationResult<bool>.SuccessResult(true);
         }
