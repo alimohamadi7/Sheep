@@ -3,6 +3,7 @@ using Sheep.Core.Application.Sheep.SheepCategory;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Entity;
 using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Application.Utilities;
 
 namespace Sheep.Core.Application.Sheep.PricePeriod
 {
@@ -27,11 +28,21 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
             var pageId = 1;
             for (int i = 0; i < pageId; i++)
             {
-                var SheepThreesix = _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken, pageId);
-
+                var SheepThreesix = _sheepCategoryApplication.GetAllThreeSixForPricePeriod(Command, cancellationToken, pageId);
+                foreach (var item in SheepThreesix)
+                {
+                    var day = Calculate.CalculateDateRange(item.Start_Three_Six, item.Three_SixCalcute);
+                    // to do find sheep in  full price  and update or  create new 
+                    //to do add new record to price Sheep period in range date
+                    //add new relation for perice period entity  white sheep and category price
+                }
+                if (SheepThreesix.Any())
+                {
+                    pageId++;
+                }
             }
             SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(command.PriceSheep,command.Unabsorbedcosts,command.Start,command.End);
-           await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity,cancellationToken);
+           await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity,cancellationToken,false);
             return OperationResult<bool>.SuccessResult(true);
         }
     }

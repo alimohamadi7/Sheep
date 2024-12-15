@@ -9,6 +9,7 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
         public Guid SheepNumber { get; set; }
         public long? PriceSheep { get; set; }
         public long? Unabsorbedcosts { get; set; }
+        public double PricePerSheep { get; set; }
        public GenderType Gender { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

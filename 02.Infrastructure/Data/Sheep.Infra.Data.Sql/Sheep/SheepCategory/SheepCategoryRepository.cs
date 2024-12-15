@@ -31,6 +31,15 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         }
 
+        public IQueryable<SheepCategoryEntity> GetAllThreeSixForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        {
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Three_SixCalcute == Command.Start);
+            int take = 100;
+            int skip = (PageId - 1) * take;
+            return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
+
+        }
+
         public async Task<IQueryable< SheepCategoryEntity>> GetAllZeroThree(SheepCategoryQuery Command, CancellationToken cancellationToken)
         {
             return TableNoTracking.Where(x => x.Gender == Command.GenderType && ((x.Start_Zero_Three >= Command.Start && x.End_Zero_Three <= Command.End) && (x.Zero_ThreeCalacute < x.End_Zero_Three)));

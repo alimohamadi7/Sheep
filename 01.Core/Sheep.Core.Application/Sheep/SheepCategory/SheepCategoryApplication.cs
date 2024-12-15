@@ -238,5 +238,10 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
          await   _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
+
+        public IQueryable<SheepCategoryEntity> GetAllThreeSixForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        {
+            return _SheepCategoryrepository.GetAllThreeSixForPricePeriod(Command, cancellationToken, PageId);
+        }
     }
 }
