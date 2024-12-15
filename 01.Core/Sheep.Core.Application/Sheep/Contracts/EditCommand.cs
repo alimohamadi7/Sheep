@@ -23,6 +23,7 @@ namespace Sheep.Core.Application.Sheep.Contracts
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
         public string? SheepbirthDate { get; set; }
+        public string? LastSheepbirthDate { get; set; }
         [Display(Name = "تاریخ خرید")]
         public string? SheepshopDate { get; set; }
         [Display(Name = "تاریخ فروش")]

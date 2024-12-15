@@ -137,7 +137,7 @@ namespace Sheep.Core.Application.Sheep
 
             }
             //Check if sheep Price Calcuted not allow change birthday
-            if (await _sheepCategoryApplication.CheckCaluteCategoryPeriod(sheep.Id,cancellationToken))
+            if (await _sheepCategoryApplication.CheckCaluteCategoryPeriod(sheep.Id,cancellationToken)&& command.SheepbirthDate != command.LastSheepbirthDate)
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
 
             int age = Calculate.CalculateAge(SheepBirthDate);
@@ -188,6 +188,7 @@ namespace Sheep.Core.Application.Sheep
             {
                 Id = sheep.Id,
                 SheepbirthDate = sheep.SheepbirthDate.ToShortPersianDateString(),
+                LastSheepbirthDate= sheep.SheepbirthDate.ToShortPersianDateString(),
                 SheepNumber = sheep.SheepNumber,
                 SheepSellDate = sheep.SheepSellDate.ToShortPersianDateString(),
                 SheepshopDate = sheep.SheepshopDate.ToShortPersianDateString(),

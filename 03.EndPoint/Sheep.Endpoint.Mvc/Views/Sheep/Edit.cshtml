@@ -27,9 +27,10 @@
                                     <div class="form-group">
                                         <label for="SheepNumber">شماره دام</label>
                                         <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
-                                        <input type="text" asp-for="Id" hidden class="form-control">
-                                        <input type="text" asp-for="PastSheepNumber" hidden class="form-control">
-                                        <input type="text" asp-for="ParentId" hidden />
+                                        <input type="hidden" asp-for="Id" hidden class="form-control">
+                                        <input type="hidden" asp-for="PastSheepNumber" hidden class="form-control">
+                                        <input type="hidden" asp-for="ParentId" hidden />
+                                        <input type="hidden" asp-for="LastSheepbirthDate" hidden />
                                         <span asp-validation-for="SheepNumber" class="error"></span>
                                     </div>
 
