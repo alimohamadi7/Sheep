@@ -33,7 +33,7 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         public IQueryable<SheepCategoryEntity> GetAllThreeSixForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Three_SixCalcute == Command.Start);
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Three_SixCalcute == Command.End);
             int take = 100;
             int skip = (PageId - 1) * take;
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);

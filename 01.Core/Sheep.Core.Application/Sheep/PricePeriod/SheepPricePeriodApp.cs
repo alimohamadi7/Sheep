@@ -1,5 +1,6 @@
 ﻿using Sheep.Core.Application.Sheep.PricePeriod.Contracts;
 using Sheep.Core.Application.Sheep.SheepCategory;
+using Sheep.Core.Application.Sheep.SheepFullPrice.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Entity;
 using Sheep.Framework.Application.Operation;
@@ -11,13 +12,14 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
     {
         private readonly ISheepPricePeriodRepo _sheepPricePeriodRepo;
         private readonly ISheepCategoryApplication _sheepCategoryApplication;
+        private readonly IFullPriceSheepApplication _fullPriceSheepApplication;
         public SheepPricePeriodApp(ISheepPricePeriodRepo sheepPricePeriodRepo, ISheepCategoryApplication sheepCategoryApplication)
         {
             _sheepPricePeriodRepo = sheepPricePeriodRepo;
             _sheepCategoryApplication = sheepCategoryApplication;
         }
 
-        public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> ThreeSixCreate(CreateCommand command, CancellationToken cancellationToken)
         {
             SheepCategoryQuery Command = new SheepCategoryQuery()
             {
@@ -33,10 +35,27 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                 {
                     var day = Calculate.CalculateDateRange(item.Start_Three_Six, item.Three_SixCalcute);
                     command.PriceSheep=Convert.ToInt64( command.PricePerSheep*day);
-                    SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End);
+                    SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(item.SheepId,command.CategoryPriceId,command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End);
                     await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity, cancellationToken, false);
-                    // to do find sheep in  full price  and update or  create new 
-                    //add new relation for perice period entity  white sheep and category price
+                    //start to do find sheep in  Sheepfull price  and update or  create new
+                  var sheepFullPrice= await _fullPriceSheepApplication.GetSheepBySheepId(item.SheepId, cancellationToken);
+                    if(sheepFullPrice != null)
+                    {
+                        sheepFullPrice.PriceSheep = sheepFullPrice.PriceSheep + command.PriceSheep;
+                        sheepFullPrice.Edit(sheepFullPrice.PriceSheep, command.Unabsorbedcosts, sheepFullPrice.SheepId, item.Three_SixCalcute);
+                    }
+                    else
+                    {
+                        SheepFullPrice.CreateCommand createCommand =new SheepFullPrice.CreateCommand()
+                        {
+                             Calcuted=item.Three_SixCalcute,
+                             PriceSheep= command.PriceSheep,
+                             SheepId= item.SheepId,
+                             Unabsorbedcosts= command.Unabsorbedcosts,
+                        };
+                    await    _fullPriceSheepApplication.ThreeSixCreate(createCommand ,  cancellationToken);
+                    }
+                    //End to do find sheep in  Sheepfull price  and update or  create new
                 }
                 if (SheepThreesix.Any())
                 {

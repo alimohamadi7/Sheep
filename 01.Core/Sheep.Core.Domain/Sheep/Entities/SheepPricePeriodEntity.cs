@@ -15,19 +15,23 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public SheepEntity SheepEntity { get; set; }
         public CategoryPriceEntity CategoryPriceEntity { get; set; }
         public SheepPricePeriodEntity() { }
-        public SheepPricePeriodEntity(long? pricesheep,long? unabsorbedcosts ,DateTime start,DateTime end)
+        public SheepPricePeriodEntity(Guid sheepId, Guid categoryPriceId, long? pricesheep,long? unabsorbedcosts ,DateTime start,DateTime end)
         {
             PriceSheep = pricesheep;
             Unabsorbedcosts = unabsorbedcosts;
             Start = start;
             End = end;
+            SheepId=sheepId;
+            CategoryPriceId=categoryPriceId;
         }
-        public void Edit(long? pricesheep, long? unabsorbedcosts, DateTime start, DateTime end)
+        public void Edit(Guid sheepId, Guid categoryPriceId, long? pricesheep, long? unabsorbedcosts, DateTime start, DateTime end)
         {
             PriceSheep = pricesheep;
             Unabsorbedcosts = unabsorbedcosts;
             Start = start;
             End = end;
+            SheepId = sheepId;
+            CategoryPriceId = categoryPriceId;
         }
     }
 }

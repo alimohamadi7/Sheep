@@ -29,6 +29,9 @@ using Sheep.Infra.Data.Sql.Fiscalyear;
 using Sheep.Core.Application.Sheep.PricePeriod;
 using Sheep.Core.Application.Sheep.PricePeriod.Contracts;
 using Sheep.Infra.Data.Sql.Sheep.PricePeriod.Repository;
+using Sheep.Core.Application.Sheep.SheepFullPrice.Contracts;
+using Sheep.Infra.Data.Sql.Sheep.SheepFullPrice;
+using Sheep.Core.Application.Sheep.SheepFullPrice;
 
 
 namespace Sheep.Infra.bootstraper
@@ -54,6 +57,8 @@ namespace Sheep.Infra.bootstraper
             services.AddTransient<IFiscalyearRepository,FiscalyearRepository>();
             services.AddTransient<ISheepPricePeriodApp, SheepPricePeriodApp>();
             services.AddTransient<ISheepPricePeriodRepo,SheepPricePeriodRepo>();
+            services.AddTransient<IFullPriceSheepApplication ,FullPriceSheepApplication>();
+            services.AddTransient<IFullPriceSheepRepository,FullPriceSheepRepository>();
             // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)

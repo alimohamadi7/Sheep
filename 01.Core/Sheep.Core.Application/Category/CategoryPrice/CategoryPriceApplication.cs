@@ -1,8 +1,7 @@
 ﻿using DNTPersianUtils.Core;
-using Microsoft.EntityFrameworkCore;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
 using Sheep.Core.Application.Category.Contracts;
-
+using Sheep.Core.Application.Sheep.PricePeriod.Contracts;
 using Sheep.Core.Application.Sheep.SheepCategory;
 using Sheep.Core.Domain.Category;
 using Sheep.Framework.Application.Entity;
@@ -17,6 +16,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
         private readonly ICategoryPriceRepository _categoryPriceRepository;
         private readonly ICategoryApplication _categoryApplication;
         private readonly ISheepCategoryApplication _sheepCategoryApplication;
+        private readonly ISheepPricePeriodApp   _pricePeriodApp;
         public CategoryPriceApplication(ICategoryPriceRepository categoryPriceRepository, ICategoryApplication categoryApplication, ISheepCategoryApplication sheepCategoryApplication)
         {
             _categoryPriceRepository = categoryPriceRepository;
@@ -212,8 +212,8 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 {
                     var ThreeSixCal = Convert.ToDateTime(item.Three_SixCalcute);
                     var livestockpersheep = Calculate.CalculateDateRange(ThreeSixCal, Command.End);
-                    if (livestockpersheep > 180)
-                        livestockpersheep = 180;
+                    if (livestockpersheep > 90)
+                        livestockpersheep = 90;
                     var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
                     Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(livestockpersheep);
                     livestockday = livestockday + livestockpersheep;
@@ -232,11 +232,21 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             categoryPriceEntity.PricePerSheep= PricePerdaySheep;
             categoryPriceEntity.Calculated = true;
             categoryPriceEntity.CountSheep =i;
-           await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
+      
             //End category price update price pership
-            //sheep price Calcute
-
-            //End sheep price Calcute
+            //start sheep price period Calcute
+            Sheep.PricePeriod.CreateCommand createCommand = new Sheep.PricePeriod.CreateCommand() 
+            {
+                CategoryPriceId= categoryPriceEntity.Id,
+                Gender=command.Gender,
+                Start=command.Start,
+                End=command.End,
+               PricePerSheep= categoryPriceEntity.PricePerSheep,
+               
+            };
+                  await    _pricePeriodApp.ThreeSixCreate(createCommand, cancellationToken);
+            //End sheep price period Calcute
+            await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
