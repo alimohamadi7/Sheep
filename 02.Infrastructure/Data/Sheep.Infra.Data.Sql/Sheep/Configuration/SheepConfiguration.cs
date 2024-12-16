@@ -21,6 +21,8 @@ namespace Sheep.Infra.Data.Sql.Sheep.Configuration
                 HasForeignKey(x => x.SheepId);
             builder.HasMany(x => x.SheepFullPrices).WithOne(x => x.SheepEntity).
                 HasForeignKey(x => x.SheepId);
+            builder.HasMany(x => x.SheepPricePeriods).WithOne(x => x.SheepEntity).
+                HasForeignKey(x => x.SheepId);
         }
     }
 }

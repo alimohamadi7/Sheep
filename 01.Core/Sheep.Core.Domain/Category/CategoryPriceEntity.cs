@@ -1,5 +1,6 @@
-﻿using Sheep.Framework.Domain.Entities;
-using System.Reflection;
+﻿using Sheep.Core.Domain.Sheep.Entities;
+using Sheep.Framework.Domain.Entities;
+
 
 namespace Sheep.Core.Domain.Category
 {
@@ -16,6 +17,7 @@ namespace Sheep.Core.Domain.Category
         public int CountSheep { get; set; }
         public bool Calculated { get; set; }
         public CategoryEntity CategoryEntity { get; set; }
+        public ICollection<SheepPricePeriodEntity> SheepPricePeriods { get; set; }
         public CategoryPriceEntity() { }
         public CategoryPriceEntity(long food,GenderType gender , CategoryType category, DateTime start,DateTime end ,Guid categoryid)
         {

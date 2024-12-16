@@ -32,8 +32,10 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                 foreach (var item in SheepThreesix)
                 {
                     var day = Calculate.CalculateDateRange(item.Start_Three_Six, item.Three_SixCalcute);
+                    command.PriceSheep=Convert.ToInt64( command.PricePerSheep*day);
+                    SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End);
+                    await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity, cancellationToken, false);
                     // to do find sheep in  full price  and update or  create new 
-                    //to do add new record to price Sheep period in range date
                     //add new relation for perice period entity  white sheep and category price
                 }
                 if (SheepThreesix.Any())
@@ -41,8 +43,7 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                     pageId++;
                 }
             }
-            SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(command.PriceSheep,command.Unabsorbedcosts,command.Start,command.End);
-           await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity,cancellationToken,false);
+           
             return OperationResult<bool>.SuccessResult(true);
         }
     }

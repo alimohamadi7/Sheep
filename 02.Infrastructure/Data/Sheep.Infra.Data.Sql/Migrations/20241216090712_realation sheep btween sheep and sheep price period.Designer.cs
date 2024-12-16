@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sheep.Infra.Data.Sql;
 
@@ -11,9 +12,11 @@ using Sheep.Infra.Data.Sql;
 namespace Sheep.Infra.Data.Sql.Migrations
 {
     [DbContext(typeof(SheepDbcontext))]
-    partial class SheepDbcontextModelSnapshot : ModelSnapshot
+    [Migration("20241216090712_realation sheep btween sheep and sheep price period")]
+    partial class realationsheepbtweensheepandsheeppriceperiod
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,7 +101,7 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoryPriceEntity", (string)null);
+                    b.ToTable("CategoryPriceEntity");
                 });
 
             modelBuilder.Entity("Sheep.Core.Domain.Fiscalyear.FiscalyearEntity", b =>
@@ -292,9 +295,6 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
-                    b.Property<Guid>("CategoryPriceId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -317,8 +317,6 @@ namespace Sheep.Infra.Data.Sql.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryPriceId");
 
                     b.HasIndex("SheepId");
 
@@ -411,19 +409,11 @@ namespace Sheep.Infra.Data.Sql.Migrations
 
             modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepPricePeriodEntity", b =>
                 {
-                    b.HasOne("Sheep.Core.Domain.Category.CategoryPriceEntity", "CategoryPriceEntity")
-                        .WithMany("SheepPricePeriods")
-                        .HasForeignKey("CategoryPriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Sheep.Core.Domain.Sheep.Entities.SheepEntity", "SheepEntity")
                         .WithMany("SheepPricePeriods")
                         .HasForeignKey("SheepId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CategoryPriceEntity");
 
                     b.Navigation("SheepEntity");
                 });
@@ -433,11 +423,6 @@ namespace Sheep.Infra.Data.Sql.Migrations
                     b.Navigation("CategoryEntities");
 
                     b.Navigation("sheepCategoryEntities");
-                });
-
-            modelBuilder.Entity("Sheep.Core.Domain.Category.CategoryPriceEntity", b =>
-                {
-                    b.Navigation("SheepPricePeriods");
                 });
 
             modelBuilder.Entity("Sheep.Core.Domain.Sheep.Entities.SheepEntity", b =>
