@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using Sheep.Core.Application.Sheep.SheepCategory;
 using Sheep.Core.Application.Sheep.SheepCategory.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
@@ -17,14 +18,14 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         public async Task<List<GetSheepCategoryQuery>> GetAll(Guid SheepId, CancellationToken cancellationToken)
         {
-            return  await TableNoTracking.Where(x =>x.SheepId==SheepId)
+            return await TableNoTracking.Where(x => x.SheepId == SheepId)
                       .Select(x => new GetSheepCategoryQuery { id = x.Id }).ToListAsync(cancellationToken);
 
         }
 
-        public  IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken , int PageId = 1)
+        public IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            var result=  TableNoTracking.Where(x => x.Gender == Command.GenderType&&x.IsDeleted==false&& x.Three_SixCalcute<x.End_Three_Six &&x.Three_SixCalcute>=Command.Start);
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Three_SixCalcute < x.End_Three_Six && x.Three_SixCalcute >= Command.Start);
             int take = 100;
             int skip = (PageId - 1) * take;
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
@@ -40,27 +41,40 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         }
 
-        public async Task<IQueryable< SheepCategoryEntity>> GetAllZeroThree(SheepCategoryQuery Command, CancellationToken cancellationToken)
+        public  IQueryable<SheepCategoryEntity> GetAllSixEighteen(SheepCategoryQuery Command, CancellationToken cancellationToken ,int PageId = 1)
         {
-            return TableNoTracking.Where(x => x.Gender == Command.GenderType && ((x.Start_Zero_Three >= Command.Start && x.End_Zero_Three <= Command.End) && (x.Zero_ThreeCalacute < x.End_Zero_Three)));
+            int take = 100;
+            int skip = (PageId - 1) * take;
+
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Six_EighteenCalcute < x.End_Six_Eighteen && x.Six_EighteenCalcute >= Command.Start);
+            return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
         }
 
         public async Task<int> GetCount()
         {
-          return  TableNoTracking.Count();
+            return TableNoTracking.Count();
         }
 
-        public   Task<SheepCategoryEntity> GetSheepCategoryBySheepId(Guid Id, CancellationToken cancellationToken)
+        public Task<SheepCategoryEntity> GetSheepCategoryBySheepId(Guid Id, CancellationToken cancellationToken)
         {
-            return  Table.SingleOrDefaultAsync(x => x.SheepId == Id,cancellationToken);
+            return Table.SingleOrDefaultAsync(x => x.SheepId == Id, cancellationToken);
         }
 
-        public IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken ,int PageId)
+        public IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken, int PageId)
         {
             IQueryable<SheepCategoryEntity> result = TableNoTracking.Where(x => x.IsDeleted == false);
             int take = 100;
             int skip = (PageId - 1) * take;
-            return result.OrderByDescending(x=>x.CreatedDate).Skip(skip).Take(take);
+            return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
+        }
+
+        public IQueryable<SheepCategoryEntity> GetAllSixEighteenForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        {
+
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Six_EighteenCalcute == Command.End);
+            int take = 100;
+            int skip = (PageId - 1) * take;
+            return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
         }
     }
 }

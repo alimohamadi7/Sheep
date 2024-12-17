@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sheep.Core.Application.Category.CategoryPrice;
 using Sheep.Core.Application.Category.CategoryPrice.Contracts;
+using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Domain.Entities;
 
 
@@ -61,8 +62,27 @@ namespace Sheep.Endpoint.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Calcute(CalcuteCommand Command, CancellationToken cancellationToken)
         {
-           // Thread.Sleep(9000);
-            var result = await _categoryPriceApplication.CalculatedPriceThreeSix(Command, cancellationToken);
+            OperationResult<bool> result=new OperationResult<bool>();
+            switch (Command.Category)   
+            {
+                case CategoryType.none:
+                    break;
+                case CategoryType.Zero_Three:
+                    break;
+                case CategoryType.Three_Six:
+                    result= await _categoryPriceApplication.CalculatedPriceThreeSix(Command, cancellationToken);
+                    break;
+                case CategoryType.Six_Eighteen:
+                    result=await _categoryPriceApplication.CalculatedPriceSixEighteen(Command, cancellationToken);
+                    break;
+                case CategoryType.Ewe:
+                    break;
+                case CategoryType.Ram:
+                    break;
+                default:
+                    break;
+            }
+            // Thread.Sleep(9000);
             return new JsonResult(result);
         }
 

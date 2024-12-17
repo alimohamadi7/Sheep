@@ -12,10 +12,11 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public long? Unabsorbedcosts { get; set; }
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
+        public DateTime Calcuted { get; set; }
         public SheepEntity SheepEntity { get; set; }
         public CategoryPriceEntity CategoryPriceEntity { get; set; }
         public SheepPricePeriodEntity() { }
-        public SheepPricePeriodEntity(Guid sheepId, Guid categoryPriceId, long? pricesheep,long? unabsorbedcosts ,DateTime start,DateTime end)
+        public SheepPricePeriodEntity(Guid sheepId, Guid categoryPriceId, long? pricesheep,long? unabsorbedcosts ,DateTime start,DateTime end, DateTime calcuted)
         {
             PriceSheep = pricesheep;
             Unabsorbedcosts = unabsorbedcosts;
@@ -23,8 +24,9 @@ namespace Sheep.Core.Domain.Sheep.Entities
             End = end;
             SheepId=sheepId;
             CategoryPriceId=categoryPriceId;
+            Calcuted = calcuted;
         }
-        public void Edit(Guid sheepId, Guid categoryPriceId, long? pricesheep, long? unabsorbedcosts, DateTime start, DateTime end)
+        public void Edit(Guid sheepId, Guid categoryPriceId, long? pricesheep, long? unabsorbedcosts, DateTime start, DateTime end , DateTime calcuted)
         {
             PriceSheep = pricesheep;
             Unabsorbedcosts = unabsorbedcosts;
@@ -32,6 +34,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
             End = end;
             SheepId = sheepId;
             CategoryPriceId = categoryPriceId;
+            Calcuted = calcuted;
         }
     }
 }

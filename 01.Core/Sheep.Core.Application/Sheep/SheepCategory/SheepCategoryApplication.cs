@@ -172,9 +172,9 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             return categoryType;
         }
 
-        public Task<IQueryable<SheepCategoryEntity>> GetAllZeroThree(SheepCategoryQuery Command, CancellationToken cancellationToken)
+        public IQueryable<SheepCategoryEntity> GetAllSixEighteen(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            return _SheepCategoryrepository.GetAllZeroThree(Command, cancellationToken); 
+            return _SheepCategoryrepository.GetAllSixEighteen(Command, cancellationToken ,PageId); 
         }
 
         public IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
@@ -242,6 +242,11 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public IQueryable<SheepCategoryEntity> GetAllThreeSixForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
             return _SheepCategoryrepository.GetAllThreeSixForPricePeriod(Command, cancellationToken, PageId);
+        }
+
+        public IQueryable<SheepCategoryEntity> GetAllSixEighteenForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        {
+           return _SheepCategoryrepository.GetAllSixEighteenForPricePeriod(Command,cancellationToken, PageId);
         }
     }
 }

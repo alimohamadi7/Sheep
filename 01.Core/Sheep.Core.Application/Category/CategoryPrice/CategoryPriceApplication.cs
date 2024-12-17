@@ -17,11 +17,12 @@ namespace Sheep.Core.Application.Category.CategoryPrice
         private readonly ICategoryApplication _categoryApplication;
         private readonly ISheepCategoryApplication _sheepCategoryApplication;
         private readonly ISheepPricePeriodApp   _pricePeriodApp;
-        public CategoryPriceApplication(ICategoryPriceRepository categoryPriceRepository, ICategoryApplication categoryApplication, ISheepCategoryApplication sheepCategoryApplication)
+        public CategoryPriceApplication(ICategoryPriceRepository categoryPriceRepository, ICategoryApplication categoryApplication, ISheepCategoryApplication sheepCategoryApplication, ISheepPricePeriodApp pricePeriodApp)
         {
             _categoryPriceRepository = categoryPriceRepository;
             _categoryApplication = categoryApplication;
             _sheepCategoryApplication = sheepCategoryApplication;
+            _pricePeriodApp = pricePeriodApp;
         }
 
         public async Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken)
@@ -172,21 +173,64 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             };
         }
 
-        public async Task<OperationResult<bool>> CalculatedPriceZeroThree(CalcuteCommand command, CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> CalculatedPriceSixEighteen(CalcuteCommand command, CancellationToken cancellationToken)
         {
+            int livestockday = 0;
+            double PricePerdaySheep = 0;
+            var pageId = 1;
+            int i = 0;
             SheepCategoryQuery Command = new SheepCategoryQuery()
             { 
             GenderType=command.Gender,
             Start= command.Start,
             End= command.End,
             };
-            var SheepZeroThree = await _sheepCategoryApplication.GetAllZeroThree(Command, cancellationToken);
-            foreach (var item in SheepZeroThree)
+            var SheepSixEighteen =  _sheepCategoryApplication.GetAllSixEighteen(Command, cancellationToken).Count();
+            if (SheepSixEighteen == 0)
+                return OperationResult<bool>.FailureResult("", ApplicationMessages.NotSheepFuondInRaneDate);
+            //calcute livestockday
+            for (i = 0; i < pageId; i++)
             {
-
+                var SheepThreesix = _sheepCategoryApplication.GetAllSixEighteen(Command, cancellationToken, pageId);
+                foreach (var item in SheepThreesix)
+                {
+                    var ThreeSixCal = Convert.ToDateTime(item.Three_SixCalcute);
+                    var livestockpersheep = Calculate.CalculateDateRange(ThreeSixCal, Command.End);
+                    if (livestockpersheep > 90)
+                        livestockpersheep = 90;
+                    var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
+                    Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(livestockpersheep);
+                    livestockday = livestockday + livestockpersheep;
+                }
+                if (SheepThreesix.Any())
+                {
+                    //await _sheepCategoryApplication.SaveChangeAsync(cancellationToken);
+                    pageId++;
+                }
+                //End calcute livestockday
             }
-            //var livestockday=
-            throw new NotImplementedException();
+            //category price update price pership
+            var categoryPriceEntity = await _categoryPriceRepository.GetCategoryPriceById(command.Id, cancellationToken);
+            if (categoryPriceEntity != null && livestockday != 0)
+                PricePerdaySheep = categoryPriceEntity.Food / livestockday;
+            categoryPriceEntity.PricePerSheep = PricePerdaySheep;
+            categoryPriceEntity.Calculated = true;
+            categoryPriceEntity.CountSheep = i;
+
+            //End category price update price pership
+            //start sheep price period Calcute
+            Sheep.PricePeriod.CreateCommand createCommand = new Sheep.PricePeriod.CreateCommand()
+            {
+                CategoryPriceId = categoryPriceEntity.Id,
+                Gender = command.Gender,
+                Start = command.Start,
+                End = command.End,
+                PricePerSheep = categoryPriceEntity.PricePerSheep,
+            };
+            await _pricePeriodApp.ThreeSixCreate(createCommand, cancellationToken);
+            //End sheep price period Calcute
+            await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
+            return OperationResult<bool>.SuccessResult(true);
         }
 
         public async Task<OperationResult<bool>> CalculatedPriceThreeSix(CalcuteCommand command, CancellationToken cancellationToken)
@@ -197,7 +241,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             int i=0;
             SheepCategoryQuery Command = new SheepCategoryQuery()
             {
-                    GenderType = command.Gender,
+                GenderType = command.Gender,
                 Start = command.Start,
                 End = command.End,
             };
@@ -232,17 +276,16 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             categoryPriceEntity.PricePerSheep= PricePerdaySheep;
             categoryPriceEntity.Calculated = true;
             categoryPriceEntity.CountSheep =i;
-      
+
             //End category price update price pership
             //start sheep price period Calcute
-            Sheep.PricePeriod.CreateCommand createCommand = new Sheep.PricePeriod.CreateCommand() 
+            Sheep.PricePeriod.CreateCommand createCommand = new Sheep.PricePeriod.CreateCommand()
             {
-                CategoryPriceId= categoryPriceEntity.Id,
-                Gender=command.Gender,
-                Start=command.Start,
-                End=command.End,
-               PricePerSheep= categoryPriceEntity.PricePerSheep,
-               
+                CategoryPriceId = categoryPriceEntity.Id,
+                Gender = command.Gender,
+                Start = command.Start,
+                End = command.End,
+                PricePerSheep = categoryPriceEntity.PricePerSheep,
             };
                   await    _pricePeriodApp.ThreeSixCreate(createCommand, cancellationToken);
             //End sheep price period Calcute

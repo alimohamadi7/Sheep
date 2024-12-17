@@ -6,6 +6,6 @@ namespace Sheep.Core.Application.Sheep.SheepFullPrice.Contracts
     public interface IFullPriceSheepApplication
     {
         Task<SheepFullPriceEntity> GetSheepBySheepId(Guid Id ,CancellationToken cancellationToken);
-        Task <OperationResult<bool>> ThreeSixCreate(CreateCommand Command,CancellationToken cancellationToken);
+        Task <OperationResult<bool>> Create(CreateCommand Command,CancellationToken cancellationToken);
     }
 }

@@ -14,5 +14,6 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
        public GenderType Gender { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+        public DateTime Calcuted { get; set; }
     }
 }

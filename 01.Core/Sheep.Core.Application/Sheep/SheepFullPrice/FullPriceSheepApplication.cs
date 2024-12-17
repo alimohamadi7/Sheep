@@ -15,7 +15,7 @@ namespace Sheep.Core.Application.Sheep.SheepFullPrice
             _repository = repository;
         }
 
-        public async Task<OperationResult<bool>> ThreeSixCreate(CreateCommand Command, CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> Create(CreateCommand Command, CancellationToken cancellationToken)
         {
             SheepFullPriceEntity sheepFullPriceEntity = new SheepFullPriceEntity(Command.PriceSheep, Command.Unabsorbedcosts,Command.SheepId,Command.Calcuted);
           await  _repository.AddAsync(sheepFullPriceEntity, cancellationToken,false);
