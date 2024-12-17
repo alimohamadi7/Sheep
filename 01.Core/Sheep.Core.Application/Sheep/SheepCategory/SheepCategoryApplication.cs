@@ -29,22 +29,22 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             command.Zero_ThreeCalacute = command.Birthdate;
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
             command.Start_Three_Six = command.Birthdate.AddDays(Ninety + One);
-            command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One);
+            command.Three_SixCalcute = command.Birthdate.AddDays(Ninety );
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
             command.Start_Six_Eighteen = command.Birthdate.AddDays(One_hundred_eighty + One);
-            command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty + One);
+            command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty );
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
             command.Start_Ram_Ewe = command.Birthdate.AddDays(Five_hundred_forty + One);
-            command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One);
+            command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty);
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
             if (command.SheepshopDate != null)
             {
                 var sheepshopDate = Convert.ToDateTime(command.SheepshopDate);
                 var Days = Calculate.CalculateDateRange(command.Birthdate, sheepshopDate);
                 command.Zero_ThreeCalacute = command.Birthdate.AddDays(Days);
-                command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One + Days);
-                command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty + One + Days);
-                command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One + Days);
+                command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + Days);
+                command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty  + Days);
+                command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + Days);
             }
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             SheepCategoryEntity sheepCategoryEntity = new SheepCategoryEntity(command.SheepId, categoryEntity.Id,
@@ -69,21 +69,21 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             command.Zero_ThreeCalacute = command.Birthdate;
             command.End_Zero_Three = command.Birthdate.AddDays(Ninety);
             command.Start_Three_Six = command.Birthdate.AddDays(Ninety + One);
-            command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One);
+            command.Three_SixCalcute = command.Birthdate.AddDays(Ninety );
             command.End_Three_Six = command.Birthdate.AddDays(One_hundred_eighty);
             command.Start_Six_Eighteen = command.Birthdate.AddDays(One_hundred_eighty + One);
-            command.Six_EighteenCalcute= command.Birthdate.AddDays(One_hundred_eighty + One);
+            command.Six_EighteenCalcute= command.Birthdate.AddDays(One_hundred_eighty);
             command.End_Six_Eighteen = command.Birthdate.AddDays(Five_hundred_forty);
             command.Start_Ram_Ewe = command.Birthdate.AddDays(Five_hundred_forty + One);
-            command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One);
+            command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty);
             if (command.SheepshopDate != null)
             {
                 var sheepshopDate = Convert.ToDateTime(command.SheepshopDate);
                 var Days = Calculate.CalculateDateRange(command.Birthdate, sheepshopDate);
                 command.Zero_ThreeCalacute = command.Birthdate.AddDays(Days);
-                command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + One + Days);
-                command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty + One + Days);
-                command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty + One + Days);
+                command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + Days);
+                command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty  + Days);
+                command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty  + Days);
             }
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);

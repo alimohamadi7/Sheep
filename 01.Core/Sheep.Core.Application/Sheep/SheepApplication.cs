@@ -137,12 +137,8 @@ namespace Sheep.Core.Application.Sheep
 
             }
             //Check if sheep Price Calcuted not allow change birthday or Gendertype
-            if (command.SheepbirthDate != command.LastSheepbirthDate|| command.Gender !=command.LastGender)
-            {
                 if (await _sheepCategoryApplication.CheckCaluteCategoryPeriod(sheep.Id, cancellationToken))
                     return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.NotChangeAble);
-            }
-
             int age = Calculate.CalculateAge(SheepBirthDate);
             sheep.Edit(command.SheepNumber,
                 SheepBirthDate, SheepShopDate, command.ParentId, command.SheepState, command.Gender, SheepSellDate,

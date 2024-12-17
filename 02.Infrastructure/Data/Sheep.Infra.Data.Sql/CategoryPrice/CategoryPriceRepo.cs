@@ -67,14 +67,14 @@ namespace Sheep.Infra.Data.Sql.CategoryPrice
         public async Task<CalcuteCommand> GetDetailsForCalcute(Guid id, CancellationToken cancellationToken)
         {
             var result=await TableNoTracking.SingleOrDefaultAsync(x=>x.Id== id, cancellationToken);
-            return new CalcuteCommand() 
+            return new CalcuteCommand()
             {
-                Id=result.Id,
-                CategoryId=result.CategoryId,
-                Start=result.Start,
-                End=result.End,
-                Gender=result.Gender,
-
+                Id = result.Id,
+                CategoryId = result.CategoryId,
+                Start = result.Start,
+                End = result.End,
+                Gender = result.Gender,
+                Category = result.Category
             };
         }
     }

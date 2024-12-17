@@ -275,7 +275,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 PricePerdaySheep = categoryPriceEntity.Food / livestockday; 
             categoryPriceEntity.PricePerSheep= PricePerdaySheep;
             categoryPriceEntity.Calculated = true;
-            categoryPriceEntity.CountSheep =i;
+            categoryPriceEntity.CountSheep =i+1;
 
             //End category price update price pership
             //start sheep price period Calcute
