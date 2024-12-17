@@ -254,17 +254,13 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 var SheepThreesix =  _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken,pageId);
                 foreach (var item in SheepThreesix)
                 {
-                    var ThreeSixCal = Convert.ToDateTime(item.Three_SixCalcute);
-                    var livestockpersheep = Calculate.CalculateDateRange(ThreeSixCal, Command.End);
+                    var livestockpersheep = Calculate.CalculateDateRange(item.Three_SixCalcute, Command.End);
                     if (livestockpersheep > 90)
                         livestockpersheep = 90;
-                    var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
-                    Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(livestockpersheep);
                     livestockday = livestockday + livestockpersheep;
                 }
                 if (SheepThreesix.Any())
                 {
-                    //await _sheepCategoryApplication.SaveChangeAsync(cancellationToken);
                     pageId++;
                 }
                 //End calcute livestockday
@@ -289,7 +285,6 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             };
                   await    _pricePeriodApp.ThreeSixCreate(createCommand, cancellationToken);
             //End sheep price period Calcute
-            await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
