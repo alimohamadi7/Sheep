@@ -196,8 +196,8 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 {
                     var ThreeSixCal = Convert.ToDateTime(item.Three_SixCalcute);
                     var livestockpersheep = Calculate.CalculateDateRange(ThreeSixCal, Command.End);
-                    if (livestockpersheep > 90)
-                        livestockpersheep = 90;
+                    if (livestockpersheep > 360)
+                        livestockpersheep = 360;
                     var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
                     Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(livestockpersheep);
                     livestockday = livestockday + livestockpersheep;
@@ -227,7 +227,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 End = command.End,
                 PricePerSheep = categoryPriceEntity.PricePerSheep,
             };
-            await _pricePeriodApp.ThreeSixCreate(createCommand, cancellationToken);
+            await _pricePeriodApp.SixEighteenCreate(createCommand, cancellationToken);
             //End sheep price period Calcute
             await _categoryPriceRepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
