@@ -1,4 +1,5 @@
-﻿using Sheep.Core.Application.Sheep.PricePeriod.Contracts;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Sheep.Core.Application.Sheep.PricePeriod.Contracts;
 using Sheep.Core.Application.Sheep.SheepCategory;
 using Sheep.Core.Application.Sheep.SheepFullPrice.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
@@ -29,12 +30,18 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                 End = command.End,
             };
             var pageId = 1;
+            int day = 0;
             for (int i = 0; i < pageId; i++)
             {
-                var SheepThreesix = _sheepCategoryApplication.GetAllSixEighteenForPricePeriod(Command, cancellationToken, pageId);
+                var SheepThreesix = _sheepCategoryApplication.GetAllSixEighteen(Command, cancellationToken, pageId);
                 foreach (var item in SheepThreesix)
                 {
-                    var day = Calculate.CalculateDateRange(item.Start_Three_Six, item.Three_SixCalcute);
+                    if (item.End_Six_Eighteen <= command.End)
+                        day = Calculate.CalculateDateRange(item.Six_EighteenCalcute, item.End_Six_Eighteen);
+                    else
+                        day = Calculate.CalculateDateRange(item.Six_EighteenCalcute, Command.End);
+                    var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
+                    Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(day);
                     command.PriceSheep = Convert.ToInt64(command.PricePerSheep * day);
                     SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(item.SheepId, command.CategoryPriceId, command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End, item.Three_SixCalcute);
                     await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity, cancellationToken, false);
@@ -63,7 +70,7 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                     pageId++;
                 }
             }
-
+            await _sheepPricePeriodRepo.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
@@ -77,36 +84,38 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                 End = command.End,
             };
             var pageId = 1;
+            int day = 0;
             for (int i = 0; i < pageId; i++)
             {
                 var SheepThreesix = _sheepCategoryApplication.GetAllThreeSix(Command, cancellationToken, pageId);
                 foreach (var item in SheepThreesix)
                 {
-                    var day = Calculate.CalculateDateRange(item.Three_SixCalcute, command.End);
-                    if (day > 90)
-                        day = 90;
-                    command.PriceSheep=Convert.ToInt64( command.PricePerSheep*day);
+                    if (item.End_Three_Six <= command.End)
+                        day = Calculate.CalculateDateRange(item.Three_SixCalcute, item.End_Three_Six);
+                    else
+                        day = Calculate.CalculateDateRange(item.Three_SixCalcute, Command.End);
+                    command.PriceSheep = Convert.ToInt64(command.PricePerSheep * day);
                     var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
                     Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(day);
-                    SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(item.SheepId,command.CategoryPriceId,command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End, item.Three_SixCalcute);
+                    SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(item.SheepId, command.CategoryPriceId, command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End, item.Three_SixCalcute);
                     await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity, cancellationToken, false);
                     //start to do find sheep in  Sheepfull price  and update or  create new
-                  var sheepFullPrice= await _fullPriceSheepApplication.GetSheepBySheepId(item.SheepId, cancellationToken);
-                    if(sheepFullPrice != null)
+                    var sheepFullPrice = await _fullPriceSheepApplication.GetSheepBySheepId(item.SheepId, cancellationToken);
+                    if (sheepFullPrice != null)
                     {
                         sheepFullPrice.PriceSheep = sheepFullPrice.PriceSheep + command.PriceSheep;
                         sheepFullPrice.Edit(sheepFullPrice.PriceSheep, command.Unabsorbedcosts, sheepFullPrice.SheepId, item.Three_SixCalcute);
                     }
                     else
                     {
-                        SheepFullPrice.CreateCommand createCommand =new SheepFullPrice.CreateCommand()
+                        SheepFullPrice.CreateCommand createCommand = new SheepFullPrice.CreateCommand()
                         {
-                             Calcuted=item.Three_SixCalcute,
-                             PriceSheep= command.PriceSheep,
-                             SheepId= item.SheepId,
-                             Unabsorbedcosts= command.Unabsorbedcosts,
+                            Calcuted = item.Three_SixCalcute,
+                            PriceSheep = command.PriceSheep,
+                            SheepId = item.SheepId,
+                            Unabsorbedcosts = command.Unabsorbedcosts,
                         };
-                    await   _fullPriceSheepApplication.Create(createCommand ,  cancellationToken);
+                        await _fullPriceSheepApplication.Create(createCommand, cancellationToken);
                     }
                     //End to do find sheep in  Sheepfull price  and update or  create new
                 }
@@ -115,7 +124,7 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                     pageId++;
                 }
             }
-        await   _sheepPricePeriodRepo.SaveChangesAsync(cancellationToken);   
+            await _sheepPricePeriodRepo.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
     }
