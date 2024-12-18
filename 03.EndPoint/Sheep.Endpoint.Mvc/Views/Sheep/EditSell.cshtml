@@ -1,0 +1,79 @@
+﻿@model Sheep.Core.Application.Sheep.Contracts.EditCommand
+@using Sheep.Framework.Domain.Entities
+@using DNTPersianUtils.Core
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">ویرایش اطلاعات دام</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="EditSell" asp-controller="Sheep"
+                          method="post"
+                          data-ajax="true"
+                          data-callback=""
+                          data-action="Refresh"
+                          enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="hidden" asp-for="Id" hidden class="form-control">
+                                        <input type="hidden" asp-for="PastSheepNumber" hidden class="form-control">
+                                        <input type="hidden" asp-for="ParentId" hidden />
+                                        <input type="hidden" asp-for="LastSheepbirthDate" hidden />
+                                        <input type="hidden" asp-for="LastGender" hidden />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="SheepState">وضعیت</label>
+                                        <select class="form-control form-myselect" onchange="myFunction()" asp-for="SheepState" asp-items="Html.GetEnumSelectList<State>()">
+                                        </select>
+                                        <span asp-validation-for="SheepState" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 SheepSellDate">
+                                    <div class="form-group SheepSellDate">
+                                        <label for="SheepSellDate" hidden class="SheepSellDate">تاریخ فروش</label>
+                                        <input type="text" asp-for="SheepSellDate" data-jdp data-jdp-max-date="today" hidden class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
+                                        <span asp-validation-for="SheepSellDate" class="error SheepSellDate"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 SheepwastedDate">
+                                    <div class="form-group SheepwastedDate">
+                                        <label for="SheepwastedDate" hidden class="SheepwastedDate">تاریخ تلف شدن</label>
+                                        <input type="text" asp-for="SheepwastedDate" data-jdp data-jdp-max-date="today" hidden class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
+                                        <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="d-flex justify-content-center">
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary waves-effect">ویرایش</button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+@section Scripts {
+
+}

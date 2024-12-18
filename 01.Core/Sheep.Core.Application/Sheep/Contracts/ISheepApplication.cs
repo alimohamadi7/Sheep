@@ -10,6 +10,7 @@ namespace Sheep.Core.Application.Sheep.Contracts
         Task<OperationResult<bool>> Create(CreateCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> IsExistSheep(CreateCommand createCommand, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Edit(EditCommand command, CancellationToken cancellationToken);
+        Task<OperationResult<bool>> EditSell(EditCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken);
         Task <GetSheepQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "");
         Task  CalcuteCategory(int day);

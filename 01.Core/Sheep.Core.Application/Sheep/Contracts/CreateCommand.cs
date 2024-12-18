@@ -20,7 +20,7 @@ namespace Sheep.Core.Application.Sheep.Contracts
         public Guid? ParentId { get; set; }
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = ValidationMessages.IsRequired)]
-        public string? SheepbirthDate { get; set; }
+        public string SheepbirthDate { get; set; }
         [Display(Name = "تاریخ خرید")]
         public string? SheepshopDate { get; set; }
         [Display(Name = "تاریخ فروش")]

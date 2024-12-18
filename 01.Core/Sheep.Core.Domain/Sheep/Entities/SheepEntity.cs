@@ -6,7 +6,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
     public class SheepEntity : BaseEntity<Guid>
     {
         public string SheepNumber { get; set; }
-        public DateTime? SheepbirthDate { get; set; }
+        public DateTime SheepbirthDate { get; set; }
         public DateTime? SheepshopDate { get; set; }
         public DateTime? SheepSellDate { get; set; }
         public DateTime? SheepwastedDate { get; set; }
@@ -48,7 +48,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
             SheepwastedDate= sheepwasteddate;
             Age = age;
         }
-        public void Edit(string sheepNumber, DateTime? sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
+        public void Edit(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
             DateTime? sheepselldate, DateTime? sheepwasteddate, int age)
         {
             switch (sheepState)

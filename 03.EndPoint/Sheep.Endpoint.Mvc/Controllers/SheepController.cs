@@ -1,9 +1,6 @@
 ﻿using DNTPersianUtils.Core;
 using Microsoft.AspNetCore.Mvc;
 using Sheep.Core.Application.Sheep.Contracts;
-using Sheep.Endpoint.Mvc.WebframeWork.Validateattr;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using System.Threading;
 using Sheep.Core.Application.Background;
 using Sheep.Core.Application.Sheep.SheepCategory;
 
@@ -86,6 +83,17 @@ namespace Sheep.Endpoint.Mvc.Controllers
         {
             var result = await _sheepApplication.Delete(id, cancellationToken);
             return new JsonResult(result);
+        }
+        public async Task<IActionResult> EditSell(Guid id, CancellationToken cancellationToken)
+        {
+            var result = await _sheepApplication.GetDetails(id, cancellationToken);
+            return PartialView(nameof(EditSell), result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditSell(EditCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _sheepApplication.EditSell(command, cancellationToken);
+            return new JsonResult( result);
         }
         [HttpGet]
         [Route("Calcute")]

@@ -22,6 +22,7 @@
         public static string DatePeriodNotValid = " بازه تاریخی نامعتبر است ";
         public static string NotFisCalYearValid = " سال مالی وجود دارد  ";
         public static string NotSheepFuondInRaneDate = "بازه تاریخی به هیچ دامی تعلق نمیگیرد  ";
+        public static string InvalidDate = "تاریخ ورودی نامعتبر است";
     }
 }
 
