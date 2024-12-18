@@ -234,7 +234,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
 
         public async Task<OperationResult<bool>> CalculatedPriceThreeSix(CalcuteCommand command, CancellationToken cancellationToken)
         {
-            int livestockday = 0;
+            double livestockday = 0;
             double PricePerdaySheep = 0;
             var pageId = 1;
             int i = 0;

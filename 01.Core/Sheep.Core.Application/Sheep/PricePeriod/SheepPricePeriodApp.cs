@@ -94,7 +94,7 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                         day = Calculate.CalculateDateRange(item.Three_SixCalcute, item.End_Three_Six);
                     else
                         day = Calculate.CalculateDateRange(item.Three_SixCalcute, Command.End);
-                    command.PriceSheep = Convert.ToInt64(command.PricePerSheep * day);
+                    command.PriceSheep = command.PricePerSheep * day;
                     var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
                     Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(day);
                     SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(item.SheepId, command.CategoryPriceId, command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End, item.Three_SixCalcute);
