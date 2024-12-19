@@ -39,7 +39,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
             if (command.SheepshopDate != null)
             {
-                var sheepshopDate = Convert.ToDateTime(command.SheepshopDate);
+                var sheepshopDate =Convert.ToDateTime( command.SheepshopDate);
                 var Days = Calculate.CalculateDateRange(command.Birthdate, sheepshopDate);
                 command.Zero_ThreeCalacute = command.Birthdate.AddDays(Days);
                 command.Three_SixCalcute = command.Birthdate.AddDays(Ninety + Days);
@@ -51,7 +51,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                command.Gender, command.ActiveCategory, command.Start_Zero_Three,command.Zero_ThreeCalacute, command.End_Zero_Three,
                command.Start_Three_Six,command.Three_SixCalcute,command.End_Three_Six,
               command.Start_Six_Eighteen,command.Six_EighteenCalcute,command.End_Six_Eighteen,command.Start_Ram_Ewe,command.Ram_EweCalcute);
-            await _SheepCategoryrepository.AddAsync(sheepCategoryEntity, cancellationToken,false);
+            await _SheepCategoryrepository.AddAsync(sheepCategoryEntity, cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
@@ -85,14 +85,14 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                 command.Six_EighteenCalcute = command.Birthdate.AddDays(One_hundred_eighty  + Days);
                 command.Ram_EweCalcute = command.Birthdate.AddDays(Five_hundred_forty  + Days);
             }
+
             command.ActiveCategory = OutCategory(command.Age, command.Gender);
             var categoryEntity = await _categoryApplication.GetCategoryByCategoryType(command.ActiveCategory, cancellationToken);
             var CategorySheepEntity=await _SheepCategoryrepository.GetSheepCategoryBySheepId(command.SheepId,cancellationToken);
             CategorySheepEntity.Edit(command.SheepId, categoryEntity.Id,
                command.Gender, command.ActiveCategory, command.Start_Zero_Three, command.Zero_ThreeCalacute,command.End_Zero_Three, command.Start_Three_Six,command.Three_SixCalcute,command.End_Three_Six,
                 command.Start_Six_Eighteen,command.Six_EighteenCalcute,command.End_Six_Eighteen,command.Start_Ram_Ewe,command.Ram_EweCalcute);
-
-          await  _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
+            //await  _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
 
@@ -190,8 +190,8 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
 
         public Task<bool> CheckCaluteCategoryPeriod(Guid sheepId, CancellationToken cancellationToken)
         {
-            return _SheepCategoryrepository.Exists(x =>x.SheepId==sheepId&&( x.Zero_ThreeCalacute > x.Start_Zero_Three || x.Three_SixCalcute > x.Start_Three_Six ||
-            x.Six_EighteenCalcute > x.Start_Six_Eighteen||x.ActiveCategory==CategoryType.Ewe||x.ActiveCategory==CategoryType.Ram));
+            return _SheepCategoryrepository.Exists(x =>x.SheepId==sheepId&&( x.Zero_ThreeCalacute > x.Start_Zero_Three || x.Three_SixCalcute > x.End_Zero_Three ||
+            x.Six_EighteenCalcute > x.End_Three_Six||x.ActiveCategory==CategoryType.Ewe||x.ActiveCategory==CategoryType.Ram));
         }
 
         public async Task SaveChangeAsync(CancellationToken cancellationToken)
@@ -199,7 +199,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
            await _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<OperationResult<bool>> CalcuteSheepCategoryDate(Guid SheepId,DateTime Date , CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> CalcuteSellOrWastedDate(Guid SheepId,DateTime Date , CancellationToken cancellationToken)
         {
             var result=await _SheepCategoryrepository.GetSheepCategoryBySheepId(SheepId, cancellationToken);
             var activeCategory=result.ActiveCategory;
@@ -208,8 +208,8 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                 case CategoryType.none:
                     break;
                 case CategoryType.Zero_Three:
-                    if (Date < result.Zero_ThreeCalacute)
-                        throw new ArithmeticException(ApplicationMessages.InvalidDate);
+                    if (Date < result.Zero_ThreeCalacute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
+                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
                     result.End_Zero_Three = Date;
                     result.Three_SixCalcute = Date;
                     result.End_Three_Six = Date;
@@ -219,8 +219,8 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     result.EndRam_Ewe= Date;
                     break;
                 case CategoryType.Three_Six:
-                    if (Date < result.Three_SixCalcute)
-                        throw new ArithmeticException(ApplicationMessages.InvalidDate);
+                    if (Date < result.Three_SixCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
+                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
                     result.End_Three_Six = Date;
                     result.Six_EighteenCalcute = Date;
                     result.End_Six_Eighteen = Date;
@@ -228,20 +228,20 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     result.EndRam_Ewe = Date;
                     break;
                 case CategoryType.Six_Eighteen:
-                    if (Date < result.Six_EighteenCalcute)
-                        throw new ArithmeticException(ApplicationMessages.InvalidDate);
+                    if (Date < result.Six_EighteenCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
+                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
                     result.End_Six_Eighteen = Date;
                     result.Ram_EweCalcute = Date;
                     result.Start_Ram_Ewe = Date;
                     break;
                 case CategoryType.Ewe:
-                    if (Date < result.Ram_EweCalcute)
-                        throw new ArithmeticException(ApplicationMessages.InvalidDate);
+                    if (Date < result.Ram_EweCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
+                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
                     result.EndRam_Ewe = Date;
                     break;
                 case CategoryType.Ram:
-                    if (Date < result.Ram_EweCalcute)
-                        throw new ArithmeticException(ApplicationMessages.InvalidDate);
+                    if (Date < result.Ram_EweCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
+                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
                     result.EndRam_Ewe = Date;
                     break;
             }

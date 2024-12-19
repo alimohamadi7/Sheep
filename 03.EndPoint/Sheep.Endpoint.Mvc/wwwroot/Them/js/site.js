@@ -84,11 +84,12 @@ $(document).ready(function () {
 function CallBackHandler(data, action, form) {
     switch (action) {
         case "Message":
+            $("#myModal").css("display", "none");  // For Watting and Background Disable
             alert(data.Message);
             break;
         case "Refresh":
             if (data.isSuccedded) {
-                $("#myModal").modal("hide"); // For Watting and Background Disable
+                $("#myModal").css("display", "none"); // For Watting and Background Disable
                 var delayInMilliseconds = 1000;
                 Swal.fire({
                     icon: "success",
@@ -101,6 +102,7 @@ function CallBackHandler(data, action, form) {
                 }, delayInMilliseconds)
               
             } else {
+                $("#myModal").css("display", "none");  // For Watting and Background Disable
                 Swal.fire({
                     icon: "warning",
                     title: data.message,

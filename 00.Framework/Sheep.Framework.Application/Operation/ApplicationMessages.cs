@@ -12,7 +12,8 @@
         public static string NotSameNumber = " شماره دام و شماره دام مادر مشابه است ";
         public static string SheepIsParentChangesheepNumber = "  شماره دام به علت داشتن بره قابل تغییر نیست ";
         public static string NotChangeAble = "  امکان تغییر وجود ندارد";
-        public static string SheepParentnotvalid = "  شماره دام مادر در گله در وضعیت   *موجود*  نیست ";
+        public static string SheepParentnotvalid = "   دام مادر در گله در وضعیت   *موجود*  نیست ";
+        public static string SheepParentAge = " دام مادر مدت زمان تغییر گروه به میش را طی نکرده است ";
         public static string AddSheepCategoryError = "  در ثبت گروه دامی مشکلی به وجود آمده است ";
         public static string RamIsnotFemale = "  قوچ نمیتواند جنسیت ماده داشته باشد ";
         public static string EveIsnotMale = "  میش نمیتواند جنسیت نر داشته باشد ";
@@ -22,7 +23,11 @@
         public static string DatePeriodNotValid = " بازه تاریخی نامعتبر است ";
         public static string NotFisCalYearValid = " سال مالی وجود دارد  ";
         public static string NotSheepFuondInRaneDate = "بازه تاریخی به هیچ دامی تعلق نمیگیرد  ";
-        public static string InvalidDate = "تاریخ ورودی نامعتبر است";
+        public static string InvalidSellOrWastedDate = "تاریخ تلف شدن یا فروش نامعتبر است";
+        public static string InvalidShopDate = "تاریخ خرید از تولد کوچکتر است";
+        public static string InvalidSheepBirthdate = "تاریخ تولد بزرگتر از تاریخ روز است";
+        public static string InvalidSellDate = "تاریخ فروش از تولد کوچکتر است";
+        public static string InvalidWastedDate = "تاریخ تلف شدن از تولد کوچکتر است";
     }
 }
 

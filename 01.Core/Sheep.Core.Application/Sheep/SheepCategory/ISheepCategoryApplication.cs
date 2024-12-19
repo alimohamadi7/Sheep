@@ -14,7 +14,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         Task<OperationResult<bool>> Create(CreateSheepCategoryCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Edit(EditSheepCategoryCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Delete(Guid SheepId, CancellationToken cancellationToken);
-        Task<OperationResult<bool>> CalcuteSheepCategoryDate(Guid SheepId, DateTime Date, CancellationToken cancellationToken);
+        Task<OperationResult<bool>> CalcuteSellOrWastedDate(Guid SheepId, DateTime Date, CancellationToken cancellationToken);
         Task<GetSheepCategoryQuery> GetAllSheepCategory(CancellationToken cancellationToken, int pageId = 1, string trim = "");
         Task CalculateSheepCategory(CancellationToken cancellationToken);
         Task<bool> CheckCaluteCategoryPeriod(Guid sheepId, CancellationToken cancellationToken);

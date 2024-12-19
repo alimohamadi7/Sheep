@@ -28,6 +28,7 @@
                                         <label for="SheepNumber">شماره دام</label>
                                         <input type="text" asp-for="SheepNumber" class="form-control" id="SheepNumber" placeholder="شماره دام">
                                         <input type="hidden" asp-for="Id" hidden class="form-control">
+                                        <input type="hidden" asp-for="SheepState" hidden class="form-control">
                                         <input type="hidden" asp-for="PastSheepNumber" hidden class="form-control">
                                         <input type="hidden" asp-for="ParentId" hidden />
                                         <input type="hidden" asp-for="LastSheepbirthDate" hidden />
@@ -64,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">  
+@*                             <div class="row">  
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="SheepState">وضعیت</label>
@@ -86,24 +87,9 @@
                                             <input type="text" asp-for="SheepwastedDate" data-jdp data-jdp-max-date="today" hidden class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
                                             <span asp-validation-for="SheepwastedDate" hidden class="error SheepwastedDate"></span>
                                         </div>
-
-@*                                     @if (Model.SheepState == State.wasted)
-                                    {
-                                        <div class="form-group">
-                                            <label for="SheepwastedDate" class="SheepwastedDate">تاریخ تلف شدن</label>
-                                            <input type="text" asp-for="SheepwastedDate" data-jdp data-jdp-max-date="today" class="form-control DatePicker SheepwastedDate" placeholder="تاریخ تلف شدن">
-                                            <span asp-validation-for="SheepwastedDate" class="error SheepwastedDate"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="SheepSellDate" hidden class="SheepSellDate">تاریخ فروش</label>
-                                            <input type="text" asp-for="SheepSellDate" hidden data-jdp data-jdp-max-date="today" class="form-control DatePicker SheepSellDate" placeholder="تاریخ فروش">
-                                            <span asp-validation-for="SheepSellDate" hidden class="error SheepSellDate"></span>
-                                        </div>
-                                    } *@
-
                                 </div>
                             </div>
-                            <div class="row">   
+ *@                            <div class="row">   
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="Gender">جنسیت</label>

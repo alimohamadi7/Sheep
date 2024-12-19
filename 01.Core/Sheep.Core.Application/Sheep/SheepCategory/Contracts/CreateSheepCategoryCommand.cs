@@ -23,5 +23,6 @@ namespace Sheep.Core.Application.Sheep.SheepCategory.Contracts
         public DateTime? SheepshopDate { get; set; }
         public int Age {  get; set; }
         public GenderType Gender { get; set; } 
+
     }
 }

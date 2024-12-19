@@ -47,6 +47,7 @@ namespace Sheep.Core.Domain.Sheep.Entities
             SheepSellDate = sheepselldate;
             SheepwastedDate= sheepwasteddate;
             Age = age;
+            SheepState = State.present;
         }
         public void Edit(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
             DateTime? sheepselldate, DateTime? sheepwasteddate, int age)
