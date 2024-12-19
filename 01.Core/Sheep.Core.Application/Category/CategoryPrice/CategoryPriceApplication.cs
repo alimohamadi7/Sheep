@@ -8,7 +8,7 @@ using Sheep.Framework.Application.Entity;
 using Sheep.Framework.Application.Operation;
 using Sheep.Framework.Application.Utilities;
 using Sheep.Framework.Domain.Entities;
-using System.Security.Cryptography;
+
 
 namespace Sheep.Core.Application.Category.CategoryPrice
 {
