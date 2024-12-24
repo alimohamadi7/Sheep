@@ -23,11 +23,13 @@
         public static string DatePeriodNotValid = " بازه تاریخی نامعتبر است ";
         public static string NotFisCalYearValid = " سال مالی وجود دارد  ";
         public static string NotSheepFuondInRaneDate = "بازه تاریخی به هیچ دامی تعلق نمیگیرد  ";
-        public static string InvalidSellOrWastedDate = "تاریخ تلف شدن یا فروش نامعتبر است";
+        public static string InvalidSellOrWastedDate = "تاریخ فروش یا تلف شدن نامعتبر است . این تاریخ دام در هزینه های گله محاسبه شده است  ";
         public static string InvalidShopDate = "تاریخ خرید از تولد کوچکتر است";
-        public static string InvalidSheepBirthdate = "تاریخ تولد بزرگتر از تاریخ روز است";
-        public static string InvalidSellDate = "تاریخ فروش از تولد کوچکتر است";
-        public static string InvalidWastedDate = "تاریخ تلف شدن از تولد کوچکتر است";
+        public static string InvalidSheepBirthdate = "تاریخ تولد یا خرید بزرگتر از تاریخ روز است";
+        public static string SellDatesmallBirthdate = "تاریخ فروش از تولد کوچکتر است";
+        public static string WastedDatesmallBirthdate = "تاریخ تلف شدن از تولد کوچکتر است";
+        public static string InvalidSellDate = "تاریخ فروش شدن بزرگتر از تاریخ روز است";
+        public static string InvalidWastedDate = "تاریخ تلف شدن بزرگتر از تاریخ روز است";
     }
 }
 

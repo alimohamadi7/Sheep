@@ -13,7 +13,6 @@ namespace Sheep.Core.Application.Sheep.Contracts
         Task<OperationResult<bool>> EditSell(EditCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken);
         Task <GetSheepQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "");
-        Task  CalcuteCategory(int day);
         Task CalculateAge(CancellationToken cancellationToken);
     }
 }

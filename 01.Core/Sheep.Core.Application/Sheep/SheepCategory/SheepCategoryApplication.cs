@@ -210,7 +210,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     break;
                 case CategoryType.Zero_Three:
                     if (Date < result.Zero_ThreeCalacute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
-                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
+                        return OperationResult<bool>.FailureResult("",ApplicationMessages.InvalidSellOrWastedDate);
                     result.Three_SixCalcute = Date;
                     result.End_Three_Six = Date;
                     result.Six_EighteenCalcute = Date;
@@ -220,7 +220,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     break;
                 case CategoryType.Three_Six:
                     if (Date < result.Three_SixCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
-                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
+                        return OperationResult<bool>.FailureResult("", ApplicationMessages.InvalidSellOrWastedDate);
                     else if (Date < result.Three_SixCalcute)
                         result.Three_SixCalcute = Date;
                     result.End_Three_Six = Date;
@@ -231,7 +231,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     break;
                 case CategoryType.Six_Eighteen:
                     if (Date < result.Six_EighteenCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
-                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
+                        return OperationResult<bool>.FailureResult("", ApplicationMessages.InvalidSellOrWastedDate);
                     else if (Date < result.Six_EighteenCalcute)
                     {
                         result.Six_EighteenCalcute = Date;
@@ -245,8 +245,8 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     break;
                 case CategoryType.Ewe:
                     if (Date < result.Ram_EweCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
-                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
-                    else if(Date < result.Ram_EweCalcute)
+                        return OperationResult<bool>.FailureResult("", ApplicationMessages.InvalidSellOrWastedDate);
+                    else if (Date < result.Ram_EweCalcute)
                     {
                         result.Ram_EweCalcute = Date;
                         if(Date < result.Six_EighteenCalcute)
@@ -264,7 +264,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     break;
                 case CategoryType.Ram:
                     if (Date < result.Ram_EweCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
-                        throw new ArithmeticException(ApplicationMessages.InvalidSellOrWastedDate);
+                        return OperationResult<bool>.FailureResult("", ApplicationMessages.InvalidSellOrWastedDate);
                     else if (Date < result.Ram_EweCalcute)
                     {
                         result.Ram_EweCalcute = Date;

@@ -21,22 +21,10 @@ namespace Sheep.Core.Domain.Sheep.Entities
         public ICollection<SheepFullPriceEntity> SheepFullPrices { get; set; }
         public ICollection<SheepPricePeriodEntity>SheepPricePeriods { get; set; }
         public SheepEntity() { }
-        public SheepEntity(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
-            DateTime? sheepselldate,DateTime? sheepwasteddate , int age)
+        public SheepEntity(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, 
+            Guid? parentId, State sheepState, GenderType gender,int age)
         {
-            switch (sheepState)
-            {
-                case State.present:
-                    sheepselldate = null;
-                    sheepwasteddate = null;
-                    break;
-                    case State.wasted:
-                    sheepselldate = null;
-                    break;
-                case State.Sell:
-                    sheepwasteddate=null;
-                    break;
-            }
+            
             SheepNumber = sheepNumber;
             SheepbirthDate = sheepbirthDate;
             SheepshopDate = sheepshop;
@@ -44,35 +32,22 @@ namespace Sheep.Core.Domain.Sheep.Entities
             IsDeleted = false;
             SheepState = sheepState;
             Gender = gender;
-            SheepSellDate = sheepselldate;
-            SheepwastedDate= sheepwasteddate;
+            SheepSellDate = null;
+            SheepwastedDate= null;
             Age = age;
             SheepState = State.present;
         }
-        public void Edit(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender,
-            DateTime? sheepselldate, DateTime? sheepwasteddate, int age)
+        public void Edit(string sheepNumber, DateTime sheepbirthDate, DateTime? sheepshop, Guid? parentId, State sheepState, GenderType gender, int age)
         {
-            switch (sheepState)
-            {
-                case State.present:
-                    sheepselldate = null;
-                    sheepwasteddate = null;
-                    break;
-                case State.wasted:
-                    sheepselldate = null;
-                    break;
-                case State.Sell:
-                    sheepwasteddate = null;
-                    break;
-            }
+         
             SheepNumber = sheepNumber;
             SheepbirthDate = sheepbirthDate;
             SheepshopDate = sheepshop;
             ParentId = parentId;
             SheepState = sheepState;
             Gender = gender;
-            SheepSellDate = sheepselldate;
-            SheepwastedDate = sheepwasteddate;
+            SheepSellDate = null;
+            SheepwastedDate = null;
             Age= age;
         }
         public void Delete()
