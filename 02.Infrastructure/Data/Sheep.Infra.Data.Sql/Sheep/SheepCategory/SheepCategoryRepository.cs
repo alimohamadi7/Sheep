@@ -4,6 +4,7 @@ using Sheep.Core.Application.Sheep.SheepCategory;
 using Sheep.Core.Application.Sheep.SheepCategory.Contracts;
 using Sheep.Core.Domain.Sheep.Entities;
 using Sheep.Framework.Application.Entity;
+using Sheep.Framework.Domain.Entities;
 using Sheep.Framework.Infrastructure.Data;
 
 namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
@@ -70,13 +71,25 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
             int take = 100;
             int skip = (PageId - 1) * take;
 
-            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Ram_EweCalcute < x.End_Six_Eighteen && x.Ram_EweCalcute >= Command.Start);
+            var result = TableNoTracking.Where(
+                x => x.Gender == Command.GenderType &&
+            x.IsDeleted == false&&x.ActiveCategory==CategoryType.Ewe
+            && x.Ram_EweCalcute != x.EndRam_Ewe
+            &&x.Start_Ram_Ewe>=Command.Start);
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
         }
 
         public IQueryable<SheepCategoryEntity> GetAllRam(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            throw new NotImplementedException();
+            int take = 100;
+            int skip = (PageId - 1) * take;
+
+            var result = TableNoTracking.Where(
+                x => x.Gender == Command.GenderType &&
+            x.IsDeleted == false && x.ActiveCategory == CategoryType.Ram
+            && x.Ram_EweCalcute != x.EndRam_Ewe
+            && x.Ram_EweCalcute >= Command.Start);
+            return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
         }
     }
 }

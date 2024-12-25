@@ -265,7 +265,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 }
                 //End calcute livestockday
             }
-            //category price update price pership
+            //Start category price update price pership
             var categoryPriceEntity = await _categoryPriceRepository.GetCategoryPriceById(command.Id, cancellationToken);
             if (categoryPriceEntity != null && livestockday != 0)
                 PricePerdaySheep = categoryPriceEntity.Food / livestockday;
@@ -303,7 +303,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             throw new NotImplementedException();
         }
 
-        public Task<OperationResult<bool>> CalculatedPriceEwe(CalcuteCommand command, CancellationToken cancellationToken)
+        public async Task<OperationResult<bool>> CalculatedPriceEwe(CalcuteCommand command, CancellationToken cancellationToken)
         {
             double livestockday = 0;
             double PricePerdaySheep = 0;
@@ -316,6 +316,32 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 Start = command.Start,
                 End = command.End,
             };
+            var Sheepthreesix = _sheepCategoryApplication.GetAllEwe(Command, cancellationToken, pageId).Count();
+            if (Sheepthreesix == 0)
+                return OperationResult<bool>.FailureResult("", ApplicationMessages.NotSheepFuondInRaneDate);
+            //calcute livestockday
+            for (i = 0; i < pageId; i++)
+            {
+                var SheepThreesix = _sheepCategoryApplication.GetAllEwe(Command, cancellationToken, pageId);
+                foreach (var item in SheepThreesix)
+                {
+                    day = Calculate.CalculateDateRange(item.Ram_EweCalcute, Command.End);
+                    livestockday = livestockday + day;
+                }
+                if (SheepThreesix.Any())
+                {
+                    pageId++;
+                }
+                //End calcute livestockday
+            }
+            //category price update price pership
+            var categoryPriceEntity = await _categoryPriceRepository.GetCategoryPriceById(command.Id, cancellationToken);
+            if (categoryPriceEntity != null && livestockday != 0)
+                PricePerdaySheep = categoryPriceEntity.Food / livestockday;
+            categoryPriceEntity.PricePerSheep = PricePerdaySheep;
+            categoryPriceEntity.Calculated = true;
+            categoryPriceEntity.CountSheep = i + 1;
+            //End category price update price pership
             throw new NotImplementedException();
         }
     }

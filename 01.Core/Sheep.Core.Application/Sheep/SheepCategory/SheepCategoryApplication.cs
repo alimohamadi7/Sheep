@@ -290,12 +290,12 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
 
         public IQueryable<SheepCategoryEntity> GetAllEwe(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            throw new NotImplementedException();
+            return _SheepCategoryrepository.GetAllEwe(Command, cancellationToken, PageId);
         }
 
         public IQueryable<SheepCategoryEntity> GetAllRam(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            throw new NotImplementedException();
+            return _SheepCategoryrepository.GetAllRam(Command, cancellationToken, PageId);
         }
     }
 }

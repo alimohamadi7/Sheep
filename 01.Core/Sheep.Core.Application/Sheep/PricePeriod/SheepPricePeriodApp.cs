@@ -21,6 +21,16 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
             _fullPriceSheepApplication = fullPriceSheepApplication;
         }
 
+        public Task<OperationResult<bool>> EweCreate(CreateCommand command, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OperationResult<bool>> RamCreate(CreateCommand command, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<OperationResult<bool>> SixEighteenCreate(CreateCommand command, CancellationToken cancellationToken)
         {
             SheepCategoryQuery Command = new SheepCategoryQuery()
