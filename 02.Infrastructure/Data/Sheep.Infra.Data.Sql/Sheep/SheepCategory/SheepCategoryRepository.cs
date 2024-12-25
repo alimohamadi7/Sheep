@@ -25,7 +25,10 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         public IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Three_SixCalcute < x.End_Three_Six && x.Three_SixCalcute >= Command.Start);
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false
+            && x.Three_SixCalcute < x.End_Three_Six
+            && x.Three_SixCalcute >= Command.Start&&
+            x.Three_SixCalcute<=Command.End);
             int take = 100;
             int skip = (PageId - 1) * take;
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
@@ -37,7 +40,10 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
             int take = 100;
             int skip = (PageId - 1) * take;
 
-            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Six_EighteenCalcute < x.End_Six_Eighteen && x.Six_EighteenCalcute >= Command.Start);
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false 
+            && x.Six_EighteenCalcute < x.End_Six_Eighteen
+            &&x.Six_EighteenCalcute >= Command.Start&&
+            x.Six_EighteenCalcute<=Command.End);
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
         }
 
