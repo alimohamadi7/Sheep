@@ -32,15 +32,6 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
 
         }
 
-        public IQueryable<SheepCategoryEntity> GetAllThreeSixForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
-        {
-            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Three_SixCalcute == Command.End);
-            int take = 100;
-            int skip = (PageId - 1) * take;
-            return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
-
-        }
-
         public  IQueryable<SheepCategoryEntity> GetAllSixEighteen(SheepCategoryQuery Command, CancellationToken cancellationToken ,int PageId = 1)
         {
             int take = 100;
@@ -68,13 +59,18 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
         }
 
-        public IQueryable<SheepCategoryEntity> GetAllSixEighteenForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        public IQueryable<SheepCategoryEntity> GetAllEwe(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-
-            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Six_EighteenCalcute == Command.End);
             int take = 100;
             int skip = (PageId - 1) * take;
+
+            var result = TableNoTracking.Where(x => x.Gender == Command.GenderType && x.IsDeleted == false && x.Ram_EweCalcute < x.End_Six_Eighteen && x.Ram_EweCalcute >= Command.Start);
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
+        }
+
+        public IQueryable<SheepCategoryEntity> GetAllRam(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

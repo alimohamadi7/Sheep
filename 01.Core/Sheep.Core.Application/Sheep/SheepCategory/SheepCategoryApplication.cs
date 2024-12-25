@@ -211,6 +211,8 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                 case CategoryType.Zero_Three:
                     if (Date < result.Zero_ThreeCalacute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
                         return OperationResult<bool>.FailureResult("",ApplicationMessages.InvalidSellOrWastedDate);
+                    else if (Date < result.Zero_ThreeCalacute)
+                    result.Zero_ThreeCalacute = Date;
                     result.Three_SixCalcute = Date;
                     result.End_Three_Six = Date;
                     result.Six_EighteenCalcute = Date;
@@ -222,7 +224,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     if (Date < result.Three_SixCalcute && await CheckCaluteCategoryPeriod(SheepId, cancellationToken))
                         return OperationResult<bool>.FailureResult("", ApplicationMessages.InvalidSellOrWastedDate);
                     else if (Date < result.Three_SixCalcute)
-                        result.Three_SixCalcute = Date;
+                    result.Three_SixCalcute = Date;
                     result.End_Three_Six = Date;
                     result.Six_EighteenCalcute = Date;
                     result.End_Six_Eighteen = Date;
@@ -286,14 +288,14 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             return OperationResult<bool>.SuccessResult(true);
         }
 
-        public IQueryable<SheepCategoryEntity> GetAllThreeSixForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        public IQueryable<SheepCategoryEntity> GetAllEwe(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            return _SheepCategoryrepository.GetAllThreeSixForPricePeriod(Command, cancellationToken, PageId);
+            throw new NotImplementedException();
         }
 
-        public IQueryable<SheepCategoryEntity> GetAllSixEighteenForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
+        public IQueryable<SheepCategoryEntity> GetAllRam(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
-            return _SheepCategoryrepository.GetAllSixEighteenForPricePeriod(Command, cancellationToken, PageId);
+            throw new NotImplementedException();
         }
     }
 }

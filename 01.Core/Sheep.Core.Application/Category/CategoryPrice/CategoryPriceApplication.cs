@@ -176,7 +176,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
 
         public async Task<OperationResult<bool>> CalculatedPriceSixEighteen(CalcuteCommand command, CancellationToken cancellationToken)
         {
-            int livestockday = 0;
+            double livestockday = 0;
             double PricePerdaySheep = 0;
             var pageId = 1;
             int i = 0;
@@ -204,7 +204,6 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 }
                 if (SheepThreesix.Any())
                 {
-                    //await _sheepCategoryApplication.SaveChangeAsync(cancellationToken);
                     pageId++;
                 }
                 //End calcute livestockday
@@ -215,7 +214,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 PricePerdaySheep = categoryPriceEntity.Food / livestockday;
             categoryPriceEntity.PricePerSheep = PricePerdaySheep;
             categoryPriceEntity.Calculated = true;
-            categoryPriceEntity.CountSheep = i;
+            categoryPriceEntity.CountSheep = i+1;
 
             //End category price update price pership
             //start sheep price period Calcute
@@ -297,6 +296,27 @@ namespace Sheep.Core.Application.Category.CategoryPrice
         public async Task<CalcuteCommand> GetDetailsForCalcute(Guid id, CancellationToken cancellationToken)
         {
             return await _categoryPriceRepository.GetDetailsForCalcute(id, cancellationToken);
+        }
+
+        public Task<OperationResult<bool>> CalculatedPriceRam(CalcuteCommand command, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OperationResult<bool>> CalculatedPriceEwe(CalcuteCommand command, CancellationToken cancellationToken)
+        {
+            double livestockday = 0;
+            double PricePerdaySheep = 0;
+            var pageId = 1;
+            int i = 0;
+            int day = 0;
+            SheepCategoryQuery Command = new SheepCategoryQuery()
+            {
+                GenderType = command.Gender,
+                Start = command.Start,
+                End = command.End,
+            };
+            throw new NotImplementedException();
         }
     }
 }

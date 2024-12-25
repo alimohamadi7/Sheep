@@ -19,6 +19,7 @@ namespace Sheep.Core.Application.Category.CategoryPrice.Contracts
         Task<CategoryPriceEntity> GetCategoryPriceById(Guid Id, CancellationToken cancellationToken);
         Task<OperationResult<bool>> CalculatedPriceSixEighteen(CalcuteCommand command, CancellationToken cancellationToken);
         Task<OperationResult<bool>> CalculatedPriceThreeSix(CalcuteCommand command, CancellationToken cancellationToken);
-
+        Task<OperationResult<bool>> CalculatedPriceRam(CalcuteCommand command, CancellationToken cancellationToken);
+        Task<OperationResult<bool>> CalculatedPriceEwe(CalcuteCommand command, CancellationToken cancellationToken);
     }
 }

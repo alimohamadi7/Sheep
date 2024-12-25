@@ -19,9 +19,9 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         Task CalculateSheepCategory(CancellationToken cancellationToken);
         Task<bool> CheckCaluteCategoryPeriod(Guid sheepId, CancellationToken cancellationToken);
         IQueryable<SheepCategoryEntity> GetAllSixEighteen(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
-        IQueryable<SheepCategoryEntity> GetAllSixEighteenForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
         IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
-        IQueryable<SheepCategoryEntity> GetAllThreeSixForPricePeriod(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
+        IQueryable<SheepCategoryEntity> GetAllEwe(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
+        IQueryable<SheepCategoryEntity> GetAllRam(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
 
         Task SaveChangeAsync(CancellationToken cancellationToken);
 

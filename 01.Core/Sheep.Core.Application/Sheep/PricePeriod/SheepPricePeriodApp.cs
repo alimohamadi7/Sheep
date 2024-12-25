@@ -42,7 +42,7 @@ namespace Sheep.Core.Application.Sheep.PricePeriod
                         day = Calculate.CalculateDateRange(item.Six_EighteenCalcute, Command.End);
                     var Sheepcategory = await _sheepCategoryApplication.GetSheepCategoryById(item.Id, cancellationToken);
                     Sheepcategory.Three_SixCalcute = Sheepcategory.Three_SixCalcute.AddDays(day);
-                    command.PriceSheep = Convert.ToInt64(command.PricePerSheep * day);
+                    command.PriceSheep = command.PricePerSheep * day;
                     SheepPricePeriodEntity sheepPricePeriodEntity = new SheepPricePeriodEntity(item.SheepId, command.CategoryPriceId, command.PriceSheep, command.Unabsorbedcosts, command.Start, command.End, item.Three_SixCalcute);
                     await _sheepPricePeriodRepo.AddAsync(sheepPricePeriodEntity, cancellationToken, false);
                     //start to do find sheep in  Sheepfull price  and update or  create new

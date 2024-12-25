@@ -265,8 +265,7 @@ namespace Sheep.Core.Application.Sheep
             if(command.SheepSellDate != null && SheepSellDate>DateTime.Now)
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.InvalidSellDate);
             if (command.SheepwastedDate != null && SheepWastedDate >DateTime.Now)
-                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.InvalidWastedDate);
-            if (command.SheepSellDate != null && SheepSellDate > DateTime.Now)
+                return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.InvalidWastedDate); 
                 sheep.SheepState = command.SheepState;
             if (command.SheepState == State.Sell)
             {
