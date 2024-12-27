@@ -68,10 +68,11 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
         }
 
         public Task<bool> IsExistSheepchild(Guid SheepId, DateTime Start, DateTime End, CancellationToken cancellationToken)
-        { 
-       var start=Start.AddDays
+        {
+            var start = Start.AddDays(-155);
+            var end = End.AddDays(155);
             return TableNoTracking.AnyAsync(x => x.ParentId == SheepId &&
-            x.SheepbirthDate >= Start && x.SheepbirthDate <= End);
+            x.SheepbirthDate >= start && x.SheepbirthDate <= end);
         }
 
         public async Task<bool> SheepIsParent(Guid Id, CancellationToken cancellationToken)
