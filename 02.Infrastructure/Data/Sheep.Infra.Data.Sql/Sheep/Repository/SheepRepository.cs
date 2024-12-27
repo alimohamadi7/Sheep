@@ -67,6 +67,13 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
             return OperationResult<bool>.FailureResult(createCommand.SheepNumber, ApplicationMessages.DuplicatedRecord);
         }
 
+        public Task<bool> IsExistSheepchild(Guid SheepId, DateTime Start, DateTime End, CancellationToken cancellationToken)
+        { 
+       var start=Start.AddDays
+            return TableNoTracking.AnyAsync(x => x.ParentId == SheepId &&
+            x.SheepbirthDate >= Start && x.SheepbirthDate <= End);
+        }
+
         public async Task<bool> SheepIsParent(Guid Id, CancellationToken cancellationToken)
         {
             return await TableNoTracking.AnyAsync(x => x.ParentId == Id); 

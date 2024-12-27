@@ -14,5 +14,6 @@ namespace Sheep.Core.Application.Sheep.Contracts
         Task<OperationResult<bool>> Delete(Guid id, CancellationToken cancellationToken);
         Task <GetSheepQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "");
         Task CalculateAge(CancellationToken cancellationToken);
+        Task <bool> IsExistSheepchild(Guid SheepId ,DateTime Start , DateTime End, CancellationToken cancellationToken);
     }
 }

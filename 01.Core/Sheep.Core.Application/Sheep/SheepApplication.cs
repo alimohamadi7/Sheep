@@ -279,6 +279,11 @@ namespace Sheep.Core.Application.Sheep
             }
             return OperationResult<bool>.SuccessResult(true);
         }
+
+        public Task<bool> IsExistSheepchild(Guid SheepId, DateTime Start, DateTime End, CancellationToken cancellationToken)
+        {
+            return _sheepRepository.IsExistSheepchild(SheepId ,Start,End,cancellationToken);
+        }
     }
 
 }

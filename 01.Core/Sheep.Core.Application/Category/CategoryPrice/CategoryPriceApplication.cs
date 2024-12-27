@@ -316,19 +316,19 @@ namespace Sheep.Core.Application.Category.CategoryPrice
                 Start = command.Start,
                 End = command.End,
             };
-            var Sheepthreesix = _sheepCategoryApplication.GetAllEwe(Command, cancellationToken, pageId).Count();
-            if (Sheepthreesix == 0)
+            var SheepEwe = _sheepCategoryApplication.GetAllEwe(Command, cancellationToken, pageId).Count();
+            if (SheepEwe == 0)
                 return OperationResult<bool>.FailureResult("", ApplicationMessages.NotSheepFuondInRaneDate);
             //calcute livestockday
             for (i = 0; i < pageId; i++)
             {
-                var SheepThreesix = _sheepCategoryApplication.GetAllEwe(Command, cancellationToken, pageId);
-                foreach (var item in SheepThreesix)
+                var Sheepewe = _sheepCategoryApplication.GetAllEwe(Command, cancellationToken, pageId);
+                foreach (var item in Sheepewe)
                 {
                     day = Calculate.CalculateDateRange(item.Ram_EweCalcute, Command.End);
                     livestockday = livestockday + day;
                 }
-                if (SheepThreesix.Any())
+                if (Sheepewe.Any())
                 {
                     pageId++;
                 }
@@ -342,7 +342,18 @@ namespace Sheep.Core.Application.Category.CategoryPrice
             categoryPriceEntity.Calculated = true;
             categoryPriceEntity.CountSheep = i + 1;
             //End category price update price pership
-            throw new NotImplementedException();
+            //start sheep price period Calcute
+            Sheep.PricePeriod.CreateCommand createCommand = new Sheep.PricePeriod.CreateCommand()
+            {
+                CategoryPriceId = categoryPriceEntity.Id,
+                Gender = command.Gender,
+                Start = command.Start,
+                End = command.End,
+                PricePerSheep = categoryPriceEntity.PricePerSheep,
+            };
+            await _pricePeriodApp.EweCreate(createCommand, cancellationToken);
+            //End sheep price period Calcute
+            return OperationResult<bool>.SuccessResult(true);
         }
     }
 }
