@@ -48,10 +48,6 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
         }
 
-        public async Task<int> GetCount()
-        {
-            return TableNoTracking.Count();
-        }
 
         public Task<SheepCategoryEntity> GetSheepCategoryBySheepId(Guid Id, CancellationToken cancellationToken)
         {
@@ -90,6 +86,54 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
             && x.Ram_EweCalcute != x.EndRam_Ewe
             && x.Ram_EweCalcute >= Command.Start);
             return result.OrderByDescending(x => x.CreatedDate).Skip(skip).Take(take);
+        }
+
+        public int GetThreeSiXMaleCount()
+        {
+            return TableNoTracking.Where(x=>x.Gender==GenderType.Male&&
+            x.ActiveCategory==CategoryType.Three_Six).Count();
+        }
+
+        public int GetThreeSixFemaleCount()
+        {
+            return TableNoTracking.Where(x => x.Gender == GenderType.Female &&
+            x.ActiveCategory == CategoryType.Three_Six).Count();
+        }
+
+        public int GetSixEighteenMaleCount()
+        {
+            return TableNoTracking.Where(x => x.Gender == GenderType.Male &&
+           x.ActiveCategory == CategoryType.Six_Eighteen).Count();
+        }
+
+        public int GetSixEighteenFemaleCount()
+        {
+            return TableNoTracking.Where(x => x.Gender == GenderType.Female
+            && x.ActiveCategory == CategoryType.Three_Six).Count();
+        }
+
+        public int GetZeroThreeMaleCount()
+        {
+            return TableNoTracking.Where(x => x.Gender == GenderType.Male
+            && x.ActiveCategory == CategoryType.Zero_Three).Count();
+        }
+
+        public int GetZeroEweFemaleCount()
+        {
+            return TableNoTracking.Where(x => x.Gender == GenderType.Female
+         && x.ActiveCategory == CategoryType.Zero_Three).Count();
+        }
+
+        public int GetEweCount()
+        {
+            return TableNoTracking.Where(x => x.Gender == GenderType.Female
+         && x.ActiveCategory == CategoryType.Ewe).Count();
+        }
+
+        public int GetRamCount()
+        {
+            return TableNoTracking.Where(x => x.Gender == GenderType.Male
+        && x.ActiveCategory == CategoryType.Ram).Count();
         }
     }
 }

@@ -22,7 +22,14 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         IQueryable<SheepCategoryEntity> GetAllThreeSix(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
         IQueryable<SheepCategoryEntity> GetAllEwe(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
         IQueryable<SheepCategoryEntity> GetAllRam(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1);
-
+        int GetThreeSiXMaleCount();
+        int GetThreeSixFemaleCount();
+        int GetSixEighteenMaleCount();
+        int GetSixEighteenFemaleCount();
+        int GetZeroThreeMaleCount();
+        int GetZeroEweFemaleCount();
+        int GetEweCount();
+        int GetRamCount();
         Task SaveChangeAsync(CancellationToken cancellationToken);
 
     }

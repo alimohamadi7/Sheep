@@ -267,6 +267,7 @@ namespace Sheep.Core.Application.Sheep
             if (command.SheepwastedDate != null && SheepWastedDate >DateTime.Now)
                 return OperationResult<bool>.FailureResult(command.SheepNumber, ApplicationMessages.InvalidWastedDate); 
                 sheep.SheepState = command.SheepState;
+                sheep.IsDeleted = true;
             if (command.SheepState == State.Sell)
             {
                 sheep.SheepSellDate =SheepSellDate;
@@ -283,6 +284,11 @@ namespace Sheep.Core.Application.Sheep
         public Task<bool> IsExistSheepchild(Guid SheepId, DateTime Start, DateTime End, CancellationToken cancellationToken)
         {
             return _sheepRepository.IsExistSheepchild(SheepId ,Start,End,cancellationToken);
+        }
+
+        public int GetSheepCount(CancellationToken cancellationToken)
+        {
+            return _sheepRepository.GetSheepCount(cancellationToken);
         }
     }
 

@@ -284,6 +284,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
                     result.EndRam_Ewe = Date;
                     break;
             }
+            result.IsDeleted= true;
             await _SheepCategoryrepository.SaveChangesAsync(cancellationToken);
             return OperationResult<bool>.SuccessResult(true);
         }
@@ -296,6 +297,46 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         public IQueryable<SheepCategoryEntity> GetAllRam(SheepCategoryQuery Command, CancellationToken cancellationToken, int PageId = 1)
         {
             return _SheepCategoryrepository.GetAllRam(Command, cancellationToken, PageId);
+        }
+
+        public int GetThreeSiXMaleCount()
+        {
+            return _SheepCategoryrepository.GetThreeSiXMaleCount();
+        }
+
+        public int GetThreeSixFemaleCount()
+        {
+           return    _SheepCategoryrepository.GetThreeSixFemaleCount();
+        }
+
+        public int GetSixEighteenMaleCount()
+        {
+            return _SheepCategoryrepository.GetSixEighteenMaleCount();
+        }
+
+        public int GetSixEighteenFemaleCount()
+        {
+            return _SheepCategoryrepository.GetSixEighteenFemaleCount();
+        }
+
+        public int GetZeroThreeMaleCount()
+        {
+            return _SheepCategoryrepository.GetZeroThreeMaleCount();
+        }
+
+        public int GetZeroEweFemaleCount()
+        {
+            return _SheepCategoryrepository.GetZeroEweFemaleCount();
+        }
+
+        public int GetEweCount()
+        {
+            return _SheepCategoryrepository.GetEweCount();
+        }
+
+        public int GetRamCount()
+        {
+            return _SheepCategoryrepository.GetRamCount();
         }
     }
 }

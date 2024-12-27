@@ -47,6 +47,11 @@ namespace Sheep.Infra.Data.Sql.Sheep.Repository
 
         }
 
+        public int GetSheepCount(CancellationToken cancellationToken)
+        {
+            return TableNoTracking.Count();
+        }
+
         public IQueryable<SheepEntity> GetsheepForAge(CancellationToken cancellationToken, int PageId = 1)
         {
             IQueryable<SheepEntity> result = TableNoTracking.Where(x => x.IsDeleted == false
