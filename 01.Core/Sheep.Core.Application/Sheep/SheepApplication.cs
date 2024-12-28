@@ -312,6 +312,7 @@ namespace Sheep.Core.Application.Sheep
                 default:
                     break;
             }
+            return Day;
         }
     }
 
