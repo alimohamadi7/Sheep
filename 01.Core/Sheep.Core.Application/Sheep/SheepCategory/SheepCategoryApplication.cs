@@ -324,9 +324,9 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
             return _SheepCategoryrepository.GetZeroThreeMaleCount();
         }
 
-        public int GetZeroEweFemaleCount()
+        public int GetZeroThreeFemaleCount()
         {
-            return _SheepCategoryrepository.GetZeroEweFemaleCount();
+            return _SheepCategoryrepository.GetZeroThreeFemaleCount();
         }
 
         public int GetEweCount()

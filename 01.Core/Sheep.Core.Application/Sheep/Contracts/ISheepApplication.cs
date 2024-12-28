@@ -1,4 +1,5 @@
 ﻿using Sheep.Framework.Application.Operation;
+using Sheep.Framework.Domain.Entities;
 
 
 
@@ -15,6 +16,7 @@ namespace Sheep.Core.Application.Sheep.Contracts
         Task <GetSheepQuery> GetAllSheep(CancellationToken cancellationToken, int pageId = 1, string trim = "");
         Task CalculateAge(CancellationToken cancellationToken);
         Task <bool> IsExistSheepchild(Guid SheepId ,DateTime Start , DateTime End, CancellationToken cancellationToken);
-        int GetSheepCount (CancellationToken cancellationToken);    
+        int GetSheepCount (CancellationToken cancellationToken);
+        int CalcuteDayPeriod(int age, CategoryType categoryType);
     }
 }

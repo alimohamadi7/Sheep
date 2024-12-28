@@ -1,6 +1,4 @@
-﻿@{
-
-}
+﻿@using Sheep.Core.Application.Sheep.SheepCategory
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -153,7 +151,10 @@
             ],
             datasets: [
               {
-                data: [700,500,400,600,300,100,1200,700],
+                data: [@Model.CountZeroThreeMale,@Model.CountZeroThreeFemale,
+                          @Model.CountThreeSixFemale,@Model.CountThreeSixMale,
+                         @Model.CountSixEighteenMale,@Model.CountSixEighteenFemale,
+                         @Model.CountEwe ,@Model.CountRam],
                 backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#a7f542','#f542ad'],
               }
             ]

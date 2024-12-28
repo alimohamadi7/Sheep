@@ -15,7 +15,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory.Contracts
         int GetSixEighteenMaleCount();
         int GetSixEighteenFemaleCount();
         int GetZeroThreeMaleCount();
-        int GetZeroEweFemaleCount();
+        int GetZeroThreeFemaleCount();
         int GetEweCount();
         int GetRamCount();
         IQueryable<SheepCategoryEntity> GetsheepForCategory(CancellationToken cancellationToken, int PageId);

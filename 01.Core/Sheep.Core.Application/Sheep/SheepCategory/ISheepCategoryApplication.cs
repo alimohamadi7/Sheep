@@ -27,7 +27,7 @@ namespace Sheep.Core.Application.Sheep.SheepCategory
         int GetSixEighteenMaleCount();
         int GetSixEighteenFemaleCount();
         int GetZeroThreeMaleCount();
-        int GetZeroEweFemaleCount();
+        int GetZeroThreeFemaleCount();
         int GetEweCount();
         int GetRamCount();
         Task SaveChangeAsync(CancellationToken cancellationToken);

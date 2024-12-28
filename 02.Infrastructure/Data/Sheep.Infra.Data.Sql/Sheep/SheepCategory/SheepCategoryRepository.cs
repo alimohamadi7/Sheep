@@ -91,49 +91,49 @@ namespace Sheep.Infra.Data.Sql.Sheep.SheepCategory
         public int GetThreeSiXMaleCount()
         {
             return TableNoTracking.Where(x=>x.Gender==GenderType.Male&&
-            x.ActiveCategory==CategoryType.Three_Six).Count();
+        x.IsDeleted==false &&   x.ActiveCategory==CategoryType.Three_Six).Count();
         }
 
         public int GetThreeSixFemaleCount()
         {
             return TableNoTracking.Where(x => x.Gender == GenderType.Female &&
-            x.ActiveCategory == CategoryType.Three_Six).Count();
+          x.IsDeleted == false && x.ActiveCategory == CategoryType.Three_Six).Count();
         }
 
         public int GetSixEighteenMaleCount()
         {
             return TableNoTracking.Where(x => x.Gender == GenderType.Male &&
-           x.ActiveCategory == CategoryType.Six_Eighteen).Count();
+          x.IsDeleted == false && x.ActiveCategory == CategoryType.Six_Eighteen).Count();
         }
 
         public int GetSixEighteenFemaleCount()
         {
             return TableNoTracking.Where(x => x.Gender == GenderType.Female
-            && x.ActiveCategory == CategoryType.Three_Six).Count();
+        &&   x.IsDeleted == false     && x.ActiveCategory == CategoryType.Six_Eighteen).Count();
         }
 
         public int GetZeroThreeMaleCount()
         {
             return TableNoTracking.Where(x => x.Gender == GenderType.Male
-            && x.ActiveCategory == CategoryType.Zero_Three).Count();
+            && x.IsDeleted == false && x.ActiveCategory == CategoryType.Zero_Three).Count();
         }
 
-        public int GetZeroEweFemaleCount()
+        public int GetZeroThreeFemaleCount()
         {
             return TableNoTracking.Where(x => x.Gender == GenderType.Female
-         && x.ActiveCategory == CategoryType.Zero_Three).Count();
+         && x.IsDeleted == false && x.ActiveCategory == CategoryType.Zero_Three).Count();
         }
 
         public int GetEweCount()
         {
             return TableNoTracking.Where(x => x.Gender == GenderType.Female
-         && x.ActiveCategory == CategoryType.Ewe).Count();
+         && x.IsDeleted == false && x.ActiveCategory == CategoryType.Ewe).Count();
         }
 
         public int GetRamCount()
         {
             return TableNoTracking.Where(x => x.Gender == GenderType.Male
-        && x.ActiveCategory == CategoryType.Ram).Count();
+        && x.IsDeleted == false && x.ActiveCategory == CategoryType.Ram).Count();
         }
     }
 }

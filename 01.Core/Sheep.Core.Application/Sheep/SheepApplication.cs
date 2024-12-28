@@ -290,6 +290,29 @@ namespace Sheep.Core.Application.Sheep
         {
             return _sheepRepository.GetSheepCount(cancellationToken);
         }
+
+        public int CalcuteDayPeriod(int age ,CategoryType categoryType)
+        {
+            int Day = 0;
+            switch (categoryType)
+            {
+                case CategoryType.Zero_Three:
+                     Day=age; 
+                    break;
+                case CategoryType.Three_Six:
+                    Day = age - 90;
+                    break;
+                case CategoryType.Six_Eighteen:
+                    Day = age - 180;
+                    break;
+                case CategoryType.Ewe:
+                    break;
+                case CategoryType.Ram:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 }
