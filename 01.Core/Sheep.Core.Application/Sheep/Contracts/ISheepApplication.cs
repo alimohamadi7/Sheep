@@ -17,6 +17,6 @@ namespace Sheep.Core.Application.Sheep.Contracts
         Task CalculateAge(CancellationToken cancellationToken);
         Task <bool> IsExistSheepchild(Guid SheepId ,DateTime Start , DateTime End, CancellationToken cancellationToken);
         int GetSheepCount (CancellationToken cancellationToken);
-        int CalcuteDayPeriod(int age, CategoryType categoryType);
+        (int Day, int TotallDay) CalcuteDayPeriod(int age, CategoryType categoryType);
     }
 }

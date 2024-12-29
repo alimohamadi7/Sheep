@@ -6,6 +6,9 @@ body{
 .error {
     color: #ff0000;
 }
+table tr{
+    text-align:center;
+}
 /* select font*/
 .form-myselect{
     font-size:16px;

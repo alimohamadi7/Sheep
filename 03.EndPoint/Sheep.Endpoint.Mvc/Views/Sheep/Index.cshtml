@@ -1,6 +1,8 @@
 ﻿@model Sheep.Core.Application.Sheep.Contracts.GetSheepQuery
 @using Sheep.Framework.Application.Utilities
 @using DNTPersianUtils.Core
+@using Sheep.Core.Application.Sheep.Contracts
+@inject ISheepApplication _sheepapplication
 <div class="content-wrapper" style="min-height: 1301.27px;">
     <section class="content-header">
         <div class="container-fluid">
@@ -24,21 +26,21 @@
                     <a class="btn btn-success btn-lg m-1" href="#showmodal=@Url.Action("Create", "Sheep")">ثبت دام</a>
                     <a class="btn btn-info  btn-lg m-1" href="#showmodal=@Url.Action("Create", "Sheep",new{SheepBirth=true})">ثبت دام متولد شده</a>
                 </div>
- 
+
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">اطلاعات دام</h3>
                             <div class="card-tools">
-                                 <form action="/Sheep" method="get">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="trim" value="@Model.trim" class="form-control float-right" placeholder="جستجو">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
+                                <form action="/Sheep" method="get">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="trim" value="@Model.trim" class="form-control float-right" placeholder="جستجو">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
                                 </form>
                             </div>
                         </div>
@@ -53,7 +55,7 @@
                                         <th>سن</th>
                                         <th>تعداد روز سن</th>
                                         <th>گروه</th>
-                                         <th></th>
+                                        <th></th>
                                         <th>جنسیت</th>
                                         <th></th>
                                     </tr>
@@ -68,16 +70,16 @@
                                             <td>@i</td>
                                             <td>@item.SheepNumber</td>
                                             <td>@item.SheepbirthDate.ToPersianDateTextify() </td>
-                                            <td>@Calculate.CalculateYourAge(Convert.ToDateTime( item.SheepbirthDate))</td>
+                                            <td>@Calculate.CalculateYourAge(Convert.ToDateTime(item.SheepbirthDate))</td>
                                             <td>@item.Age</td>
                                             <td>@EnumExtensions.ToDisplay(item.SheepCategories.SingleOrDefault().ActiveCategory)</td>
                                             <td>
-                                                    <div style="display:inline;width:90px;height:90px;">
-                                                        <input type="text" class="dial" value="70" readonly data-width="50" data-height="50" data-fgcolor="#00c0ef" style="width: 49px; height: 30px; position: absolute; vertical-align: middle; margin-top: 30px; margin-left: -69px; border: 0px; background: none; font: bold 18px Arial; text-align: center; color: rgb(0, 192, 239); padding: 0px; appearance: none;">
-                                                        </div>
-                                      @*               <div class="knob-label">دوره</div> *@
+                                                @{
+                                                    var result = _sheepapplication.CalcuteDayPeriod(item.Age, item.SheepCategories.SingleOrDefault().ActiveCategory);
+                                                }
+                                                <circle-progress class="progress" value="@result.Day" max="@result.TotallDay"></circle-progress>
                                             </td>
-                                          <td>@EnumExtensions.ToDisplay(@item.Gender)</td>
+                                            <td>@EnumExtensions.ToDisplay(@item.Gender)</td>
                                             <td>
                                                 <a class="btn btn-warning pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Edit", "Sheep", new { id = item.Id})">
@@ -85,7 +87,7 @@
                                                 </a>
                                                 <a class="btn btn-danger pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("Delete", "Sheep", new { id = item.Id})">
-                                                    <i class="fa fa-trash"></i> 
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                                 <a class="btn btn-info pull-right m-rl-5"
                                                    href="#showmodal=@Url.Action("EditSell", "Sheep", new { id = item.Id})">
@@ -112,7 +114,7 @@
 @section Scripts {
     <link href="~/lib/datepicker/jalalidatepicker.min.css" rel="stylesheet" />
     <script src="~/lib/datepicker/jalalidatepicker.min.js"></script>
-    <script src="~/them/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="~/lib/circle-progress/circle-progress.min.js" type="module"></script>
     <script>
         $(document).ready(function () {
             $("#MainModal").on('show.bs.modal', function () {
@@ -129,7 +131,7 @@
         });
 
     </script>
-    
+
     <script>
         function myFunction() {
             var x = document.getElementById("SheepState").value;
@@ -172,10 +174,20 @@
                     p[i].value="";
                 }
             }
-</script>
-<script>
-           $(function() {
-            $(".dial").knob();
+    </script>
+    <script>
+            new CircleProgress('.progress', {
+            textFormat: 'valueOnCircle',
         });
-</script>
+    </script>
 }
+<style>
+    .progress{
+        background-color:inherit !important;
+        display:inherit !important;
+    }
+
+    circle-progress{
+        width:70px !important;
+    }
+</style>
